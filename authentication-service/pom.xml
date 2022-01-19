@@ -136,7 +136,7 @@
 					<configuration>
 						<archive>
 							<manifest>
-								<mainClass>com.abderrahmane.webappexec.App</mainClass>
+								<mainClass>com.abderrahmane.elearning.authservice.App</mainClass>
 							</manifest>
 						</archive>
 						<descriptorRefs>
