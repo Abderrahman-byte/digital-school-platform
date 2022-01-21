@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -31,11 +32,20 @@ public class WebAppConfig implements WebMvcConfigurer {
     @Autowired
     Environment environment;
 
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer () {
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-    @Bean EntityManager entityManager () {
+    @Bean
+    public ResourceBundleMessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.addBasenames("messages");
+        return messageSource;
+    }
+
+    @Bean
+    EntityManager entityManager() {
         return entityManagerFactory().createEntityManager();
     }
 
