@@ -19,8 +19,11 @@ import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -46,6 +49,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 
     @Bean
     EntityManager entityManager() {
+        // EntityManager entityManager = entityManagerFactory().createEntityManager();
         return entityManagerFactory().createEntityManager();
     }
 
@@ -60,9 +64,21 @@ public class WebAppConfig implements WebMvcConfigurer {
         return Persistence.createEntityManagerFactory("main-unit", jpaProperties);
     }
 
+    /* Configuring Message Converters */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(new JsonMapConverter());
         converters.add(new StringHttpMessageConverter());
+    }
+
+    /* Adding persistence exception translator */
+    @Bean
+    public PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor () {
+        return new PersistenceExceptionTranslationPostProcessor();
+    }
+
+    @Bean
+    public PersistenceExceptionTranslator persistenceExceptionTranslator () {
+        return new HibernateExceptionTranslator();
     }
 }
