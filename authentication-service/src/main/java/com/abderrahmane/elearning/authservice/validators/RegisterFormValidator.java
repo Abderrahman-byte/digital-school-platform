@@ -15,7 +15,7 @@ public class RegisterFormValidator extends GenericMapValidator {
 
     public RegisterFormValidator() {
         this.addRequiredFields("username", "email", "password", "password2");
-        this.addAllowedFields("username", "email", "password", "password2", "account_type");
+        this.addAllowedFields("username", "email", "password", "password2", "accountType");
     }
 
     @SuppressWarnings("unchecked")
@@ -40,7 +40,7 @@ public class RegisterFormValidator extends GenericMapValidator {
         String email = (String)form.get("email");
         String password = (String)form.get("password");
         String password2 = (String)form.get("password2");
-        String accountType = (String)form.get("account_type");
+        String accountType = (String)form.get("accountType");
 
         if (username.length() <= 3 || !validUsernamePattern.matcher(username).matches()) errors.rejectValue("username", "invalidField");
         if (!validEmailPattern.matcher(email).matches()) errors.rejectValue("email", "invalidField");
