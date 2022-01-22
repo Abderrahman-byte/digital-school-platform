@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,10 @@ public class TransactionManager {
     @Autowired
     private  EntityManager entityManager;
 
-    @Around("execution (* *(..)) && @annotation(com.abderrahmane.elearning.authservice.annotations.HandleTransactions)")
+    @Pointcut("execution (* *(..)) && @annotation(com.abderrahmane.elearning.authservice.annotations.HandleTransactions)")
+    private void getTransactions () {};
+
+    @Around("getTransactions ()")
     public Object wrapTransaction (ProceedingJoinPoint pjp) throws Throwable {
         if (!entityManager.getTransaction().isActive()) {
             entityManager.getTransaction().begin();
