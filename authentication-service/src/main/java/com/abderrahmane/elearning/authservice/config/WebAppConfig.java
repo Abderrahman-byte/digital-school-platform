@@ -32,10 +32,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 @EnableAspectJAutoProxy
 @ComponentScan(basePackages = "com.abderrahmane.elearning.authservice")
-@PropertySources(@PropertySource("classpath:jdbc.properties"))
+@PropertySources({ @PropertySource("classpath:jdbc.properties"), @PropertySource("classpath:smtp.properties") })
 public class WebAppConfig implements WebMvcConfigurer {
     @Autowired
-    Environment environment;
+    private Environment environment;
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -75,12 +75,12 @@ public class WebAppConfig implements WebMvcConfigurer {
 
     /* Adding persistence exception translator */
     @Bean
-    public PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor () {
+    public PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
     @Bean
-    public PersistenceExceptionTranslator persistenceExceptionTranslator () {
+    public PersistenceExceptionTranslator persistenceExceptionTranslator() {
         return new HibernateExceptionTranslator();
     }
 }

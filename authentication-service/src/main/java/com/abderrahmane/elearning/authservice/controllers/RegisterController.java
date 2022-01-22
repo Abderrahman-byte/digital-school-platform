@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+// TODO : Send Email Verify
+
 @RestController
 @RequestMapping("/api/auth/register")
 public class RegisterController {

@@ -4,3 +4,4 @@ tomcat.*
 application.properties
 tomcat
 jdbc.properties
+smtp.properties
