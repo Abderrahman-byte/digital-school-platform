@@ -32,7 +32,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 @EnableAspectJAutoProxy
 @ComponentScan(basePackages = "com.abderrahmane.elearning.authservice")
-@PropertySources({ @PropertySource("classpath:jdbc.properties"), @PropertySource("classpath:smtp.properties") })
+@PropertySources({ @PropertySource("classpath:jdbc.properties"), @PropertySource("classpath:smtp.properties"), @PropertySource("classpath:application.properties") })
 public class WebAppConfig implements WebMvcConfigurer {
     @Autowired
     private Environment environment;
