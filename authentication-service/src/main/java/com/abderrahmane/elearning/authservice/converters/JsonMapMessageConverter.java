@@ -13,7 +13,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
-public class JsonMapConverter implements HttpMessageConverter<Map<String, Object>> {
+public class JsonMapMessageConverter implements HttpMessageConverter<Map<String, Object>> {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override

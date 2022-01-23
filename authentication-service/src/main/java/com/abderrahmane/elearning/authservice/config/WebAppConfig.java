@@ -9,7 +9,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 
-import com.abderrahmane.elearning.authservice.converters.JsonMapConverter;
+import com.abderrahmane.elearning.authservice.converters.JsonMapMessageConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -74,7 +74,7 @@ public class WebAppConfig implements WebMvcConfigurer {
     /* Configuring Message Converters */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(new JsonMapConverter());
+        converters.add(new JsonMapMessageConverter());
         converters.add(new StringHttpMessageConverter());
     }
 
