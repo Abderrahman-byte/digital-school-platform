@@ -10,6 +10,7 @@ import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 
 import com.abderrahmane.elearning.authservice.converters.JsonMapMessageConverter;
+import com.abderrahmane.elearning.authservice.handlers.AuthenticationHandler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,13 +28,18 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
 @EnableAspectJAutoProxy
 @ComponentScan(basePackages = "com.abderrahmane.elearning.authservice")
-@PropertySources({ @PropertySource("classpath:jdbc.properties"), @PropertySource("classpath:smtp.properties"), @PropertySource("classpath:application.properties") })
+@PropertySources({ 
+    @PropertySource("classpath:jdbc.properties"), 
+    @PropertySource("classpath:smtp.properties"), 
+    @PropertySource("classpath:application.properties") 
+})
 public class WebAppConfig implements WebMvcConfigurer {
     @Autowired
     private Environment environment;
@@ -87,5 +93,17 @@ public class WebAppConfig implements WebMvcConfigurer {
     @Bean
     public PersistenceExceptionTranslator persistenceExceptionTranslator() {
         return new HibernateExceptionTranslator();
+    }
+
+    /* Adding interceptors */
+
+    @Bean
+    public AuthenticationHandler authenticationHandler() {
+        return new AuthenticationHandler();
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(authenticationHandler()).addPathPatterns("/api/**").order(1);
     }
 }
