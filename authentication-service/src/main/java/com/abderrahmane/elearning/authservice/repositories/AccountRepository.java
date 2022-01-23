@@ -1,7 +1,10 @@
 package com.abderrahmane.elearning.authservice.repositories;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
@@ -60,5 +63,25 @@ public class AccountRepository {
 
     public Account select (String id) {
         return entityManager.find(Account.class, id);
-    } 
+    }
+
+    public Account selectByUsername (String username) {
+        CriteriaQuery<Account> criteriaQuery = criteriaBuilder.createQuery(Account.class);
+        Root<Account> root = criteriaQuery.from(Account.class);
+
+        criteriaQuery.select(root).where(
+            criteriaBuilder.or(
+                criteriaBuilder.equal(root.get("username"), username), 
+                criteriaBuilder.equal(root.get("email"), username)
+            )
+        );
+
+        Query query = entityManager.createQuery(criteriaQuery);
+        
+        try {
+            return (Account)query.getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
 }
