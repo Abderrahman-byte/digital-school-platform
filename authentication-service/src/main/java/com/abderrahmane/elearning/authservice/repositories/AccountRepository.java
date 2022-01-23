@@ -6,6 +6,7 @@ import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
 import com.abderrahmane.elearning.authservice.annotations.HandleTransactions;
+import com.abderrahmane.elearning.authservice.helpers.PasswordEncoder;
 import com.abderrahmane.elearning.authservice.models.Account;
 import com.abderrahmane.elearning.authservice.models.AccountType;
 
@@ -19,6 +20,9 @@ public class AccountRepository {
 
     @Autowired
     private CriteriaBuilder criteriaBuilder;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @HandleTransactions
     public Account insertAccount(String username, String email, String password) {
@@ -34,7 +38,7 @@ public class AccountRepository {
     @HandleTransactions
     public Account insertAccount(String username, String email, String password, AccountType accountType) {
         Account account = new Account();
-        account.setPassword(password);
+        account.setPassword(passwordEncoder.encode(password));
         account.setUsername(username);
         account.setEmail(email);
         account.setAccountType(accountType);
