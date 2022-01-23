@@ -2,11 +2,12 @@
 
 ## Endpoints
 
-| Method   | Endpoint          | Request Data  | Response Data                                             | Description          |
-| -------- | ----------------- | ------------- | --------------------------------------------------------- | -------------------- |
-| POST     | /api/register     | AccountForm | { "ok": ${boolean},"errors"?: [${List of error messages}] } | Register new account |
-| GET/POST | /api/verify-email | ?q=${token}   | { "ok": ${boolean},"errors"?: [${List of error messages]] } | Verify account email |
-| GET      | /api/isLoggedIn   |               | { "isLoggedIn": true, data: ${AccountData} }               |                      |
+| Method   | Endpoint          | Request Data      | Response Data                                               | Description          |
+| -------- | ----------------- | ----------------- | ----------------------------------------------------------- | -------------------- |
+| POST     | /api/register     | AccountForm       | { "ok": ${boolean},"errors"?: [${List of error messages}] } | Register new account |
+| GET/POST | /api/verify-email | ?q=${token}       | { "ok": ${boolean},"errors"?: [${List of error messages]] } | Verify account email |
+| GET      | /api/isLoggedIn   |                   | { "isLoggedIn": true, "data"?: ${AccountData} }             |                      |
+| POST     | /api/login        | username,password | { "ok": ${boolean}, "data"?: ${AccountData} }               |                      |
 
 ```text
 AccountForm {
