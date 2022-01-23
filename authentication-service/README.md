@@ -1,5 +1,33 @@
 # The Authentication Service
 
+## Endpoints
+
+| Method   | Endpoint          | Request Data  | Response Data                                             | Description          |
+| -------- | ----------------- | ------------- | --------------------------------------------------------- | -------------------- |
+| POST     | /api/register     | AccountForm | { "ok": ${boolean},"errors"?: [${List of error messages}] } | Register new account |
+| GET/POST | /api/verify-email | ?q=${token}   | { "ok": ${boolean},"errors"?: [${List of error messages]] } | Verify account email |
+| GET      | /api/isLoggedIn   |               | { "isLoggedIn": true, data: ${AccountData} }               |                      |
+
+```text
+AccountForm {
+    username : String,
+    email: String,
+    password: String,
+    password2: String,
+    accountType?: 'STUDENT' || 'TEACHER' || 'SCHOOL'
+}
+```
+
+```text
+AccountData {
+    username : String,
+    email: String,
+    accountType: 'STUDENT' || 'TEACHER' || 'SCHOOL',
+    isAdmin: Boolean,
+    profileData: 'Data that differ in each account type'
+}
+```
+
 ## Required Config files
 
 - src/main/resources/jdbc.properties
