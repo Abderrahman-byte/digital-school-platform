@@ -92,7 +92,7 @@ public class RegisterController {
         Map<String, Object> payload = new HashMap<>();
         String token, verificationUrl; 
         
-        payload.put("emai", email);
+        payload.put("email", email);
         payload.put("id", id);
         payload.put("action", "verify_email");
 

@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
 
 import com.abderrahmane.elearning.authservice.converters.JsonMapConverter;
 
@@ -50,8 +51,12 @@ public class WebAppConfig implements WebMvcConfigurer {
     }
 
     @Bean
+    CriteriaBuilder criteriaBuilder () {
+        return entityManager().getCriteriaBuilder();
+    }
+
+    @Bean
     EntityManager entityManager() {
-        // EntityManager entityManager = entityManagerFactory().createEntityManager();
         return entityManagerFactory().createEntityManager();
     }
 
