@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS city (
     name VARCHAR (100) NOT NULL,
     state_id INTEGER NOT NULL REFERENCES "state" (id),
     UNIQUE (state_id, name)
-); 
+);
 
 CREATE TABLE IF NOT EXISTS school_profil (
     account_id VARCHAR(25) PRIMARY KEY,
@@ -24,8 +24,29 @@ CREATE TABLE IF NOT EXISTS school_profil (
     location INTEGER NOT NULL REFERENCES city (id),
     subtitle VARCHAR (250),
     overview TEXT,
-
     created_date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
-
     FOREIGN KEY (account_id) REFERENCES account (id)
+);
+
+CREATE TABLE IF NOT EXISTS teacher_profil (
+    account_id VARCHAR(25) PRIMARY KEY,
+    first_name VARCHAR (100) NOT NULL,
+    last_name VARCHAR (100) NOT NULL,
+    title VARCHAR (100) NOT NULL,
+    bio TEXT,
+    location INTEGER NOT NULL REFERENCES city (id),
+    created_date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (account_id) REFERENCES account (id)
+);
+
+CREATE TABLE IF NOT EXISTS teacher_school (
+    teacher_id VARCHAR (25) NOT NULL REFERENCES teacher_profil (account_id),
+    school_id VARCHAR (25) NOT NULL REFERENCES school_profil (account_id),
+
+    title VARCHAR (100),
+    verified BOOLEAN NOT NULL DEFAULT false,
+    created_date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+    ended_date TIMESTAMP WITH TIME ZONE,
+
+    PRIMARY KEY (teacher_id, school_id)
 );
