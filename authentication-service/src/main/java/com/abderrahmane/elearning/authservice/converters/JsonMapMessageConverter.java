@@ -40,11 +40,8 @@ public class JsonMapMessageConverter implements HttpMessageConverter<Map<String,
             Map<String, Object> parsedData = objectMapper.readValue(inputMessage.getBody(), Map.class);
             return parsedData;
         } catch (Exception ex) {
-            // TODO : Must throw invalid format Error
-            System.err.println("[JSON-PARSING] " + ex.getMessage());
+            throw new HttpMessageNotReadableException("invalid_json_format", inputMessage);
         }
-
-        return null;
     }
 
     @Override
