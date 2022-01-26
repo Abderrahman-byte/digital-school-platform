@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 // TODO : May save user session after verification 
-// FIXME : Send front-end url as verification url
 
 @RestController
 @RequestMapping("/api/verify-email")

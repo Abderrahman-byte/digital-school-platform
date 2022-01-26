@@ -15,6 +15,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.validation.MapBindingResult;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/register")
@@ -43,7 +45,10 @@ public class RegisterController {
     @Autowired
     private MailService mailService;
 
-    // FIXME : Send verification email could be asynchronous
+    @Autowired
+    private Environment environment;
+
+    // FIXME : Send verification email can be asynchronous
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Object> handlePost(@RequestBody Map<String, Object> body, HttpServletRequest request) {
@@ -85,9 +90,14 @@ public class RegisterController {
         return success;
     }
 
-    // FIXME : Verification url should be in to fron-end
     private void sendVerificationMessage (HttpServletRequest request, String email, String id) {
-        UriComponents uriComponents = ServletUriComponentsBuilder.fromRequestUri(request).replacePath("/api/verify-email").queryParam("q", "{token}").build();
+        String frontendVerificationUrl = environment.getProperty("frontend.verifyEmail.url");
+        UriComponentsBuilder uriBuilder = frontendVerificationUrl != null
+                ? UriComponentsBuilder.fromHttpUrl(frontendVerificationUrl)
+                : ServletUriComponentsBuilder.fromRequestUri(request).replacePath("/api/verify-email");
+        UriComponents uriComponents = uriBuilder.queryParam("q", "{token}").build();
+
+
         Algorithm algorithm = Algorithm.HMAC256(jwtSecret);
         Map<String, Object> payload = new HashMap<>();
         String token, verificationUrl; 
