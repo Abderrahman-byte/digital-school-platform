@@ -1,17 +1,17 @@
-CREATE TABLE country (
+CREATE TABLE IF NOT EXISTS country (
     id SERIAL PRIMARY KEY,
     name VARCHAR (100) NOT NULL UNIQUE,
     code VARCHAR (5) NOT NULL UNIQUE
 );
 
-CREATE TABLE "state" (
+CREATE TABLE IF NOT EXISTS "state" (
     id SERIAL PRIMARY KEY,
     name VARCHAR (100) NOT NULL,
     country_id INTEGER NOT NULL REFERENCES country (id),
     UNIQUE (country_id, name)
 );
 
-CREATE TABLE city (
+CREATE TABLE IF NOT EXISTS city (
     id SERIAL PRIMARY KEY,
     name VARCHAR (100) NOT NULL,
     state_id INTEGER NOT NULL REFERENCES "state" (id),
