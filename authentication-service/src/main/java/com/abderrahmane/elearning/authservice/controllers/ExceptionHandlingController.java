@@ -10,6 +10,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class ExceptionHandlingController {
@@ -21,6 +22,11 @@ public class ExceptionHandlingController {
 
         return this.responseWithError("unknown_error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler({ NoHandlerFoundException.class })
+    public ResponseEntity<?> handleNoHandlerFound (Exception ex) {
+        return this.responseWithError("not_found", HttpStatus.NOT_FOUND);
+    } 
 
     @ExceptionHandler({ HttpRequestMethodNotSupportedException.class })
     public ResponseEntity<?> handleMethodNotSupported (Exception ex) {
