@@ -27,6 +27,7 @@ import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -105,5 +106,21 @@ public class WebAppConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authenticationHandler()).addPathPatterns("/api/**").order(1);
+    }
+    
+    /* Add CORS support */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        String allowOrigins = environment.getProperty("cors.allowOrigins");
+
+        if (allowOrigins == null) return;
+
+        String allowedOriginsList[] = allowOrigins.split(",");
+
+        if (allowedOriginsList.length <= 0) return;
+
+        registry.addMapping("/api/**").allowedOrigins(allowedOriginsList).allowCredentials(true).maxAge(3600); 
+
+        
     }
 }
