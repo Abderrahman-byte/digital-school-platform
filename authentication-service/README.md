@@ -67,3 +67,11 @@ docker build -t auth-service .
 ```shell
 docker run -dp <local-port>:8080 auth-service
 ```
+
+## Tasks
+
+- [ ] Add Cors Support for front-end
+- [ ] Add CSRF protection
+- [ ] Add Brute-force protection
+- [ ] Deleting account
+- [ ] Global Error Handling
