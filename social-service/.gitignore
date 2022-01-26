@@ -1,0 +1,5 @@
+target
+.vscode
+tomcat.*
+application.properties
+tomcat
