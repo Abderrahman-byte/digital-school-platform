@@ -1,11 +1,16 @@
 package com.abderrahmane.elearning.socialservice.config;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import com.abderrahmane.elearning.socialservice.converters.JsonMapHttpMessageConverter;
+import com.abderrahmane.elearning.socialservice.handlers.AuthenticatedOnly;
+import com.abderrahmane.elearning.socialservice.handlers.AuthenticationHandler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +20,10 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -48,5 +56,23 @@ public class WebAppConfig implements WebMvcConfigurer {
         properties.put("javax.persistence.jdbc.password", environment.getProperty("jdbc.password"));
 
         return properties;
+    }
+
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(new JsonMapHttpMessageConverter());
+        converters.add(new StringHttpMessageConverter());
+    }
+
+    /* Configure interceptors */
+    @Bean
+    public AuthenticationHandler authenticationHandler() {
+        return new AuthenticationHandler();
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(authenticationHandler()).addPathPatterns("/api/**").order(0);
+        registry.addInterceptor(new AuthenticatedOnly()).addPathPatterns("/api/**").order(1);
     }
 }
