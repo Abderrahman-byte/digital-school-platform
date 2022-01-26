@@ -3,3 +3,4 @@ target
 tomcat.*
 application.properties
 tomcat
+jdbc.properties
