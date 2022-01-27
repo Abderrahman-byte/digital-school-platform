@@ -9,6 +9,7 @@ import com.abderrahmane.elearning.socialservice.models.AccountType;
 import com.abderrahmane.elearning.socialservice.models.City;
 import com.abderrahmane.elearning.socialservice.repositories.GeoDAO;
 import com.abderrahmane.elearning.socialservice.repositories.ProfilDAO;
+import com.abderrahmane.elearning.socialservice.utils.MessageResolver;
 import com.abderrahmane.elearning.socialservice.validators.SchoolProfilCreationValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class CreateProfileController {
     @Autowired
     private SchoolProfilCreationValidator schoolProfilValidator;
 
+    @Autowired
+    private MessageResolver messageResolver;
+
     @PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<?> handlePost(@RequestBody Map<String, Object> body, @RequestAttribute("account") Account account) {
         AccountType accountType = account.getAccountType();
@@ -57,21 +61,17 @@ public class CreateProfileController {
     private Map<String, Object> createSchoolProfile (Map<String, Object> body, Account account) {
         MapBindingResult errors = new MapBindingResult(body, "schoolProfil");
         Map<String, Object> response = new HashMap<>();
-        schoolProfilValidator.validate(body, errors);
-
         response.put("ok", true);
-
+        
         if (account.getSchoolProfil() != null) {
             response.put("ok", false);
             response.put("errors", List.of("profil_already_exists"));
             return response;
         }
+        
+        schoolProfilValidator.validate(body, errors);
 
-        if (errors.hasErrors()) {
-            response.put("ok", false);
-            response.put("errors", errors.getAllErrors().stream().map(error -> error.getCode()).toList());
-            return response;
-        }
+        if (errors.hasErrors()) return messageResolver.getErrorResponseBody(errors);
 
         City location = geoDAO.getCity((Integer)body.get("cityId"));
 
