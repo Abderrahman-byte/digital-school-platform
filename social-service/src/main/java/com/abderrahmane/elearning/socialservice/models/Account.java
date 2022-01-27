@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,6 +39,9 @@ public class Account {
     @Column(name = "acc_type", nullable = false)
     @Type( type = "com.abderrahmane.elearning.socialservice.helpers.PostgresqlEnumType")
     private AccountType accountType;
+
+    @OneToOne(targetEntity = SchoolProfil.class, mappedBy = "account", optional = true)
+    private SchoolProfil schoolProfil;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date", nullable = false)
@@ -107,5 +111,13 @@ public class Account {
 
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    public SchoolProfil getSchoolProfil() {
+        return schoolProfil;
+    }
+
+    public void setSchoolProfil(SchoolProfil schoolProfil) {
+        this.schoolProfil = schoolProfil;
     }
 }
