@@ -2,6 +2,7 @@ package com.abderrahmane.elearning.socialservice.models;
 
 import java.util.Calendar;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -40,7 +41,7 @@ public class Account {
     @Type( type = "com.abderrahmane.elearning.socialservice.helpers.PostgresqlEnumType")
     private AccountType accountType;
 
-    @OneToOne(targetEntity = SchoolProfil.class, mappedBy = "account", optional = true)
+    @OneToOne(targetEntity = SchoolProfil.class, mappedBy = "account", optional = true, cascade = { CascadeType.ALL })
     private SchoolProfil schoolProfil;
 
     @Temporal(TemporalType.TIMESTAMP)

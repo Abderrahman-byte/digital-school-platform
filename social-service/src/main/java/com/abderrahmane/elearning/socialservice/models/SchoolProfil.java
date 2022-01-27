@@ -2,6 +2,7 @@ package com.abderrahmane.elearning.socialservice.models;
 
 import java.util.Calendar;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -28,19 +29,19 @@ public class SchoolProfil {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(targetEntity = City.class, optional = false)
+    @ManyToOne(targetEntity = City.class, optional = false, cascade = { CascadeType.PERSIST })
     @JoinColumn(name = "location")
     private City location;
 
-    @Column(nullable = false)
+    @Column
     private String subtitle;
 
     @Column
     private String overview;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false, name = "created_date")
-    private Calendar createdDate;
+    @Column(name = "created_date", nullable = false)
+    private Calendar createdDate = Calendar.getInstance();
 
     public SchoolProfil () {}
 
