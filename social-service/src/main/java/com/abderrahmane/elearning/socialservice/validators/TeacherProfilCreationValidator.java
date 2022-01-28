@@ -24,7 +24,7 @@ public class TeacherProfilCreationValidator extends GenericMapValidator {
         if (errors.hasErrors()) return ;
 
         List.of("firstName", "lastName", "title", "bio").forEach(field -> {
-            if (data.containsKey(field) && !data.get("field").getClass().equals(String.class)) {
+            if (data.containsKey(field) && !data.get(field).getClass().equals(String.class)) {
                 errors.rejectValue(field, "invalidType");
             } else if (data.containsKey(field) && ((String)data.get(field)).length() <= 0) {
                 errors.rejectValue(field, "invalidValue");

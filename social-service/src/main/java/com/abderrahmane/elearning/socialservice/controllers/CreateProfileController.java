@@ -102,7 +102,7 @@ public class CreateProfileController {
 
     private Map<String, Object> createTeacherProfil (Map<String, Object> body, Account account) {
         Map<String, Object> response = new HashMap<>();
-        MapBindingResult errors = new MapBindingResult(body, "teacherProfil");
+        MapBindingResult errors = new MapBindingResult(body, "teacherProfile");
 
         response.put("ok", true);
 
@@ -116,8 +116,22 @@ public class CreateProfileController {
 
         if (errors.hasErrors()) return messageResolver.getErrorResponseBody(errors);
 
-        // Must create teacher profil after validation
+        City location = geoDAO.getCity((Integer)body.get("cityId"));
 
+        if (location == null) {
+            response.put("ok", false);
+            response.put("errors", List.of("unexisting_location"));
+            return response;
+        }
+
+        profilDAO.createTeacherProfil(
+            (String)body.get("firstName"), 
+            (String)body.get("lastName"), 
+            (String)body.get("title"), 
+            (String)body.get("bio"), 
+            account, 
+            location
+        );
 
         return response;
     }

@@ -6,6 +6,7 @@ import com.abderrahmane.elearning.socialservice.annotations.WrapTransaction;
 import com.abderrahmane.elearning.socialservice.models.Account;
 import com.abderrahmane.elearning.socialservice.models.City;
 import com.abderrahmane.elearning.socialservice.models.SchoolProfil;
+import com.abderrahmane.elearning.socialservice.models.TeacherProfil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,7 +19,6 @@ public class ProfilDAO {
     @Autowired
     private AccountDAO accountDAO;
 
-    @WrapTransaction
     public SchoolProfil createSchoolProfil (String name, String overview, String subtitle, Account account, City location) {
         SchoolProfil schoolProfil = new SchoolProfil();
 
@@ -32,6 +32,22 @@ public class ProfilDAO {
         accountDAO.saveAccount(account);
 
         return schoolProfil;
+    }
+
+    public TeacherProfil createTeacherProfil (String firstname, String lastname, String title, String bio, Account account, City location) {
+        TeacherProfil teacherProfil = new TeacherProfil();
+
+        teacherProfil.setAccount(account);
+        teacherProfil.setFirstname(firstname);
+        teacherProfil.setLastname(lastname);
+        teacherProfil.setBio(bio);
+        teacherProfil.setTitle(title);
+        teacherProfil.setLocation(location);
+        account.setTeacherProfil(teacherProfil);
+
+        accountDAO.saveAccount(account);
+
+        return teacherProfil;
     }
 
     @WrapTransaction

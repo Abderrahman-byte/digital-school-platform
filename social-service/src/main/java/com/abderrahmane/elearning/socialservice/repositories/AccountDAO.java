@@ -9,7 +9,7 @@ import com.abderrahmane.elearning.socialservice.models.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-// TODO : Translate transactions
+// TODO : Translate transactions exceptions
 
 @Repository
 public class AccountDAO {
