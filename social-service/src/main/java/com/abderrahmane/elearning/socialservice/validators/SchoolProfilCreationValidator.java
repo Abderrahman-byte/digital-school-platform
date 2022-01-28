@@ -24,10 +24,13 @@ public class SchoolProfilCreationValidator extends GenericMapValidator {
 
         if (!data.get("name").getClass().equals(String.class))
             errors.rejectValue("name", "invalidType");
+
         if (!data.get("cityId").getClass().equals(Integer.class))
             errors.rejectValue("cityId", "invalidType");
+
         if (data.containsKey("subtitle") && !data.get("subtitle").getClass().equals(String.class))
             errors.rejectValue("subtitle", "invalidType");
+
         if (data.containsKey("overview") && !data.get("overview").getClass().equals(String.class))
             errors.rejectValue("overview", "invalidType");
 
