@@ -49,6 +49,7 @@ public class JsonMapMessageConverter implements HttpMessageConverter<Map<String,
             throws IOException, HttpMessageNotWritableException {
         try {
             String jsonData = objectMapper.writeValueAsString(t);
+            outputMessage.getHeaders().add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
             outputMessage.getBody().write(jsonData.getBytes());
         } catch (Exception ex) {
             System.err.println("[JSON-Serializer] " + ex.getMessage());
