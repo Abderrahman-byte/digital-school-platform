@@ -2,14 +2,13 @@ package com.abderrahmane.elearning.socialservice.repositories;
 
 import javax.persistence.EntityManager;
 
+import com.abderrahmane.elearning.socialservice.annotations.WrapTransaction;
 import com.abderrahmane.elearning.socialservice.models.Account;
 import com.abderrahmane.elearning.socialservice.models.City;
 import com.abderrahmane.elearning.socialservice.models.SchoolProfil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-// TODO : management transaction in a aop style
 
 @Repository
 public class ProfilDAO {
@@ -19,6 +18,7 @@ public class ProfilDAO {
     @Autowired
     private AccountDAO accountDAO;
 
+    @WrapTransaction
     public SchoolProfil createSchoolProfil (String name, String overview, String subtitle, Account account, City location) {
         SchoolProfil schoolProfil = new SchoolProfil();
 
@@ -34,12 +34,9 @@ public class ProfilDAO {
         return schoolProfil;
     }
 
+    @WrapTransaction
     public SchoolProfil saveSchoolProfil (SchoolProfil schoolProfil) {
-        entityManager.getTransaction().begin();
-
         entityManager.persist(schoolProfil);
-
-        entityManager.getTransaction().commit();
 
         return schoolProfil;
     }

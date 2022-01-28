@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import com.abderrahmane.elearning.socialservice.annotations.ClearCache;
 import com.abderrahmane.elearning.socialservice.models.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class SessionDAO {
     @Autowired
     private EntityManager entityManager;    
 
+    @ClearCache
     public Session selectById (String id) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Session> cq = cb.createQuery(Session.class);
