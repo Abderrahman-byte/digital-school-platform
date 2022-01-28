@@ -18,6 +18,7 @@ import com.abderrahmane.elearning.authservice.validators.LoginFormValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.validation.MapBindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,7 +49,7 @@ public class LoginController {
     @Value("${session.key:sid}")
     private String sessionKey;
 
-    @PostMapping
+    @PostMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
     public Map<String, Object> handlePostRequest(@RequestBody Map<String, Object> form, HttpServletResponse httpResponse) {
         Map<String, Object> response = new HashMap<>();
         MapBindingResult errors = new MapBindingResult(form, "login");

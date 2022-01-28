@@ -1,5 +1,7 @@
 package com.abderrahmane.elearning.authservice.repositories;
 
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -79,7 +81,10 @@ public class AccountRepository {
         Query query = entityManager.createQuery(criteriaQuery);
         
         try {
-            return (Account)query.getSingleResult();
+            Optional<Account> account = Optional.ofNullable((Account)query.getSingleResult());
+            account.ifPresent(entityManager::refresh);
+
+            return account.get();
         } catch (NoResultException ex) {
             return null;
         }
