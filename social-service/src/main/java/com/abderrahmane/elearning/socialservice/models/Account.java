@@ -44,6 +44,9 @@ public class Account {
     @OneToOne(targetEntity = SchoolProfil.class, mappedBy = "account", optional = true, cascade = { CascadeType.ALL })
     private SchoolProfil schoolProfil;
 
+    @OneToOne(targetEntity = TeacherProfil.class, mappedBy = "account", optional = true, cascade = { CascadeType.ALL })
+    private TeacherProfil teacherProfil;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date", nullable = false)
     private Calendar createdDate;
@@ -120,5 +123,13 @@ public class Account {
 
     public void setSchoolProfil(SchoolProfil schoolProfil) {
         this.schoolProfil = schoolProfil;
+    }
+
+    public TeacherProfil getTeacherProfil() {
+        return teacherProfil;
+    }
+
+    public void setTeacherProfil(TeacherProfil teacherProfil) {
+        this.teacherProfil = teacherProfil;
     }
 }
