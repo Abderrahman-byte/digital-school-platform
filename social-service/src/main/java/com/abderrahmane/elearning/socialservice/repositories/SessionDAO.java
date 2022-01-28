@@ -3,6 +3,7 @@ package com.abderrahmane.elearning.socialservice.repositories;
 import java.util.Calendar;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -31,6 +32,10 @@ public class SessionDAO {
             )
         );
 
-        return entityManager.find(Session.class, id);
+        try {
+            return (Session)entityManager.createQuery(cq).getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 }
