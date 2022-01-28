@@ -8,6 +8,8 @@ import com.abderrahmane.elearning.authservice.models.Account;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+// TODO : Add Profil data
+
 @Component
 public class AccountMapConverter implements Converter<Account, Map<String, Object>> {
 
