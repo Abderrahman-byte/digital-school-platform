@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS school_profil (
     subtitle VARCHAR (250),
     overview TEXT,
     created_date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
-    FOREIGN KEY (account_id) REFERENCES account (id)
+    FOREIGN KEY (account_id) REFERENCES account (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS teacher_profil (
@@ -36,12 +36,12 @@ CREATE TABLE IF NOT EXISTS teacher_profil (
     bio TEXT,
     location INTEGER NOT NULL REFERENCES city (id),
     created_date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
-    FOREIGN KEY (account_id) REFERENCES account (id)
+    FOREIGN KEY (account_id) REFERENCES account (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS teacher_school (
-    teacher_id VARCHAR (25) NOT NULL REFERENCES teacher_profil (account_id),
-    school_id VARCHAR (25) NOT NULL REFERENCES school_profil (account_id),
+    teacher_id VARCHAR (25) NOT NULL REFERENCES teacher_profil (account_id) ON DELETE CASCADE,
+    school_id VARCHAR (25) NOT NULL REFERENCES school_profil (account_id) ON DELETE CASCADE,
 
     title VARCHAR (100),
     verified BOOLEAN NOT NULL DEFAULT false,
