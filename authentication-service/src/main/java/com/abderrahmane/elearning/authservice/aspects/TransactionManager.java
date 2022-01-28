@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,10 @@ public class TransactionManager {
     private  EntityManager entityManager;
 
     @Pointcut("execution (* *(..)) && @annotation(com.abderrahmane.elearning.authservice.annotations.HandleTransactions)")
-    private void getTransactions () {};
+    private void getTransactions () {}
+    
+    @Pointcut("execution (* *(..)) && @annotation(com.abderrahmane.elearning.authservice.annotations.ClearCache)")
+    private void mustClearCache () {}
 
     @Around("getTransactions ()")
     public Object wrapTransaction (ProceedingJoinPoint pjp) throws Throwable {
@@ -36,5 +40,11 @@ public class TransactionManager {
 
             throw ex;
         }
+    }
+
+    @Before("mustClearCache ()")
+    public void clearCache () {
+        System.out.println("[CLEAR THE CACHE]");
+        entityManager.clear();
     }
 }
