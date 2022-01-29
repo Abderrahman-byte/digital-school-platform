@@ -29,6 +29,34 @@ AccountData {
 }
 ```
 
+```text
+SchoolProfileData {
+    name: String,
+    subtitle: String,
+    overview: String,
+    location: String,
+}   
+```
+
+```text
+TeacherProfileData {
+    firstname: String,
+    lastname: String,
+    title: String,
+    bio: String,
+    location: String,
+}   
+```
+
+```text
+StudentProfileData {
+    firstname: String,
+    lastname: String,
+    dayOfBirth: String,
+    location: String
+}   
+```
+
 ## Required Config files
 
 - src/main/resources/jdbc.properties
