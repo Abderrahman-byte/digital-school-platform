@@ -17,6 +17,9 @@ public class AccountMapConverter implements Converter<Account, Map<String, Objec
     @Autowired
     private SchoolProfileMapConverter schoolProfileMapConverter;
 
+    @Autowired
+    private TeacherProfileMapConverter teacherProfileMapConverter;
+
     @Override
     public Map<String, Object> convert(Account source) {
         Map<String, Object> data = new HashMap<>();
@@ -35,6 +38,8 @@ public class AccountMapConverter implements Converter<Account, Map<String, Objec
     private void putProfileData (Account source, Map<String, Object> data) {
         if (source.getAccountType().equals(AccountType.SCHOOL) && source.getSchoolProfile() != null) {
             data.put("profile", schoolProfileMapConverter.convert(source.getSchoolProfile()));
+        } else if (source.getAccountType().equals(AccountType.TEACHER) && source.getTeacherProfile() != null) {
+            data.put("profile", teacherProfileMapConverter.convert(source.getTeacherProfile()));
         } else {
             data.put("profile", null);
         }
