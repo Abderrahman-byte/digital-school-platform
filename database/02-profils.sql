@@ -39,6 +39,16 @@ CREATE TABLE IF NOT EXISTS teacher_profil (
     FOREIGN KEY (account_id) REFERENCES account (id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS student_profil (
+    account_id VARCHAR (25) PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    day_of_birth DATE NOT NULL,
+    location INTEGER NOT NULL REFERENCES city (id),
+    created_date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (account_id) REFERENCES account (id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS teacher_school (
     teacher_id VARCHAR (25) NOT NULL REFERENCES teacher_profil (account_id) ON DELETE CASCADE,
     school_id VARCHAR (25) NOT NULL REFERENCES school_profil (account_id) ON DELETE CASCADE,
