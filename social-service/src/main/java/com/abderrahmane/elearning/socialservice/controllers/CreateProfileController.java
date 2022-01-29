@@ -1,5 +1,6 @@
 package com.abderrahmane.elearning.socialservice.controllers;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,16 +9,14 @@ import com.abderrahmane.elearning.socialservice.models.Account;
 import com.abderrahmane.elearning.socialservice.models.AccountType;
 import com.abderrahmane.elearning.socialservice.models.City;
 import com.abderrahmane.elearning.socialservice.repositories.GeoDAO;
-import com.abderrahmane.elearning.socialservice.repositories.ProfilDAO;
+import com.abderrahmane.elearning.socialservice.repositories.ProfileDAO;
 import com.abderrahmane.elearning.socialservice.utils.MessageResolver;
 import com.abderrahmane.elearning.socialservice.validators.SchoolProfilCreationValidator;
+import com.abderrahmane.elearning.socialservice.validators.StudentProfileCreationValidator;
 import com.abderrahmane.elearning.socialservice.validators.TeacherProfilCreationValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.MapBindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -29,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/profile")
 public class CreateProfileController {
     @Autowired
-    private ProfilDAO profilDAO;
+    private ProfileDAO profilDAO;
 
     @Autowired
     private GeoDAO geoDAO;
@@ -41,28 +40,18 @@ public class CreateProfileController {
     private TeacherProfilCreationValidator teacherProfilValidator;
 
     @Autowired
+    private StudentProfileCreationValidator studentProfileValidator;
+
+    @Autowired
     private MessageResolver messageResolver;
 
-    // TODO : this function must be refactored
     @PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<?> handlePost(@RequestBody Map<String, Object> body, @RequestAttribute("account") Account account) {
+    public Map<String, Object> handlePost(@RequestBody Map<String, Object> body, @RequestAttribute("account") Account account) {
         AccountType accountType = account.getAccountType();
 
-        if (accountType.equals(AccountType.SCHOOL)) {
-            Map<String, Object> responseBody = this.createSchoolProfile(body, account);
-            return new ResponseEntity<Map<String, Object>>(responseBody, HttpStatus.OK);
-        } else if (accountType.equals(AccountType.TEACHER)) {
-            Map<String, Object> responseBody = this.createTeacherProfil(body, account);
-            return new ResponseEntity<Map<String, Object>>(responseBody, HttpStatus.OK);
-        }
-
-        HttpHeaders headers = new HttpHeaders();
-        Map<String, Object> message = new HashMap<>();
-        message.put("ok", false);
-        message.put("errors", List.of("not_implemented_yet"));
-        headers.set("Content-Type", "application/json");
-
-        return new ResponseEntity<Map<String, Object>>(message, headers, HttpStatus.OK);
+        if (accountType.equals(AccountType.SCHOOL)) return this.createSchoolProfile(body, account);
+        else if (accountType.equals(AccountType.TEACHER)) return this.createTeacherProfil(body, account);
+        return this.createStudentProfile(body, account);
     }   
  
     
@@ -131,6 +120,41 @@ public class CreateProfileController {
             (String)body.get("bio"), 
             account, 
             location
+        );
+
+        return response;
+    }
+
+    public Map<String, Object> createStudentProfile (Map<String, Object> body, Account account) {
+        MapBindingResult errors = new MapBindingResult(body, "studentProfile");
+        Map<String, Object> response = new HashMap<>();
+
+        response.put("ok", true);
+
+        if (account.getStudentProfile() != null) {
+            response.put("ok", false);
+            response.put("errors", List.of("profil_already_exists"));
+            return response;
+        }
+
+        studentProfileValidator.validate(body, errors);
+
+        if (errors.hasErrors()) return messageResolver.getErrorResponseBody(errors);
+
+        City location = geoDAO.getCity((Integer)body.get("cityId"));
+
+        if (location == null) {
+            response.put("ok", false);
+            response.put("errors", List.of("unexisting_location"));
+            return response;
+        }
+
+        profilDAO.creatStudentProfile(
+            (String)body.get("firstName"),
+            (String)body.get("lastName"),
+            (Calendar)body.get("dayOfBirth"),
+            location,
+            account
         );
 
         return response;
