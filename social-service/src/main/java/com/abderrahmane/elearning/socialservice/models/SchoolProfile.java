@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "school_profil")
-public class SchoolProfil {
+public class SchoolProfile {
     @Id
     @Column(name = "account_id")
     private String id;
@@ -43,7 +43,7 @@ public class SchoolProfil {
     @Column(name = "created_date", nullable = false)
     private Calendar createdDate = Calendar.getInstance();
 
-    public SchoolProfil () {}
+    public SchoolProfile () {}
 
     public String getId() {
         return id;

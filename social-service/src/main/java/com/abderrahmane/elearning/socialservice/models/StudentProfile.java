@@ -14,15 +14,15 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "teacher_profil")
-public class TeacherProfil {
+@Table(name = "student_profil")
+public class StudentProfile {
     @Id
     @Column(name = "account_id")
     private String id;
 
-    @OneToOne(targetEntity = Account.class, optional = false)
     @MapsId
     @JoinColumn(name = "account_id")
+    @OneToOne(targetEntity = Account.class, optional = false)
     private Account account;
 
     @Column(name = "first_name", nullable = false)
@@ -31,26 +31,24 @@ public class TeacherProfil {
     @Column(name = "last_name", nullable = false)
     private String lastname;
 
-    @Column
-    private String title;
-
-    @Column
-    private String bio;
-
     @ManyToOne(targetEntity = City.class, optional = false)
     @JoinColumn(name = "location")
     private City location;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "day_of_birth", nullable = false)
+    private Calendar dayOfBirth;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date", nullable = false)
     private Calendar createdDate = Calendar.getInstance();
 
-    public TeacherProfil() {}
+    public StudentProfile () {}
 
     public String getId() {
         return id;
     }
-
+    
     public void setId(String id) {
         this.id = id;
     }
@@ -61,22 +59,6 @@ public class TeacherProfil {
 
     public void setAccount(Account account) {
         this.account = account;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public Calendar getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Calendar createdDate) {
-        this.createdDate = createdDate;
     }
 
     public String getFirstname() {
@@ -95,19 +77,27 @@ public class TeacherProfil {
         this.lastname = lastname;
     }
 
+    public Calendar getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Calendar createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Calendar getDayOfBirth() {
+        return dayOfBirth;
+    }
+
+    public void setDayOfBirth(Calendar dayOfBirth) {
+        this.dayOfBirth = dayOfBirth;
+    }
+
     public City getLocation() {
         return location;
     }
 
     public void setLocation(City location) {
         this.location = location;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 }

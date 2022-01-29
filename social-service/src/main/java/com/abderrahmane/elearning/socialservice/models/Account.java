@@ -41,11 +41,14 @@ public class Account {
     @Type( type = "com.abderrahmane.elearning.socialservice.helpers.PostgresqlEnumType")
     private AccountType accountType;
 
-    @OneToOne(targetEntity = SchoolProfil.class, mappedBy = "account", optional = true, cascade = { CascadeType.ALL })
-    private SchoolProfil schoolProfil;
+    @OneToOne(targetEntity = SchoolProfile.class, mappedBy = "account", optional = true, cascade = { CascadeType.ALL })
+    private SchoolProfile schoolProfil;
 
-    @OneToOne(targetEntity = TeacherProfil.class, mappedBy = "account", optional = true, cascade = { CascadeType.ALL })
-    private TeacherProfil teacherProfil;
+    @OneToOne(targetEntity = TeacherProfile.class, mappedBy = "account", optional = true, cascade = { CascadeType.ALL })
+    private TeacherProfile teacherProfil;
+
+    @OneToOne(targetEntity = StudentProfile.class, mappedBy = "account", optional = true, cascade = { CascadeType.ALL })
+    private StudentProfile studentProfile;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date", nullable = false)
@@ -117,19 +120,27 @@ public class Account {
         this.isAdmin = isAdmin;
     }
 
-    public SchoolProfil getSchoolProfil() {
+    public SchoolProfile getSchoolProfil() {
         return schoolProfil;
     }
 
-    public void setSchoolProfil(SchoolProfil schoolProfil) {
+    public void setSchoolProfil(SchoolProfile schoolProfil) {
         this.schoolProfil = schoolProfil;
     }
 
-    public TeacherProfil getTeacherProfil() {
+    public TeacherProfile getTeacherProfil() {
         return teacherProfil;
     }
 
-    public void setTeacherProfil(TeacherProfil teacherProfil) {
+    public void setTeacherProfil(TeacherProfile teacherProfil) {
         this.teacherProfil = teacherProfil;
+    }
+
+    public StudentProfile getStudentProfile() {
+        return studentProfile;
+    }
+
+    public void setStudentProfile(StudentProfile studentProfile) {
+        this.studentProfile = studentProfile;
     }
 }
