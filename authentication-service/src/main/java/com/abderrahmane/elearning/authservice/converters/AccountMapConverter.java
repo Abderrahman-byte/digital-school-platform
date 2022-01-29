@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.abderrahmane.elearning.authservice.models.Account;
+import com.abderrahmane.elearning.authservice.models.AccountType;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AccountMapConverter implements Converter<Account, Map<String, Object>> {
+    @Autowired
+    private SchoolProfileMapConverter schoolProfileMapConverter;
 
     @Override
     public Map<String, Object> convert(Account source) {
@@ -23,7 +27,17 @@ public class AccountMapConverter implements Converter<Account, Map<String, Objec
         data.put("accountType", source.getAccountType());
         data.put("isAdmin", source.isAdmin());
 
+        this.putProfileData(source, data);
+
         return data;
+    }
+
+    private void putProfileData (Account source, Map<String, Object> data) {
+        if (source.getAccountType().equals(AccountType.SCHOOL) && source.getSchoolProfile() != null) {
+            data.put("profile", schoolProfileMapConverter.convert(source.getSchoolProfile()));
+        } else {
+            data.put("profile", null);
+        }
     }
     
 }
