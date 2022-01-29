@@ -49,6 +49,9 @@ public class Account {
     @OneToOne(targetEntity = TeacherProfile.class, optional = true, mappedBy = "account")
     private TeacherProfile teacherProfile;
 
+    @OneToOne(targetEntity = StudentProfile.class, optional = true, mappedBy = "account")
+    private StudentProfile studentProfile;
+
     @Column(name = "created_date", nullable = false)
     @CreationTimestamp
     private Calendar createdDate;
@@ -138,5 +141,13 @@ public class Account {
 
     public void setTeacherProfile(TeacherProfile teacherProfile) {
         this.teacherProfile = teacherProfile;
+    }
+
+    public StudentProfile getStudentProfile() {
+        return studentProfile;
+    }
+
+    public void setStudentProfile(StudentProfile studentProfile) {
+        this.studentProfile = studentProfile;
     }
 }
