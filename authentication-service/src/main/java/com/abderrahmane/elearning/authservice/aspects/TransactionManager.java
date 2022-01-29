@@ -44,7 +44,6 @@ public class TransactionManager {
 
     @Before("mustClearCache ()")
     public void clearCache () {
-        System.out.println("[CLEAR THE CACHE]");
         entityManager.clear();
     }
 }
