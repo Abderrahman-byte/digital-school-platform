@@ -8,6 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -41,6 +42,9 @@ public class Account {
     @Column(name = "acc_type", nullable = false)
     @Type(type = "com.abderrahmane.elearning.authservice.helpers.EnumTypePostgreSql")
     private AccountType accountType;
+
+    @OneToOne(targetEntity = SchoolProfile.class, optional = true, mappedBy = "account")
+    private SchoolProfile schoolProfile;
 
     @Column(name = "created_date", nullable = false)
     @CreationTimestamp
@@ -115,5 +119,13 @@ public class Account {
 
     public void setActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public SchoolProfile getSchoolProfile() {
+        return schoolProfile;
+    }
+
+    public void setSchoolProfile(SchoolProfile schoolProfile) {
+        this.schoolProfile = schoolProfile;
     }
 }
