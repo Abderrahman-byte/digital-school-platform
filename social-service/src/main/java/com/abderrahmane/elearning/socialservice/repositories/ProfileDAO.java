@@ -1,9 +1,12 @@
 package com.abderrahmane.elearning.socialservice.repositories;
 
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
+import com.abderrahmane.elearning.socialservice.annotations.ClearCache;
 import com.abderrahmane.elearning.socialservice.annotations.WrapTransaction;
 import com.abderrahmane.elearning.socialservice.models.Account;
 import com.abderrahmane.elearning.socialservice.models.City;
@@ -73,5 +76,18 @@ public class ProfileDAO {
         entityManager.persist(schoolProfil);
 
         return schoolProfil;
+    }
+
+    // TODO : Implement advance search for best result
+    // TODO : Escape query
+
+    @ClearCache
+    @SuppressWarnings("unchecked")
+    public List<SchoolProfile> searchSchool (String name, int limit) {
+        Query query = entityManager.createNativeQuery("select * from school_profil where name ~* ? LIMIT ?", SchoolProfile.class);
+        query.setParameter(1, ".*" + name + ".*");
+        query.setParameter(2, limit);
+
+        return (List<SchoolProfile>)query.getResultList();
     }
 }

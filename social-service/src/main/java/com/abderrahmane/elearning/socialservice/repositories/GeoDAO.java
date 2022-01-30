@@ -20,6 +20,7 @@ public class GeoDAO {
     }
 
     // TODO : escape search query
+    // TODO : Implement Advance search for best result
     @SuppressWarnings("unchecked")
     public List<City> searchCity(String name, int limit) {
         Query query = entityManager.createNativeQuery("SELECT * FROM city where name % ? LIMIT ?", City.class);
