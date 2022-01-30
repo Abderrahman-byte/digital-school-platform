@@ -60,3 +60,7 @@ CREATE TABLE IF NOT EXISTS teacher_school (
 
     PRIMARY KEY (teacher_id, school_id)
 );
+
+CREATE EXTENSION pg_trgm;
+
+CREATE INDEX IF NOT EXISTS city_name_search_idx ON city USING gist (name gist_trgm_ops);
