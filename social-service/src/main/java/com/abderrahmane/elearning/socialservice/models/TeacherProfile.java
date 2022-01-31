@@ -45,7 +45,7 @@ public class TeacherProfile {
     private City location;
 
     @OneToMany(targetEntity = SchoolTeacher.class, mappedBy = "teacher", orphanRemoval = true)
-    private List<SchoolProfile> schooles = new ArrayList<>();
+    private List<SchoolTeacher> schooles = new ArrayList<>();
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date", nullable = false)
@@ -117,11 +117,11 @@ public class TeacherProfile {
         this.title = title;
     }
 
-    public List<SchoolProfile> getSchooles() {
+    public List<SchoolTeacher> getSchooles() {
         return schooles;
     }
 
-    public void setSchooles(List<SchoolProfile> schooles) {
+    public void setSchooles(List<SchoolTeacher> schooles) {
         this.schooles = schooles;
     }
 }
