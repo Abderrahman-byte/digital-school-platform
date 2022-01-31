@@ -1,6 +1,8 @@
 package com.abderrahmane.elearning.socialservice.models;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -40,6 +43,9 @@ public class TeacherProfile {
     @ManyToOne(targetEntity = City.class, optional = false)
     @JoinColumn(name = "location")
     private City location;
+
+    @OneToMany(targetEntity = SchoolTeacher.class, mappedBy = "teacher", orphanRemoval = true)
+    private List<SchoolProfile> schooles = new ArrayList<>();
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date", nullable = false)
@@ -109,5 +115,13 @@ public class TeacherProfile {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<SchoolProfile> getSchooles() {
+        return schooles;
+    }
+
+    public void setSchooles(List<SchoolProfile> schooles) {
+        this.schooles = schooles;
     }
 }
