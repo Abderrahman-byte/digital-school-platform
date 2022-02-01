@@ -40,7 +40,7 @@ public class SchoolTeacher {
     private String title;
     
     @Column(nullable = false)
-    private Boolean verified = false;
+    private boolean verified = false;
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false, name = "created_date")
@@ -93,7 +93,7 @@ public class SchoolTeacher {
         this.school = school;
     }
 
-    public Boolean getVerified() {
+    public boolean isVerified() {
         return verified;
     }
 

@@ -56,7 +56,7 @@ public class TeacherController {
         List<Map<String, Object>> schools = account.getTeacherProfil().getSchooles().stream().map(school -> {
            Map<String, Object> schoolTeacherMap = new HashMap<>();
 
-           schoolTeacherMap.put("verified", school.getVerified());
+           schoolTeacherMap.put("verified", school.isVerified());
            schoolTeacherMap.put("title", school.getTitle());
            schoolTeacherMap.put("addedDate", stringDateConverter.convert(school.getCreatedDate()));
            schoolTeacherMap.put("endedDate", school.getEndedDate() != null ? stringDateConverter.convert(school.getEndedDate()) : null);
@@ -109,6 +109,36 @@ public class TeacherController {
         return response;
     }
 
+    @DeleteMapping(path = "/leave-school", params = "id")
+    public Map<String, Object> leaveSchool (@RequestAttribute("account") Account account, @RequestParam(name = "id") String schoolId) {
+        Map<String, Object> response = new HashMap<>();
+
+        response.put("ok", true);
+
+        if (!checkTeacherAccount(response, account)) return response;
+
+        List<SchoolTeacher> schools = account.getTeacherProfil().getSchooles().stream().filter(schoolTeacher -> {
+            return schoolTeacher.getEndedDate() == null && schoolTeacher.getSchool().getId().equals(schoolId);
+        }).toList();
+
+        if (schools.size() <= 0) {
+            response.put("ok", false);
+            response.put("errors", List.of("no_school_joined"));
+            return response;
+        }
+
+        SchoolTeacher schoolTeacher = schools.get(0);
+
+        if (!schoolTeacher.isVerified()) {
+            boolean deleted = profileDAO.deleteTeacherSchool(account.getTeacherProfil().getId(), schoolId);
+            response.put("ok", deleted);
+        } else {
+            boolean ended = profileDAO.endTeacherSchool(account.getTeacherProfil().getId(), schoolId);
+            response.put("ok", ended);
+        }
+
+        return response;
+    }
 
     private boolean checkTeacherAccount (Map<String, Object> response, Account account) {
         if (!account.getAccountType().equals(AccountType.TEACHER)) {
