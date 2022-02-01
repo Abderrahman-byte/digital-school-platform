@@ -109,4 +109,13 @@ public class ProfileDAO {
 
         return query.executeUpdate() > 0;
     }
+
+    @WrapTransaction
+    public boolean endTeacherSchool (String teacherId, String schoolId) {
+        Query query = entityManager.createNativeQuery("UPDATE teacher_school SET ended_date = NOW() WHERE teacher_id = ? AND school_id = ?");
+        query.setParameter(1, teacherId);
+        query.setParameter(2, schoolId);
+
+        return query.executeUpdate() > 0;
+    }
 }
