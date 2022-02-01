@@ -105,7 +105,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authenticationHandler()).addPathPatterns("/api/isLoggedIn").order(1);
+        registry.addInterceptor(authenticationHandler()).addPathPatterns("/api/v1/isLoggedIn").order(1);
     }
     
     /* Add CORS support */
