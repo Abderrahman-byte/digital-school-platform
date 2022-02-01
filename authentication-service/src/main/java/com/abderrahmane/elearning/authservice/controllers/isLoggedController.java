@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/isLoggedIn")
+@RequestMapping("/api/v1/isLoggedIn")
 public class isLoggedController {
     @Autowired
     private AccountMapConverter accountMapConverter;

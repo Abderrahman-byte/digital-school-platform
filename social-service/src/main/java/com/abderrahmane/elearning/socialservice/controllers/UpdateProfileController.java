@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/profile")
+@RequestMapping("/api/v1/profile")
 public class UpdateProfileController {
     @PutMapping(consumes = { MediaType.APPLICATION_JSON_VALUE })
     public String handlePut (@RequestBody Map<String, Object> body) {

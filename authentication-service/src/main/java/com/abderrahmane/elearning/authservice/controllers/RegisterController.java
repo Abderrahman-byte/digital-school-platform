@@ -28,7 +28,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api/register")
+@RequestMapping("/api/v1/register")
 public class RegisterController {
     @Autowired
     private RegisterFormValidator validator;
