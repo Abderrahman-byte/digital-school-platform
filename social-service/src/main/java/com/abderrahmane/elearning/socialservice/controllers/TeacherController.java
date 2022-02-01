@@ -3,6 +3,7 @@ package com.abderrahmane.elearning.socialservice.controllers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.abderrahmane.elearning.socialservice.converters.JsonSchoolProfileConverter;
 import com.abderrahmane.elearning.socialservice.converters.StringDateConverter;
@@ -24,8 +25,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-// TODO : Maybe allow teacher to join school again after leaving
 
 @RestController
 @RequestMapping(path = "/api/v1/teacher")
@@ -84,10 +83,17 @@ public class TeacherController {
 
         // Check if the teacher is current in a school
         List<SchoolTeacher> schools = account.getTeacherProfil().getSchooles().stream().filter(schoolTeacher -> schoolTeacher.getEndedDate() == null).toList();
+        Optional<SchoolTeacher> endedSchool = account.getTeacherProfil().getSchooles().stream().filter(schoolTeacher -> schoolTeacher.getEndedDate() != null && schoolTeacher.getSchoolId().equals((String)body.get("id"))).findFirst();
 
         if (schools.size() > 0) {
             response.put("ok", false);
             response.put("errors", List.of("teacher_already_in_school"));
+            return response;
+        }
+
+        if (endedSchool.isPresent()){
+            boolean joined = profileDAO.teacherRejoinSchool(account.getTeacherProfil().getId(), (String)body.get("id"), (String)body.get("title"));
+            response.put("ok", joined);
             return response;
         }
 

@@ -118,4 +118,14 @@ public class ProfileDAO {
 
         return query.executeUpdate() > 0;
     }
+
+    @WrapTransaction
+    public boolean teacherRejoinSchool (String teacherId, String schoolId, String title) {
+        Query query = entityManager.createNativeQuery("UPDATE teacher_school SET ended_date = NULL, verified = false, title = ? WHERE teacher_id = ? AND school_id = ?");
+        query.setParameter(1, title);
+        query.setParameter(2, teacherId);
+        query.setParameter(3, schoolId);
+
+        return query.executeUpdate() > 0;
+    }
 }
