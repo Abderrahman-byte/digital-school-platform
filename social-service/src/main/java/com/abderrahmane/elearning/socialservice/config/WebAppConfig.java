@@ -22,8 +22,11 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -84,5 +87,16 @@ public class WebAppConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authenticationHandler()).addPathPatterns("/api/**").order(0);
         registry.addInterceptor(new AuthenticatedOnly()).addPathPatterns("/api/**").order(1);
+    }
+
+    /* Configure Persistence Exception Translator */
+    @Bean
+    public PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor () {
+        return new PersistenceExceptionTranslationPostProcessor();
+    }
+
+    @Bean
+    public PersistenceExceptionTranslator persistenceExceptionTranslator () {
+        return new HibernateExceptionTranslator();
     }
 }
