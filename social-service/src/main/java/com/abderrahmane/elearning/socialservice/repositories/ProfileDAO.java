@@ -90,4 +90,14 @@ public class ProfileDAO {
 
         return (List<SchoolProfile>)query.getResultList();
     }
+
+    @WrapTransaction
+    public boolean teacherJoinSchool(String teacherId, String schoolId, String title) {
+        Query query = entityManager.createNativeQuery("INSERT INTO teacher_school (teacher_id, school_id, title) VALUES (?, ?, ?)");
+        query.setParameter(1, teacherId);
+        query.setParameter(2, schoolId);
+        query.setParameter(3, title);
+
+        return query.executeUpdate() > 0;
+    }
 }
