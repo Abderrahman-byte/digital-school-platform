@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/api/v1/search")
-public class searchController {
+public class SearchController {
     @Autowired
     private JsonCityConverter cityConverter;
 
