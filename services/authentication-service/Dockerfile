@@ -1,0 +1,9 @@
+FROM maven:3.8.4-openjdk-17-slim
+
+WORKDIR /app
+
+COPY . .
+
+RUN mvn clean compile assembly:single -pl authentication-service -am
+
+CMD cd authentication-service && java -jar /app/authentication-service/target/authentication-service-1.0-SNAPSHOT-jar-with-dependencies.jar
