@@ -5,17 +5,19 @@ import tornado.web
 from dotenv import load_dotenv
 
 from admin_service.utils.settings import *
-
-class MainHandler (tornado.web.RequestHandler) :
-    def get (self):
-        self.render('index.html')
+from admin_service.accounts.urls import urls as accounts_urls
+from admin_service.auth import urls as auth
+from admin_service.utils.urls import refactor_urls_handlers
 
 def make_app ():
     settings = get_setting()
-    
-    return tornado.web.Application([
-        (r"/", MainHandler)
-    ], **settings)
+    urlSpecs = refactor_urls_handlers([
+        (r"/app", accounts_urls),
+        (r"/auth", auth.urls)
+    ])
+    app = tornado.web.Application(urlSpecs, **settings)
+        
+    return app
 
 def app () :
     load_dotenv()
