@@ -27,5 +27,5 @@ def make_app ():
 def app () :
     load_dotenv()
     app = make_app()
-    app.listen(8080)
+    app.listen(os.getenv('PORT', 8080))
     tornado.ioloop.IOLoop.current().start()
