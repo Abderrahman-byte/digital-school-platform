@@ -1,11 +1,12 @@
-import tornado.web
+from tornado.web import authenticated
 
-class MainHandler (tornado.web.RequestHandler):
-    def initialize (self, session) :
-        self.session = session
-        
+from admin_service.utils.security import AuthenticationBaseHandler, admin_only
+
+class MainHandler (AuthenticationBaseHandler):  
+    @authenticated
+    @admin_only
     def get(self):
-        self.render('index.html')
+        self.write("HI THERE")
 
 urls = [
     (r"/", MainHandler),

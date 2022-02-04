@@ -8,5 +8,28 @@
 </head>
 <body>
     <h1>Welcome to login page</h1>
+    <form method="POST">
+        <div class="div-form">
+            <label>Username :</label>
+            <input type="text" name="username" id="username-input" class="input-elt" value="{{ username }}" autocomplete="off" />
+        </div>
+
+        <div class="div-form">
+            <label>Password :</label>
+            <input type="password" name="password" id="password-input" class="input-elt" value="{{ password }}" autocomplete="off" />
+        </div>
+
+        <input type="hidden" name="next_url" value="{{ next_url }}" />
+
+        {% if 'errors' in globals() %}
+        <div class="errors-div">
+            {% for error in errors %}
+                <p>{{error}}</p>
+            {% end %}
+        </div>
+        {% end %}
+
+        <button type="submit">Login</button>
+    </form>
 </body>
 </html>

@@ -10,6 +10,7 @@ setuptools = "*"
 admin-service = {editable = true, path = "."}
 psycopg2-binary = "*"
 sqlalchemy = "*"
+bcrypt = "*"
 
 [dev-packages]
 

@@ -1,7 +1,7 @@
 import enum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql.sqltypes import *
-from sqlalchemy import *
+from sqlalchemy.sql.schema import *
 
 Base = declarative_base()
 
