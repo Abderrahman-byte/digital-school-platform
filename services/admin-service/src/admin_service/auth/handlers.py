@@ -37,7 +37,7 @@ class LoginHandler (tornado.web.RequestHandler)  :
         sess = Session(sid = generate_random_str(25), payload = {'account_id': account.id }, expires=expires)        
         self.session.add(sess)
         self.session.commit()        
-        self.set_secure_cookie('sid', sess.sid)
+        self.set_secure_cookie('sid', sess.sid, expires_days=31)
         
         self.redirect(next_url)
         
@@ -46,11 +46,19 @@ class LogoutHandler (tornado.web.RequestHandler)  :
         self.session = session
 
     def get (self) :
-        self.write("This logout handler")
+        sid = self.get_secure_cookie('sid')
+        sid = sid.decode('UTF-8') if sid is not None else None
+        
+        if sid is not None :
+            self.session.query(Session).filter_by(sid = sid).delete()
+            self.session.commit()
+            self.clear_cookie('sid')
+        
+        self.redirect(self.get_login_url())
         
 class RootHandler (tornado.web.RequestHandler)  :
     def initialize (self, session) :
         self.session = session
 
     def get (self) :
-        self.write("This root handler")
+        self.redirect(self.get_login_url(), True)
