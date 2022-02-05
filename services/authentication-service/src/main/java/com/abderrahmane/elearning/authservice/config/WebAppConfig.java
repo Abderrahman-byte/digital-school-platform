@@ -9,8 +9,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 
-import com.abderrahmane.elearning.authservice.converters.JsonMapMessageConverter;
 import com.abderrahmane.elearning.common.aspects.TransactionManager;
+import com.abderrahmane.elearning.common.converters.JsonMessageConverter;
 import com.abderrahmane.elearning.common.handlers.AuthenticationHandler;
 import com.abderrahmane.elearning.common.utils.ErrorMessageResolver;
 
@@ -94,7 +94,7 @@ public class WebAppConfig implements WebMvcConfigurer {
     /* Configuring Message Converters */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(new JsonMapMessageConverter());
+        converters.add(new JsonMessageConverter());
         converters.add(new StringHttpMessageConverter());
     }
 

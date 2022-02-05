@@ -12,6 +12,8 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 
+// FIXME : copy webapp folder to classpath that is make it gonna make it prossible to run jar on any folder
+
 public class TomcatAppLauncher {
     private final String baseDir = "./target/tomcat";
     private String docBase = "src/main/webapp";

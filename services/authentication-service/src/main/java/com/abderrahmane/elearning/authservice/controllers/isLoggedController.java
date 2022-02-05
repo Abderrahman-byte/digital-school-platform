@@ -3,7 +3,7 @@ package com.abderrahmane.elearning.authservice.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.abderrahmane.elearning.authservice.converters.AccountMapConverter;
+import com.abderrahmane.elearning.common.converters.MapAccountConverter;
 import com.abderrahmane.elearning.common.models.Account;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/isLoggedIn")
 public class isLoggedController {
     @Autowired
-    private AccountMapConverter accountMapConverter;
+    private MapAccountConverter accountMapConverter;
 
     @GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
     public Map<String, Object> handleGetRequest (@RequestAttribute(name = "account", required = false) Account account) {

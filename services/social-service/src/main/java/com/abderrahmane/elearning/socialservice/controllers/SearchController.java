@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.abderrahmane.elearning.socialservice.converters.JsonCityConverter;
-import com.abderrahmane.elearning.socialservice.converters.JsonSchoolProfileConverter;
+import com.abderrahmane.elearning.common.converters.MapCityConverter;
+import com.abderrahmane.elearning.common.converters.MapSchoolProfileConverter;
 import com.abderrahmane.elearning.common.models.City;
 import com.abderrahmane.elearning.common.models.SchoolProfile;
 import com.abderrahmane.elearning.common.repositories.GeoDAO;
@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/api/v1/search")
 public class SearchController {
     @Autowired
-    private JsonCityConverter cityConverter;
+    private MapCityConverter cityConverter;
 
     @Autowired
-    private JsonSchoolProfileConverter schoolProfileConverter;
+    private MapSchoolProfileConverter schoolProfileConverter;
 
     @Autowired
     private GeoDAO geoDAO;

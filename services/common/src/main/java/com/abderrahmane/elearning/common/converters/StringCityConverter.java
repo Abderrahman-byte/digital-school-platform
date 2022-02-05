@@ -1,4 +1,4 @@
-package com.abderrahmane.elearning.authservice.converters;
+package com.abderrahmane.elearning.common.converters;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LocationStringConverter implements Converter<City, String> {
+public class StringCityConverter implements Converter<City, String> {
     @Override
     public String convert(City source) {
         List<String> parts = new ArrayList<>(List.of(source.getName()));

@@ -1,4 +1,4 @@
-package com.abderrahmane.elearning.socialservice.converters;
+package com.abderrahmane.elearning.common.converters;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,19 +13,18 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
-
-public class JsonMapHttpMessageConverter implements HttpMessageConverter<Map<String, Object>> {
+public class JsonMessageConverter implements HttpMessageConverter<Map<String, Object>> {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public boolean canRead(Class<?> clazz, MediaType mediaType) {
-        return clazz.equals(Map.class) && mediaType.equals(MediaType.APPLICATION_JSON);
+        return mediaType != null && mediaType.equals(MediaType.APPLICATION_JSON) && clazz.equals(Map.class);
     }
 
     @Override
     public boolean canWrite(Class<?> clazz, MediaType mediaType) {
         if (mediaType == null) return Map.class.isAssignableFrom(clazz);
-        return mediaType.equals(MediaType.APPLICATION_JSON) && Map.class.isAssignableFrom(clazz);
+        return mediaType != null && mediaType.equals(MediaType.APPLICATION_JSON) && Map.class.isAssignableFrom(clazz);
     }
 
     @Override
@@ -38,7 +37,8 @@ public class JsonMapHttpMessageConverter implements HttpMessageConverter<Map<Str
     public Map<String, Object> read(Class<? extends Map<String, Object>> clazz, HttpInputMessage inputMessage)
             throws IOException, HttpMessageNotReadableException {
         try {
-            return objectMapper.readValue(inputMessage.getBody(), Map.class);
+            Map<String, Object> parsedData = objectMapper.readValue(inputMessage.getBody(), Map.class);
+            return parsedData;
         } catch (Exception ex) {
             throw new HttpMessageNotReadableException("invalid_json_format", inputMessage);
         }
@@ -47,13 +47,14 @@ public class JsonMapHttpMessageConverter implements HttpMessageConverter<Map<Str
     @Override
     public void write(Map<String, Object> t, MediaType contentType, HttpOutputMessage outputMessage)
             throws IOException, HttpMessageNotWritableException {
-
         try {
+            String jsonData = objectMapper.writeValueAsString(t);
             outputMessage.getHeaders().add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
-            outputMessage.getBody().write(objectMapper.writeValueAsString(t).getBytes());
+            outputMessage.getBody().write(jsonData.getBytes());
         } catch (Exception ex) {
-            System.out.println("[ERROR-JSON] " + ex.getMessage());
+            System.err.println("[JSON-Serializer] " + ex.getMessage());
         }
     }
     
 }
+

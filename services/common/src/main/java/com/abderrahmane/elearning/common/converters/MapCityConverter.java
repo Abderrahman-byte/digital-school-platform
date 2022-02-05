@@ -1,4 +1,4 @@
-package com.abderrahmane.elearning.socialservice.converters;
+package com.abderrahmane.elearning.common.converters;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JsonCityConverter implements Converter<City, Map<String, Object>> {
+public class MapCityConverter implements Converter<City, Map<String, Object>> {
     @Autowired
     private StringCityConverter stringCityConverter;
 

@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.abderrahmane.elearning.socialservice.converters.JsonSchoolProfileConverter;
-import com.abderrahmane.elearning.socialservice.converters.StringDateConverter;
+import com.abderrahmane.elearning.common.converters.MapSchoolProfileConverter;
+import com.abderrahmane.elearning.common.converters.StringDateConverter;
 import com.abderrahmane.elearning.common.models.Account;
 import com.abderrahmane.elearning.common.models.AccountType;
 import com.abderrahmane.elearning.common.models.SchoolTeacher;
@@ -36,7 +36,7 @@ public class TeacherController {
     private StringDateConverter stringDateConverter;
 
     @Autowired
-    private JsonSchoolProfileConverter schoolProfileConverter;
+    private MapSchoolProfileConverter schoolProfileConverter;
 
     @Autowired
     private JoinTeacherFormValidator joinTeacherFormValidator;

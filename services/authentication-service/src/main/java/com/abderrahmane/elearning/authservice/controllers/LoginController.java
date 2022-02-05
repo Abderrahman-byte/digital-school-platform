@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import com.abderrahmane.elearning.authservice.converters.AccountMapConverter;
+import com.abderrahmane.elearning.common.converters.MapAccountConverter;
 import com.abderrahmane.elearning.common.helpers.PasswordEncoder;
 import com.abderrahmane.elearning.common.models.Account;
 import com.abderrahmane.elearning.common.models.Session;
@@ -44,7 +44,7 @@ public class LoginController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private AccountMapConverter accountMapConverter;
+    private MapAccountConverter accountMapConverter;
 
     @Value("${session.key:sid}")
     private String sessionKey;

@@ -1,4 +1,4 @@
-package com.abderrahmane.elearning.authservice.converters;
+package com.abderrahmane.elearning.common.converters;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,18 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-// TODO : Add Profil data
-
 @Component
-public class AccountMapConverter implements Converter<Account, Map<String, Object>> {
+public class MapAccountConverter implements Converter<Account, Map<String, Object>> {
     @Autowired
-    private SchoolProfileMapConverter schoolProfileMapConverter;
+    private MapSchoolProfileConverter schoolProfileMapConverter;
 
     @Autowired
-    private TeacherProfileMapConverter teacherProfileMapConverter;
+    private MapTeacherProfileConverter teacherProfileMapConverter;
 
     @Autowired
-    private StudentProfileMapConverter studentProfileMapConverter;
+    private MapStudentProfileConverter studentProfileMapConverter;
 
     @Override
     public Map<String, Object> convert(Account source) {
@@ -39,19 +37,18 @@ public class AccountMapConverter implements Converter<Account, Map<String, Objec
     }
 
     private void putProfileData (Account source, Map<String, Object> data) {
-        System.out.println("TEACHER profile " + source.getTeacherProfile());
-        System.out.println("School profile " + source.getTeacherProfile());
-        System.out.println("STUDENT profile " + source.getStudentProfile());
+       Map<String, Object> profile = null;
 
         if (source.getAccountType().equals(AccountType.SCHOOL) && source.getSchoolProfile() != null) {
-            data.put("profile", schoolProfileMapConverter.convert(source.getSchoolProfile()));
+            profile = schoolProfileMapConverter.convert(source.getSchoolProfile());
         } else if (source.getAccountType().equals(AccountType.TEACHER) && source.getTeacherProfile() != null) {
-            data.put("profile", teacherProfileMapConverter.convert(source.getTeacherProfile()));
+            profile = teacherProfileMapConverter.convert(source.getTeacherProfile());
         } else if (source.getStudentProfile() != null) {
-            data.put("profile", studentProfileMapConverter.convert(source.getStudentProfile()));
-        } else {
-            data.put("profile", null);
+            profile = studentProfileMapConverter.convert(source.getStudentProfile());
         }
+
+        if (profile != null && profile.containsKey("id")) profile.remove("id");
+
+        data.put("profile", profile);
     }
-    
 }
