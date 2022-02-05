@@ -4,7 +4,8 @@ WORKDIR /app
 
 COPY . .
 
-RUN python -m pip install .
+RUN python -m pip install pipenv
 
-# CMD ["python", "-m", "admin-service"]
-CMD ["python", "-m", "admin-service"]
+RUN pipenv install
+
+CMD pipenv shell 'python -m admin_service ; exit'

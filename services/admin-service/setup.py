@@ -19,6 +19,7 @@ setuptools.setup(
     },
     install_requires=requirement,
     package_dir={"": "src"},
+    scripts = ['./src/admin_service/__main__.py'],
     packages=setuptools.find_packages(where="src"),
     python_required=">=3.6"
 )
