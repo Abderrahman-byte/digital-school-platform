@@ -1,6 +1,7 @@
 package com.abderrahmane.elearning.common.converters;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.abderrahmane.elearning.common.models.TeacherProfile;
@@ -29,5 +30,9 @@ public class MapTeacherProfileConverter implements Converter<TeacherProfile, Map
         }
 
         return data;
+    }
+
+    public List<Map<String, Object>> convertList (List<TeacherProfile> source) {
+        return source.stream().map(profile -> this.convert(profile)).toList();
     }
 }
