@@ -53,6 +53,8 @@ public class RequestsController {
     public ResponseEntity<Map<String, Object>> acceptRequest (@RequestAttribute("account") Account account, @RequestBody Map<String, Object> body) {
         Map<String, Object> response = new HashMap<>();
         MapBindingResult errors = new MapBindingResult(body, "acceptTeacher");
+        boolean accepted = false;
+
         acceptTeacherFormValidator.validate(body, errors);
         
         if (errors.hasErrors()) {
@@ -61,15 +63,14 @@ public class RequestsController {
     
         try {
             // TODO : Should send notification to teacher
-            boolean accepted = schoolDAO.acceptTeacher(account.getId(), (String)body.get("id"));
-            response.put("ok", accepted);
+            accepted = schoolDAO.acceptTeacher(account.getId(), (String)body.get("id"));
         } catch (Exception ex) {
             System.out.print("[" + ex.getClass().getName() + "]");
             System.out.println(ex.getMessage());
-            response.put("ok", false);
         }
-
-
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+        
+        
+        response.put("ok", accepted);
+        return new ResponseEntity<Map<String, Object>>(response, accepted ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }
