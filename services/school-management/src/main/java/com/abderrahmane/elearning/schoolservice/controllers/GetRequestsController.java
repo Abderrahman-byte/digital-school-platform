@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/teachers")
-public class GetVerifiedTeachers {
+@RequestMapping("/api/v1/requests")
+public class GetRequestsController {
     @Autowired
-    private MapTeacherSchool teacherProfileConverter;
+    private MapTeacherSchool teacherSchoolConverter;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, Object> getTeachers(@RequestAttribute("account") Account account) {
+    public Map<String, Object> getRequests (@RequestAttribute("account") Account account) {
         Map<String, Object> response = new HashMap<>();
-        List<SchoolTeacher> teachers = account.getSchoolProfile().getTeachers().stream().filter(teacher -> teacher.isVerified() && teacher.getEndedDate() == null).toList();
+        List<SchoolTeacher> teachers = account.getSchoolProfile().getTeachers().stream().filter(teacher -> !teacher.isVerified() && teacher.getEndedDate() == null).toList();
 
-        response.put("data", teacherProfileConverter.convertList(teachers));
-        response.put("ok", "true");
+        response.put("ok", true);
+        response.put("data", teacherSchoolConverter.convertList(teachers));
 
         return response;
     }
