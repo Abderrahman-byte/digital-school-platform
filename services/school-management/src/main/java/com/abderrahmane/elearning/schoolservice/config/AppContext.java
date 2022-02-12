@@ -14,17 +14,23 @@ import com.abderrahmane.elearning.common.converters.JsonMessageConverter;
 import com.abderrahmane.elearning.common.handlers.AuthenticatedOnly;
 import com.abderrahmane.elearning.common.handlers.AuthenticationHandler;
 import com.abderrahmane.elearning.common.handlers.SchoolOnly;
+import com.abderrahmane.elearning.common.utils.ErrorMessageResolver;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -39,6 +45,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class AppContext implements WebMvcConfigurer {
     @Autowired
     private Environment environment;
+
+    @Bean
+    public MessageSource messageSource () {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages");
+
+        return messageSource;
+    }
+
+    @Bean
+    public ErrorMessageResolver errorMessageResolver () {
+        return new ErrorMessageResolver();
+    }
 
     @Bean
     public CriteriaBuilder criteriaBuilder () {
@@ -90,5 +109,16 @@ public class AppContext implements WebMvcConfigurer {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(new JsonMessageConverter());
         converters.add(new StringHttpMessageConverter());
+    }
+
+    /* Configure Persistence Exception Translator */
+    @Bean
+    public PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor () {
+        return new PersistenceExceptionTranslationPostProcessor();
+    }
+
+    @Bean
+    public PersistenceExceptionTranslator persistenceExceptionTranslator () {
+        return new HibernateExceptionTranslator();
     }
 }
