@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 
 public class ErrorMessageResolver {
     @Autowired
@@ -32,13 +33,15 @@ public class ErrorMessageResolver {
     }
 
     public List<String> resolveFieldErrors (Errors errors) {
-        return errors.getFieldErrors().stream().map(errorField -> {
-            return messageSource.getMessage(errorField, Locale.getDefault());
-        }).toList();
+        return this.resolveList(errors.getFieldErrors().stream().map(error -> (ObjectError)error).toList());
     }
 
     public List<String> resolveGlobalErrors (Errors errors) {
-        return errors.getGlobalErrors().stream().map(errorField -> {
+        return this.resolveList(errors.getGlobalErrors());
+    }
+
+    private List<String> resolveList (List<ObjectError> errors) {
+        return errors.stream().map(errorField -> {
             return messageSource.getMessage(errorField, Locale.getDefault());
         }).toList();
     }
