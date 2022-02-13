@@ -38,7 +38,5 @@ public class TeacherProfilCreationValidator extends GenericMapValidator {
         } else if ((Integer)data.get("cityId") <= 0) {
             errors.rejectValue("cityId", "invalidValue");
         }
-
-        if (errors.hasErrors()) return;
     }    
 }

@@ -56,13 +56,13 @@ public class CreateProfileController {
  
     
     private Map<String, Object> createSchoolProfile (Map<String, Object> body, Account account) {
-        MapBindingResult errors = new MapBindingResult(body, "schoolProfil");
+        MapBindingResult errors = new MapBindingResult(body, "schoolProfile");
         Map<String, Object> response = new HashMap<>();
         response.put("ok", true);
         
         if (account.getSchoolProfile() != null) {
             response.put("ok", false);
-            response.put("errors", List.of("profil_already_exists"));
+            response.put("errors", List.of("profile_already_exists"));
             return response;
         }
         
@@ -97,7 +97,7 @@ public class CreateProfileController {
 
         if (account.getTeacherProfile() != null) {
             response.put("ok", false);
-            response.put("errors", List.of("profil_already_exists"));
+            response.put("errors", List.of("profile_already_exists"));
             return response;
         }
 
@@ -133,7 +133,7 @@ public class CreateProfileController {
 
         if (account.getStudentProfile() != null) {
             response.put("ok", false);
-            response.put("errors", List.of("profil_already_exists"));
+            response.put("errors", List.of("profile_already_exists"));
             return response;
         }
 
