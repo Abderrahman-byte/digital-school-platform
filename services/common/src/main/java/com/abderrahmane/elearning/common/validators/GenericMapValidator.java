@@ -29,4 +29,24 @@ public abstract class GenericMapValidator extends GenericValidator {
             }
         }
     }
+
+    public void checkStringValues(Map<String, Object> data, Errors errors, List<String> fields) {
+        fields.forEach(field -> {
+            if (data.containsKey(field) && !data.get(field).getClass().equals(String.class)) {
+                errors.rejectValue(field, "invalidType");
+            } else if (data.containsKey(field) && ((String)data.get(field)).length() <= 0) {
+                errors.rejectValue(field, "invalidValue");
+            }
+        });
+    }
+
+    public void checkPositiveIntegers (Map<String, Object> data, Errors errors, List<String> fields) {
+        fields.forEach(field -> {
+            if (data.containsKey(field) && !data.get(field).getClass().equals(Integer.class)) {
+                errors.rejectValue(field, "invalidType");
+            } else if (data.containsKey(field) && (Integer)data.get(field) <= 0) {
+                errors.rejectValue(field, "invalidValue");
+            }
+        });
+    }
 }
