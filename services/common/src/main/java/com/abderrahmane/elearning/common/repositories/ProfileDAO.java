@@ -2,6 +2,7 @@ package com.abderrahmane.elearning.common.repositories;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -125,6 +126,23 @@ public class ProfileDAO {
         query.setParameter(1, title);
         query.setParameter(2, teacherId);
         query.setParameter(3, schoolId);
+
+        return query.executeUpdate() > 0;
+    }
+
+    @HandleTransactions
+    public boolean updateTeacherProfile (Map<String, Object> data, String teacherId) {
+        String sqlString = "UPDATE teacher_profil SET "
+                + String.join(", ", data.keySet().stream().map(key -> key + " = ?").toList()) 
+                + " WHERE account_id = ?";
+        Query query = this.entityManager.createNativeQuery(sqlString);
+        Object[] values = data.values().toArray();
+        
+        System.out.println("QUERY => "+sqlString);
+
+        for (int i = 0; i < values.length; i++) query.setParameter(i + 1, values[i]);
+
+        query.setParameter(values.length + 1, teacherId);
 
         return query.executeUpdate() > 0;
     }
