@@ -19,8 +19,8 @@ public class LoginFormValidator extends GenericMapValidator {
     public void validate(Object target, Errors errors) {
         Map<String, Object> form = (Map<String, Object>)target;
 
-        checkAllowedFields(form, errors);
-        checkRequiredFields(form, errors);
+        this.checkAllowedFields(form, errors);
+        this.checkRequiredFields(form, errors);
 
         if (errors.hasErrors()) return ;
 

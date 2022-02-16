@@ -1,5 +1,6 @@
 package com.abderrahmane.elearning.authservice.validators;
 
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -30,11 +31,7 @@ public class RegisterFormValidator extends GenericMapValidator {
 
         if (errors.hasErrors()) return;
         
-        for (String field : form.keySet()) {
-            if (!form.get(field).getClass().equals(String.class)) {
-                errors.rejectValue(field, "invalidType", new Object[] { field }, "Invalid field type, " + field + " must be a string");
-            }
-        }
+        this.checkStringValues(form, errors, List.of("username", "email", "password", "password2", "accountType"));
 
         if (errors.hasErrors()) return;
 

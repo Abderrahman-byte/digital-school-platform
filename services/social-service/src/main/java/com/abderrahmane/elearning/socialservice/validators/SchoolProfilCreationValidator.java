@@ -1,5 +1,6 @@
 package com.abderrahmane.elearning.socialservice.validators;
 
+import java.util.List;
 import java.util.Map;
 
 import com.abderrahmane.elearning.common.validators.GenericMapValidator;
@@ -24,24 +25,12 @@ public class SchoolProfilCreationValidator extends GenericMapValidator {
 
         if (errors.hasErrors()) return;
 
-        if (!data.get("name").getClass().equals(String.class))
-            errors.rejectValue("name", "invalidType");
-
-        if (!data.get("cityId").getClass().equals(Integer.class))
-            errors.rejectValue("cityId", "invalidType");
-
-        if (data.containsKey("subtitle") && !data.get("subtitle").getClass().equals(String.class))
-            errors.rejectValue("subtitle", "invalidType");
-
-        if (data.containsKey("overview") && !data.get("overview").getClass().equals(String.class))
-            errors.rejectValue("overview", "invalidType");
+        this.checkStringValues(data, errors, List.of("name", "subtitle", "overview"));
+        this.checkPositiveIntegers(data, errors, List.of("cityId"));
 
         if (errors.hasErrors()) return;
         
         String name = (String)data.get("name");
-        int cityId = (Integer)data.get("cityId");
-
-        if (cityId <= 0) errors.rejectValue("cityId", "invalidValue");
 
         if (name.length() <= 3) errors.rejectValue("name", "invalidValue");
     }

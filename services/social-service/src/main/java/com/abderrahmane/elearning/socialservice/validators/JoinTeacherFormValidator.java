@@ -24,12 +24,6 @@ public class JoinTeacherFormValidator extends GenericMapValidator {
 
         if (errors.hasErrors()) return;
 
-        List.of("id", "title").forEach(field -> {
-            if (form.containsKey(field) && !form.get(field).getClass().equals(String.class)) {
-                errors.rejectValue(field, "invalidType");
-            } else if (form.containsKey(field) && ((String) form.get(field)).length() <= 0) {
-                errors.rejectValue(field, "invalidValue");
-            }
-        });
+        this.checkStringValues(form, errors, List.of("id", "string"));
     }
 }
