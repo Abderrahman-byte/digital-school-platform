@@ -142,4 +142,9 @@ public class ProfileDAO {
     public boolean updateSchoolProfile (Map<String, Object> data, String schoolId) {
         return SQLUtils.updateTable(this.entityManager, "school_profil", "account_id", schoolId, data);
     }
+
+    @HandleTransactions
+    public boolean updateStudentProfile (Map<String, Object> data, String studentId) {
+        return SQLUtils.updateTable(this.entityManager, "student_profil", "account_id", studentId, data);
+    }
 }
