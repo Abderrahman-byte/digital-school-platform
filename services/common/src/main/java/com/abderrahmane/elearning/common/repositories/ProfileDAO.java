@@ -114,7 +114,8 @@ public class ProfileDAO {
 
     @HandleTransactions
     public boolean endTeacherSchool (String teacherId, String schoolId) {
-        Query query = entityManager.createNativeQuery("UPDATE teacher_school SET ended_date = NOW() WHERE teacher_id = ? AND school_id = ? AND verified = true");
+        String sqlString = "UPDATE teacher_school SET ended_date = NOW() WHERE teacher_id = ? AND school_id = ? AND verified = true";
+        Query query = entityManager.createNativeQuery(sqlString);
         query.setParameter(1, teacherId);
         query.setParameter(2, schoolId);
 
@@ -123,7 +124,8 @@ public class ProfileDAO {
 
     @HandleTransactions
     public boolean teacherRejoinSchool (String teacherId, String schoolId, String title) {
-        Query query = entityManager.createNativeQuery("UPDATE teacher_school SET ended_date = NULL, verified = false, title = ? WHERE teacher_id = ? AND school_id = ?");
+        String sqlString = "UPDATE teacher_school SET ended_date = NULL, verified = false, title = ? WHERE teacher_id = ? AND school_id = ?";
+        Query query = entityManager.createNativeQuery(sqlString);
         query.setParameter(1, title);
         query.setParameter(2, teacherId);
         query.setParameter(3, schoolId);
@@ -133,27 +135,11 @@ public class ProfileDAO {
 
     @HandleTransactions
     public boolean updateTeacherProfile (Map<String, Object> data, String teacherId) {
-        String sqlString = SQLUtils.constructSQLUpdateString("teacher_profil", "account_id", data);
-        Query query = this.entityManager.createNativeQuery(sqlString);
-        Object[] values = data.values().toArray();
-        
-        for (int i = 0; i < values.length; i++) query.setParameter(i + 1, values[i]);
-
-        query.setParameter(values.length + 1, teacherId);
-
-        return query.executeUpdate() > 0;
+        return SQLUtils.updateTable(this.entityManager, "teacher_profil", "account_id", teacherId, data);
     }
 
     @HandleTransactions
     public boolean updateSchoolProfile (Map<String, Object> data, String schoolId) {
-        String sqlString = SQLUtils.constructSQLUpdateString("school_profil", "account_id", data);
-        Query query = this.entityManager.createNativeQuery(sqlString);
-        Object[] values = data.values().toArray();
-
-        for (int i = 0; i < values.length; i++) query.setParameter(i + 1, values[i]);
-
-        query.setParameter(values.length + 1, schoolId);
-
-        return query.executeUpdate() > 0;
+        return SQLUtils.updateTable(this.entityManager, "school_profil", "account_id", schoolId, data);
     }
 }
