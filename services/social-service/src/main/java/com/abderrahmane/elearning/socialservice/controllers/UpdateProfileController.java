@@ -12,6 +12,7 @@ import com.abderrahmane.elearning.socialservice.validators.SchoolProfileUpdateVa
 import com.abderrahmane.elearning.socialservice.validators.TeacherProfileUpdateValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.validation.Errors;
 import org.springframework.validation.MapBindingResult;
@@ -85,6 +86,8 @@ public class UpdateProfileController {
 
         try {
             return profileDAO.updateTeacherProfile(body, account.getId());
+        } catch (DataIntegrityViolationException ex) {
+            errors.reject("unexisting_city");
         } catch (Exception ex) {
             System.out.print("[" + ex.getClass().getName() + "] ");
             System.out.println(ex.getMessage());
@@ -100,6 +103,8 @@ public class UpdateProfileController {
 
         try {
             return profileDAO.updateSchoolProfile(body, account.getId());
+        } catch (DataIntegrityViolationException ex) {
+            errors.reject("unexisting_city");
         } catch (Exception ex) {
             System.out.print("[" + ex.getClass().getName() + "] ");
             System.out.println(ex.getMessage());
