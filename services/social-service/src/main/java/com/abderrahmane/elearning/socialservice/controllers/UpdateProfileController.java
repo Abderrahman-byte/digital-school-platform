@@ -1,7 +1,6 @@
 package com.abderrahmane.elearning.socialservice.controllers;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.abderrahmane.elearning.common.models.Account;
@@ -9,6 +8,7 @@ import com.abderrahmane.elearning.common.models.AccountType;
 import com.abderrahmane.elearning.common.repositories.ProfileDAO;
 import com.abderrahmane.elearning.common.utils.ErrorMessageResolver;
 import com.abderrahmane.elearning.socialservice.validators.SchoolProfileUpdateValidator;
+import com.abderrahmane.elearning.socialservice.validators.StudentProfileUpdateValidator;
 import com.abderrahmane.elearning.socialservice.validators.TeacherProfileUpdateValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,30 +35,30 @@ public class UpdateProfileController {
     private SchoolProfileUpdateValidator schoolProfileUpdateValidator;
 
     @Autowired
+    private StudentProfileUpdateValidator studentProfileUpdateValidator;
+
+    @Autowired
     private ProfileDAO profileDAO;
 
     @PutMapping(consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
     public Map<String, Object> handlePut (@RequestBody Map<String, Object> body, @RequestAttribute("account") Account account) {
         Map<String, Object> response = new HashMap<>();
         MapBindingResult errors = new MapBindingResult(body, this.getObjectName(account.getAccountType()));
+        boolean updated = false;
 
         // Check if the profile has been created
         if (!this.checkProfile(account, errors)) return this.messageResolver.constructErrorResponse(errors);
         
-        if (account.getAccountType().equals(AccountType.TEACHER)) {
-            boolean updated = this.updateTeacherProfile(body, account, errors);
-            response.put("ok", updated);
-        } else if (account.getAccountType().equals(AccountType.SCHOOL)) {
-            boolean updated = this.updateSchoolProfile(body, account, errors);
-            response.put("ok", updated);
-        } else {
-            response.put("ok", false);
-            response.put("errors", List.of("operation_not_supported"));
-            return response;
-        }
+        if (account.getAccountType().equals(AccountType.TEACHER)) 
+            updated = this.updateTeacherProfile(body, account, errors);
+        else if (account.getAccountType().equals(AccountType.SCHOOL)) 
+            updated = this.updateSchoolProfile(body, account, errors);
+        else if (account.getAccountType().equals(AccountType.STUDENT)) 
+            updated = this.updateStudentProfile(body, account, errors);
         
         if (errors.hasErrors()) return this.messageResolver.constructErrorResponse(errors);
         
+        response.put("ok", updated);
         return response;
     }
 
@@ -113,7 +113,20 @@ public class UpdateProfileController {
         return false;
     }
 
-    // private void updateStudentProfile (Map<String, Object> body, Account account, MapBindingResult errors) {
+    private boolean updateStudentProfile (Map<String, Object> body, Account account, MapBindingResult errors) {
+        this.studentProfileUpdateValidator.validate(body, errors);
 
-    // }
+        if (errors.hasErrors()) return false;
+
+        try {
+            return profileDAO.updateStudentProfile(body, account.getId());
+        } catch (DataIntegrityViolationException ex) {
+            errors.reject("unexisting_city");
+        } catch (Exception ex) {
+            System.out.print("[" + ex.getClass().getName() + "] ");
+            System.out.println(ex.getMessage());
+        }
+
+        return false;
+    }
 }
