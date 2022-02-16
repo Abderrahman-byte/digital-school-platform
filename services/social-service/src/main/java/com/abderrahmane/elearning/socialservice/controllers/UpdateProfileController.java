@@ -8,6 +8,7 @@ import com.abderrahmane.elearning.common.models.Account;
 import com.abderrahmane.elearning.common.models.AccountType;
 import com.abderrahmane.elearning.common.repositories.ProfileDAO;
 import com.abderrahmane.elearning.common.utils.ErrorMessageResolver;
+import com.abderrahmane.elearning.socialservice.validators.SchoolProfileUpdateValidator;
 import com.abderrahmane.elearning.socialservice.validators.TeacherProfileUpdateValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class UpdateProfileController {
     private TeacherProfileUpdateValidator teacherProfileUpdateValidator;
 
     @Autowired
+    private SchoolProfileUpdateValidator schoolProfileUpdateValidator;
+
+    @Autowired
     private ProfileDAO profileDAO;
 
     @PutMapping(consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -42,6 +46,9 @@ public class UpdateProfileController {
         
         if (account.getAccountType().equals(AccountType.TEACHER)) {
             boolean updated = this.updateTeacherProfile(body, account, errors);
+            response.put("ok", updated);
+        } else if (account.getAccountType().equals(AccountType.SCHOOL)) {
+            boolean updated = this.updateSchoolProfile(body, account, errors);
             response.put("ok", updated);
         } else {
             response.put("ok", false);
@@ -86,9 +93,20 @@ public class UpdateProfileController {
         return false;
     }
 
-    // private void updateSchoolProfile (Map<String, Object> body, Account account, MapBindingResult errors) {
+    private boolean updateSchoolProfile (Map<String, Object> body, Account account, MapBindingResult errors) {
+        this.schoolProfileUpdateValidator.validate(body, errors);
 
-    // }
+        if (errors.hasErrors()) return false;
+
+        try {
+            return profileDAO.updateSchoolProfile(body, account.getId());
+        } catch (Exception ex) {
+            System.out.print("[" + ex.getClass().getName() + "] ");
+            System.out.println(ex.getMessage());
+        }
+
+        return false;
+    }
 
     // private void updateStudentProfile (Map<String, Object> body, Account account, MapBindingResult errors) {
 
