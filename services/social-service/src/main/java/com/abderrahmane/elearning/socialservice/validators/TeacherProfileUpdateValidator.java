@@ -44,5 +44,10 @@ public class TeacherProfileUpdateValidator extends GenericMapValidator {
             data.put("last_name", data.get("lastName"));
             data.remove("lastName");
         }
+
+        if (data.containsKey("cityId")) {
+            data.put("location", data.get("cityId"));
+            data.remove("cityId");
+        }
     }
 }
