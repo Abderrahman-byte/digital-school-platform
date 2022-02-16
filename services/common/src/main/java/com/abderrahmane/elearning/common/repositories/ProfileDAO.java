@@ -14,6 +14,7 @@ import com.abderrahmane.elearning.common.models.City;
 import com.abderrahmane.elearning.common.models.SchoolProfile;
 import com.abderrahmane.elearning.common.models.StudentProfile;
 import com.abderrahmane.elearning.common.models.TeacherProfile;
+import com.abderrahmane.elearning.common.utils.SQLUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -132,17 +133,26 @@ public class ProfileDAO {
 
     @HandleTransactions
     public boolean updateTeacherProfile (Map<String, Object> data, String teacherId) {
-        String sqlString = "UPDATE teacher_profil SET "
-                + String.join(", ", data.keySet().stream().map(key -> key + " = ?").toList()) 
-                + " WHERE account_id = ?";
+        String sqlString = SQLUtils.constructSQLUpdateString("teacher_profil", "account_id", data);
         Query query = this.entityManager.createNativeQuery(sqlString);
         Object[] values = data.values().toArray();
         
-        System.out.println("QUERY => "+sqlString);
-
         for (int i = 0; i < values.length; i++) query.setParameter(i + 1, values[i]);
 
         query.setParameter(values.length + 1, teacherId);
+
+        return query.executeUpdate() > 0;
+    }
+
+    @HandleTransactions
+    public boolean updateSchoolProfile (Map<String, Object> data, String schoolId) {
+        String sqlString = SQLUtils.constructSQLUpdateString("school_profil", "account_id", data);
+        Query query = this.entityManager.createNativeQuery(sqlString);
+        Object[] values = data.values().toArray();
+
+        for (int i = 0; i < values.length; i++) query.setParameter(i + 1, values[i]);
+
+        query.setParameter(values.length + 1, schoolId);
 
         return query.executeUpdate() > 0;
     }
