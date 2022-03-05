@@ -147,4 +147,23 @@ public class ProfileDAO {
     public boolean updateStudentProfile (Map<String, Object> data, String studentId) {
         return SQLUtils.updateTable(this.entityManager, "student_profil", "account_id", studentId, data);
     }
+
+    public List<TeacherProfile> searchTeachers (String searchQuery) {
+        return this.searchTeachers(searchQuery, 10);
+    }
+
+    // FIXME : Escape search query
+    // FIXME : Make indexed query
+
+    @SuppressWarnings("unchecked")
+    public List<TeacherProfile> searchTeachers (String searchQuery, int limit) {
+        String sqlString = "SELECT * FROM teacher_profil WHERE to_tsvector(first_name || ' ' || last_name) @@ to_tsquery(?) LIMIT ?";
+        Query query = this.entityManager.createNativeQuery(sqlString, TeacherProfile.class);
+        String nameValues = String.join(" | ", List.of(searchQuery.split(" ")).stream().map(name -> name + ":*").toList());
+
+        query.setParameter(1, nameValues);
+        query.setParameter(2, limit);
+
+        return (List<TeacherProfile>)query.getResultList();
+    }
 }

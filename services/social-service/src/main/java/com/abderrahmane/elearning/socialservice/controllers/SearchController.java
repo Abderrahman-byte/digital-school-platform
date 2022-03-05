@@ -6,8 +6,10 @@ import java.util.Map;
 
 import com.abderrahmane.elearning.common.converters.MapCityConverter;
 import com.abderrahmane.elearning.common.converters.MapSchoolProfileConverter;
+import com.abderrahmane.elearning.common.converters.MapTeacherProfileConverter;
 import com.abderrahmane.elearning.common.models.City;
 import com.abderrahmane.elearning.common.models.SchoolProfile;
+import com.abderrahmane.elearning.common.models.TeacherProfile;
 import com.abderrahmane.elearning.common.repositories.GeoDAO;
 import com.abderrahmane.elearning.common.repositories.ProfileDAO;
 
@@ -25,6 +27,9 @@ public class SearchController {
 
     @Autowired
     private MapSchoolProfileConverter schoolProfileConverter;
+
+    @Autowired
+    private MapTeacherProfileConverter teacherProfileConverter;
 
     @Autowired
     private GeoDAO geoDAO;
@@ -50,6 +55,17 @@ public class SearchController {
 
         response.put("ok", true);
         response.put("data", schoolProfileConverter.convertList(results));
+
+        return response;
+    }
+
+    @GetMapping(path = "/teacher", params = "query")
+    public Map<String, Object> searchTeacher (@RequestParam(name = "query") String name) {
+        Map<String, Object> response = new HashMap<>();
+        List<TeacherProfile> results = profileDAO.searchTeachers(name);
+
+        response.put("ok", true);
+        response.put("data", teacherProfileConverter.convertList(results));
 
         return response;
     }
