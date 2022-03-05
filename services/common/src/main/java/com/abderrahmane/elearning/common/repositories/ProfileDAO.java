@@ -5,15 +5,18 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import com.abderrahmane.elearning.common.annotations.ClearCache;
 import com.abderrahmane.elearning.common.annotations.HandleTransactions;
 import com.abderrahmane.elearning.common.models.Account;
 import com.abderrahmane.elearning.common.models.City;
+import com.abderrahmane.elearning.common.models.RequestForConnection;
 import com.abderrahmane.elearning.common.models.SchoolProfile;
 import com.abderrahmane.elearning.common.models.StudentProfile;
 import com.abderrahmane.elearning.common.models.TeacherProfile;
+import com.abderrahmane.elearning.common.utils.RandomStringGenerator;
 import com.abderrahmane.elearning.common.utils.SQLUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,8 @@ public class ProfileDAO {
 
     @Autowired
     private AccountDAO accountDAO;
+
+    // private RandomStringGenerator rndStringGenerator = new RandomStringGenerator();
 
     public SchoolProfile createSchoolProfil (String name, String overview, String subtitle, Account account, City location) {
         SchoolProfile schoolProfil = new SchoolProfile();
@@ -165,5 +170,37 @@ public class ProfileDAO {
         query.setParameter(2, limit);
 
         return (List<TeacherProfile>)query.getResultList();
+    }
+
+    @ClearCache
+    public RequestForConnection getRequestForConnection (String id, String teacherId) {
+        String sqlString = "SELECT * FROM request_for_connection WHERE id = ? AND teacher_id = ?";
+        Query query = this.entityManager.createNativeQuery(sqlString, RequestForConnection.class);
+
+        query.setParameter(1, id);
+        query.setParameter(2, teacherId);
+
+        try {
+            return (RequestForConnection)query.getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
+
+    @HandleTransactions
+    public boolean deleteRequestForConnection (String id) {
+        Query query = this.entityManager.createNativeQuery("DELETE FROM request_for_connection WHERE id = ?");
+        query.setParameter(1, id);
+
+        return query.executeUpdate() >= 1;
+    }
+
+    @HandleTransactions
+    public boolean createTeacherStudentConnection (String teacherId, String studentId) {
+        Query query = this.entityManager.createNativeQuery("INSERT INTO connection (teacher_id, student_id) VALUES (?,?)");
+        query.setParameter(1, teacherId);
+        query.setParameter(2, studentId);
+
+        return query.executeUpdate() >= 1;
     }
 }

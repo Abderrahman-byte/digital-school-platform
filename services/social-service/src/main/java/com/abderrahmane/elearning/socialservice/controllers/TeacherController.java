@@ -10,6 +10,7 @@ import com.abderrahmane.elearning.common.converters.MapStudentProfileConverter;
 import com.abderrahmane.elearning.common.converters.StringDateConverter;
 import com.abderrahmane.elearning.common.models.Account;
 import com.abderrahmane.elearning.common.models.AccountType;
+import com.abderrahmane.elearning.common.models.RequestForConnection;
 import com.abderrahmane.elearning.common.models.SchoolTeacher;
 import com.abderrahmane.elearning.common.utils.ErrorMessageResolver;
 import com.abderrahmane.elearning.common.repositories.ProfileDAO;
@@ -150,6 +151,7 @@ public class TeacherController {
         return response;
     }
 
+    // TODO : check if student already connected with teacher
     @GetMapping(path = "/requests")
     public Map<String, Object> getRequestsForConnections (@RequestAttribute("account") Account account) {
         Map<String, Object> response = new HashMap<>();
@@ -160,10 +162,47 @@ public class TeacherController {
         response.put("data", account.getTeacherProfile().getRequests().stream().map(request -> {
             Map<String, Object> requestObject = studentProfileConverter.convert(request.getStudentProfile());
             requestObject.put("id", request.getId());
-            
+
             return requestObject;
         }).toList());
 
+        return response;
+    }
+
+    @PostMapping(path = "/requests/accept")
+    public Map<String, Object> acceptConnectionRequest (@RequestAttribute("account") Account account, @RequestBody Map<String, Object> body) {
+        Map<String, Object> response = new HashMap<>();
+        RequestForConnection requestForConnection = null;
+
+        response.put("ok", true);
+
+        if (!checkTeacherAccount(response, account)) return response;
+
+        if (!body.containsKey("id") || !body.get("id").getClass().equals(String.class) || ((String)body.get("id")).length() <= 0) {
+            response.put("ok", false);
+            response.put("errors", List.of("Id field is required"));
+            return response;
+        }
+
+        requestForConnection = profileDAO.getRequestForConnection((String)body.get("id"), account.getId());
+
+        if (requestForConnection == null) {
+            response.put("ok", false);
+            response.put("errors", List.of("not_found"));
+        }
+
+        if (!profileDAO.deleteRequestForConnection((String)body.get("id"))) {
+            response.put("ok", false);
+            return response;
+        }
+        
+        try {
+            profileDAO.createTeacherStudentConnection(account.getId(), requestForConnection.getStudentProfile().getId());
+        } catch (DataIntegrityViolationException ex) {
+            response.put("ok", false);
+            response.put("errors", List.of(this.translateException(ex)));
+        }
+        
         return response;
     }
 
@@ -190,6 +229,8 @@ public class TeacherController {
             return "school_already_joined";
         } else if (message.contains("teacher_school_school_id_fkey")) {
             return "school_does_not_exist";
+        } else if (message.contains("connection_pkey")) {
+            return "connection_already_exists";
         }
 
         System.out.println("[UNKOWN-ERROR] " + ex.getMessage());
