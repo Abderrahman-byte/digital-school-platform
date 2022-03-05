@@ -47,6 +47,9 @@ public class TeacherProfile {
     @OneToMany(targetEntity = SchoolTeacher.class, orphanRemoval = true, mappedBy = "teacher")
     private List<SchoolTeacher> schooles = new ArrayList<>();
 
+    @OneToMany(targetEntity = RequestForConnection.class, orphanRemoval = true, mappedBy = "teacherProfile")
+    private List<RequestForConnection> requests = new ArrayList<>();
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
     private Calendar createdDate = Calendar.getInstance();
@@ -123,5 +126,13 @@ public class TeacherProfile {
 
     public void setSchooles(List<SchoolTeacher> schooles) {
         this.schooles = schooles;
+    }
+
+    public List<RequestForConnection> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<RequestForConnection> requests) {
+        this.requests = requests;
     }
 }

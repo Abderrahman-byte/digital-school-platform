@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.abderrahmane.elearning.common.converters.MapSchoolProfileConverter;
+import com.abderrahmane.elearning.common.converters.MapStudentProfileConverter;
 import com.abderrahmane.elearning.common.converters.StringDateConverter;
 import com.abderrahmane.elearning.common.models.Account;
 import com.abderrahmane.elearning.common.models.AccountType;
@@ -40,6 +41,9 @@ public class TeacherController {
 
     @Autowired
     private JoinTeacherFormValidator joinTeacherFormValidator;
+
+    @Autowired
+    private MapStudentProfileConverter studentProfileConverter;
 
     @Autowired
     private ErrorMessageResolver messageResolver;
@@ -142,6 +146,23 @@ public class TeacherController {
             boolean ended = profileDAO.endTeacherSchool(account.getTeacherProfile().getId(), schoolId);
             response.put("ok", ended);
         }
+
+        return response;
+    }
+
+    @GetMapping(path = "/requests")
+    public Map<String, Object> getRequestsForConnections (@RequestAttribute("account") Account account) {
+        Map<String, Object> response = new HashMap<>();
+
+        if (!checkTeacherAccount(response, account)) return response;
+
+        response.put("ok", true);
+        response.put("data", account.getTeacherProfile().getRequests().stream().map(request -> {
+            Map<String, Object> requestObject = studentProfileConverter.convert(request.getStudentProfile());
+            requestObject.put("id", request.getId());
+            
+            return requestObject;
+        }).toList());
 
         return response;
     }
