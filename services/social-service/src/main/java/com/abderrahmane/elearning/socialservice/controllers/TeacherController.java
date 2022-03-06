@@ -169,6 +169,7 @@ public class TeacherController {
         return response;
     }
 
+    // TODO : May send notification to the student
     @PostMapping(path = "/requests/accept")
     public Map<String, Object> acceptConnectionRequest (@RequestAttribute("account") Account account, @RequestBody Map<String, Object> body) {
         Map<String, Object> response = new HashMap<>();
@@ -203,6 +204,27 @@ public class TeacherController {
             response.put("errors", List.of(this.translateException(ex)));
         }
         
+        return response;
+    }
+
+    @PostMapping(path = "/requests/reject")
+    public Map<String, Object> rejectRequestForConnection (@RequestAttribute("account") Account account, @RequestBody Map<String, Object> body) {
+        Map<String, Object> response = new HashMap<>();
+        boolean deleted = false;
+
+        if (!checkTeacherAccount(response, account)) return response;
+
+        if (!body.containsKey("id") || !body.get("id").getClass().equals(String.class) || ((String)body.get("id")).length() <= 0) {
+            response.put("ok", false);
+            response.put("errors", List.of("Id field is required"));
+            return response;
+        }
+
+        deleted = profileDAO.deleteRequestForConnection((String)body.get("id"), account.getId());
+        response.put("ok", deleted);
+
+        if (!deleted) response.put("errors", List.of("not_found"));
+
         return response;
     }
 
