@@ -50,6 +50,9 @@ public class StudentProfile {
     @OneToMany(targetEntity = RequestForConnection.class, orphanRemoval = true, mappedBy = "studentProfile")
     private List<RequestForConnection> requests = new ArrayList<>();
 
+    @OneToMany(targetEntity = StudentTeacherConnection.class, orphanRemoval = true, mappedBy = "student")
+    private List<StudentTeacherConnection> connections = new ArrayList<>();
+
     public StudentProfile () {}
 
     public String getId() {
@@ -114,5 +117,13 @@ public class StudentProfile {
 
     public void setRequests(List<RequestForConnection> requests) {
         this.requests = requests;
+    }
+
+    public List<StudentTeacherConnection> getConnections() {
+        return connections;
+    }
+
+    public void setConnections(List<StudentTeacherConnection> connections) {
+        this.connections = connections;
     }
 }
