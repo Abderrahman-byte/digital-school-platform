@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/v1/teacher")
+@RequestMapping(path = "/api/${app.version}/teacher")
 public class TeacherController {
     @Autowired
     private ProfileDAO profileDAO;

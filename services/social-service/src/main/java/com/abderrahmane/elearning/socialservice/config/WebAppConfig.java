@@ -41,7 +41,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableAspectJAutoProxy
 @ComponentScan(basePackages = "com.abderrahmane.elearning")
 @PropertySources({
-    @PropertySource("classpath:jdbc.properties")
+    @PropertySource("classpath:jdbc.properties"),
+    @PropertySource("classpath:application.properties")
 })
 public class WebAppConfig implements WebMvcConfigurer {
     @Autowired

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/profile")
+@RequestMapping("/api/${app.version}/profile")
 public class UpdateProfileController {
     @Autowired
     private ErrorMessageResolver messageResolver;
