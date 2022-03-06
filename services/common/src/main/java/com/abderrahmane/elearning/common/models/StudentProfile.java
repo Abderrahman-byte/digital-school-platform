@@ -1,6 +1,8 @@
 package com.abderrahmane.elearning.common.models;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -43,6 +46,9 @@ public class StudentProfile {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date", nullable = false)
     private Calendar createdDate = Calendar.getInstance();
+
+    @OneToMany(targetEntity = RequestForConnection.class, orphanRemoval = true, mappedBy = "studentProfile")
+    private List<RequestForConnection> requests = new ArrayList<>();
 
     public StudentProfile () {}
 
@@ -100,5 +106,13 @@ public class StudentProfile {
 
     public void setCreatedDate(Calendar createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public List<RequestForConnection> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<RequestForConnection> requests) {
+        this.requests = requests;
     }
 }
