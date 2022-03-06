@@ -14,6 +14,7 @@ import com.abderrahmane.elearning.common.converters.JsonMessageConverter;
 import com.abderrahmane.elearning.common.handlers.AuthenticatedOnly;
 import com.abderrahmane.elearning.common.handlers.AuthenticationHandler;
 import com.abderrahmane.elearning.common.utils.ErrorMessageResolver;
+import com.abderrahmane.elearning.socialservice.handlers.TeachersOnly;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -106,6 +107,7 @@ public class WebAppConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authenticationHandler()).addPathPatterns("/api/**").order(0);
         registry.addInterceptor(new AuthenticatedOnly()).addPathPatterns("/api/**").order(1);
+        registry.addInterceptor(new TeachersOnly()).addPathPatterns("/api/v?/teacher/**", "/api/teacher/**").order(2);
     }
 
     /* Configure Persistence Exception Translator */

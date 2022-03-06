@@ -9,7 +9,6 @@ import com.abderrahmane.elearning.common.converters.MapSchoolProfileConverter;
 import com.abderrahmane.elearning.common.converters.MapStudentProfileConverter;
 import com.abderrahmane.elearning.common.converters.StringDateConverter;
 import com.abderrahmane.elearning.common.models.Account;
-import com.abderrahmane.elearning.common.models.AccountType;
 import com.abderrahmane.elearning.common.models.RequestForConnection;
 import com.abderrahmane.elearning.common.models.SchoolTeacher;
 import com.abderrahmane.elearning.common.utils.ErrorMessageResolver;
@@ -55,8 +54,6 @@ public class TeacherController {
         
         response.put("ok", true);
 
-        if (!checkTeacherAccount(response, account)) return response;
-        
         List<Map<String, Object>> schools = account.getTeacherProfile().getSchooles().stream().map(school -> {
            Map<String, Object> schoolTeacherMap = new HashMap<>();
 
@@ -78,9 +75,6 @@ public class TeacherController {
     public Map<String, Object> joinSchool (@RequestAttribute("account") Account account, @RequestBody Map<String, Object> body) {
         Map<String, Object> response = new HashMap<>();
         MapBindingResult errors = new MapBindingResult(body, "joinSchool");
-
-        // Check if the account is a teacher account and if the profile is complete
-        if (!checkTeacherAccount(response, account)) return response;
 
         joinTeacherFormValidator.validate(body, errors);
 
@@ -126,8 +120,6 @@ public class TeacherController {
 
         response.put("ok", true);
 
-        if (!checkTeacherAccount(response, account)) return response;
-
         List<SchoolTeacher> schools = account.getTeacherProfile().getSchooles().stream().filter(schoolTeacher -> {
             return schoolTeacher.getEndedDate() == null && schoolTeacher.getSchool().getId().equals(schoolId);
         }).toList();
@@ -151,12 +143,9 @@ public class TeacherController {
         return response;
     }
 
-    // TODO : check if student already connected with teacher
     @GetMapping(path = "/requests")
     public Map<String, Object> getRequestsForConnections (@RequestAttribute("account") Account account) {
         Map<String, Object> response = new HashMap<>();
-
-        if (!checkTeacherAccount(response, account)) return response;
 
         response.put("ok", true);
         response.put("data", account.getTeacherProfile().getRequests().stream().map(request -> {
@@ -176,8 +165,6 @@ public class TeacherController {
         RequestForConnection requestForConnection = null;
 
         response.put("ok", true);
-
-        if (!checkTeacherAccount(response, account)) return response;
 
         if (!body.containsKey("id") || !body.get("id").getClass().equals(String.class) || ((String)body.get("id")).length() <= 0) {
             response.put("ok", false);
@@ -212,8 +199,6 @@ public class TeacherController {
         Map<String, Object> response = new HashMap<>();
         boolean deleted = false;
 
-        if (!checkTeacherAccount(response, account)) return response;
-
         if (!body.containsKey("id") || !body.get("id").getClass().equals(String.class) || ((String)body.get("id")).length() <= 0) {
             response.put("ok", false);
             response.put("errors", List.of("Id field is required"));
@@ -226,22 +211,6 @@ public class TeacherController {
         if (!deleted) response.put("errors", List.of("not_found"));
 
         return response;
-    }
-
-    private boolean checkTeacherAccount (Map<String, Object> response, Account account) {
-        if (!account.getAccountType().equals(AccountType.TEACHER)) {
-            response.put("ok", false);
-            response.put("errors", List.of("unauthorized"));
-            return false;
-        }
-
-        if (account.getTeacherProfile() == null) {
-            response.put("ok", false);
-            response.put("errors", List.of("uncompleted_profile"));
-            return false;
-        }
-
-        return true;
     }
 
     private String translateException (DataIntegrityViolationException ex) {
