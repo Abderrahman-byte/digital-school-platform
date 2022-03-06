@@ -30,7 +30,7 @@ public class ProfileDAO {
     @Autowired
     private AccountDAO accountDAO;
 
-    // private RandomStringGenerator rndStringGenerator = new RandomStringGenerator();
+    private RandomStringGenerator rndStringGenerator = new RandomStringGenerator();
 
     public SchoolProfile createSchoolProfil (String name, String overview, String subtitle, Account account, City location) {
         SchoolProfile schoolProfil = new SchoolProfile();
@@ -209,6 +209,16 @@ public class ProfileDAO {
         Query query = this.entityManager.createNativeQuery("INSERT INTO connection (teacher_id, student_id) VALUES (?,?)");
         query.setParameter(1, teacherId);
         query.setParameter(2, studentId);
+
+        return query.executeUpdate() >= 1;
+    }
+
+    @HandleTransactions
+    public boolean createRequestForConnection (String studentId, String teacherId) {
+        Query query = this.entityManager.createNativeQuery("INSERT INTO request_for_connection (id, teacher_id, student_id) VALUES (?,?,?)");
+        query.setParameter(1, rndStringGenerator.generateRandomStr(25));
+        query.setParameter(2, teacherId);
+        query.setParameter(3, studentId);
 
         return query.executeUpdate() >= 1;
     }
