@@ -231,6 +231,15 @@ public class ProfileDAO {
     }
 
     @HandleTransactions
+    public boolean deleteTeacherStudentConnection (String teacherId, String studentId) {
+        Query query = this.entityManager.createNativeQuery("DELETE FROM connection WHERE teacher_id = ? AND student_id = ?");
+        query.setParameter(1, teacherId);
+        query.setParameter(2, studentId);
+
+        return query.executeUpdate() >= 1;
+    }
+
+    @HandleTransactions
     public boolean createRequestForConnection (String studentId, String teacherId) {
         Query query = this.entityManager.createNativeQuery("INSERT INTO request_for_connection (id, teacher_id, student_id) VALUES (?,?,?)");
         query.setParameter(1, rndStringGenerator.generateRandomStr(25));

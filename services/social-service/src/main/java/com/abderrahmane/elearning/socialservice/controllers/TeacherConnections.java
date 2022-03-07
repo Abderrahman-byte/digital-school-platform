@@ -11,6 +11,7 @@ import com.abderrahmane.elearning.common.models.StudentTeacherConnection;
 import com.abderrahmane.elearning.common.repositories.ProfileDAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,6 +53,16 @@ public class TeacherConnections {
             return connObject;
         }).toList());
 
+
+        return response;
+    }
+
+    @DeleteMapping(params = "id")
+    public Map<String, Object> deleteTeacherConnection (@RequestAttribute("account") Account account, @RequestParam("id") String id) {
+        Map<String, Object> response = new HashMap<>();
+        boolean deleted = profileDAO.deleteTeacherStudentConnection(account.getId(), id);
+
+        response.put("ok", deleted);
 
         return response;
     }
