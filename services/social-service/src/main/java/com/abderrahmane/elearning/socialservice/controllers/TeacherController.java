@@ -8,6 +8,7 @@ import java.util.Optional;
 import com.abderrahmane.elearning.common.converters.MapSchoolProfileConverter;
 import com.abderrahmane.elearning.common.converters.MapStudentProfileConverter;
 import com.abderrahmane.elearning.common.converters.StringDateConverter;
+import com.abderrahmane.elearning.common.converters.StringDateTimeConverter;
 import com.abderrahmane.elearning.common.models.Account;
 import com.abderrahmane.elearning.common.models.RequestForConnection;
 import com.abderrahmane.elearning.common.models.SchoolTeacher;
@@ -47,6 +48,9 @@ public class TeacherController {
 
     @Autowired
     private ErrorMessageResolver messageResolver;
+
+    @Autowired
+    private StringDateTimeConverter dateTimeConverter;
 
     @GetMapping(path = "/schools")
     public Map<String, Object> getTeacherSchoolList (@RequestAttribute(name = "account") Account account) {
@@ -152,6 +156,7 @@ public class TeacherController {
             Map<String, Object> requestObject = studentProfileConverter.convert(request.getStudentProfile());
             requestObject.put("accountId", request.getStudentProfile().getId());
             requestObject.put("id", request.getId());
+            requestObject.put("createdDate", dateTimeConverter.convert(request.getCreatedDate()));
 
             return requestObject;
         }).toList());

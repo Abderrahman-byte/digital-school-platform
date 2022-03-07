@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import com.abderrahmane.elearning.common.converters.MapTeacherProfileConverter;
+import com.abderrahmane.elearning.common.converters.StringDateTimeConverter;
 import com.abderrahmane.elearning.common.models.Account;
 import com.abderrahmane.elearning.common.models.StudentTeacherConnection;
 import com.abderrahmane.elearning.common.repositories.ProfileDAO;
@@ -30,6 +31,9 @@ public class StudentRequestController {
     @Autowired
     private ProfileDAO profileDAO;
 
+    @Autowired
+    private StringDateTimeConverter dateTimeConverter;
+
     // TODO : Do pagination
     @GetMapping()
     public Map<String, Object> getRequestsForConnections (@RequestAttribute("account") Account account) {
@@ -40,6 +44,7 @@ public class StudentRequestController {
             Map<String, Object> rfcData = teacherProfileConverter.convert(rfc.getTeacherProfile());
             rfcData.put("id", rfc.getId());
             rfcData.put("accountId", rfc.getTeacherProfile().getId());
+            rfcData.put("createdDate", dateTimeConverter.convert(rfc.getCreatedDate()));
 
             return rfcData;
         }).toList());
