@@ -150,6 +150,7 @@ public class TeacherController {
         response.put("ok", true);
         response.put("data", account.getTeacherProfile().getRequests().stream().map(request -> {
             Map<String, Object> requestObject = studentProfileConverter.convert(request.getStudentProfile());
+            requestObject.put("accountId", request.getStudentProfile().getId());
             requestObject.put("id", request.getId());
 
             return requestObject;

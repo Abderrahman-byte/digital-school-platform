@@ -39,6 +39,7 @@ public class StudentRequestController {
         response.put("data", account.getStudentProfile().getRequests().stream().map(rfc -> {
             Map<String, Object> rfcData = teacherProfileConverter.convert(rfc.getTeacherProfile());
             rfcData.put("id", rfc.getId());
+            rfcData.put("accountId", rfc.getTeacherProfile().getId());
 
             return rfcData;
         }).toList());
