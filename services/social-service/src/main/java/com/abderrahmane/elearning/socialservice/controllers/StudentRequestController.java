@@ -12,15 +12,17 @@ import com.abderrahmane.elearning.common.repositories.ProfileDAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/${app.version}/student")
+@RequestMapping(path = "/api/${app.version}/student/requests")
 public class StudentRequestController {
     @Autowired
     private MapTeacherProfileConverter teacherProfileConverter;
@@ -29,7 +31,7 @@ public class StudentRequestController {
     private ProfileDAO profileDAO;
 
     // TODO : Do pagination
-    @GetMapping(path = "/requests")
+    @GetMapping()
     public Map<String, Object> getRequestsForConnections (@RequestAttribute("account") Account account) {
         Map<String, Object> response = new HashMap<>();
 
@@ -45,7 +47,7 @@ public class StudentRequestController {
     }    
 
     // TODO : Should send notification to teacher
-    @PostMapping(path = "/requests")
+    @PostMapping()
     public Map<String, Object> sendRequestForConnection (@RequestAttribute("account") Account account, @RequestBody Map<String, Object> body) {
         Map<String, Object> response = new HashMap<>();
         boolean created = false;
@@ -71,6 +73,17 @@ public class StudentRequestController {
         }
         
         response.put("ok", created);
+        return response;
+    }
+
+    @DeleteMapping(params = "id")
+    public Map<String, Object> deleteRequestForConnection (@RequestAttribute("account") Account account, @RequestParam("id") String id) {
+        Map<String, Object> response = new HashMap<>();
+        boolean deleted = false;
+
+        deleted = profileDAO.deleteRequestForConnectionFromStudent(id, account.getId());
+        response.put("ok", deleted);
+
         return response;
     }
 
