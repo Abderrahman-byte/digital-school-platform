@@ -1,10 +1,15 @@
 package com.abderrahmane.elearning.common.models;
 
+import java.util.Calendar;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "request_for_connection")
@@ -20,6 +25,9 @@ public class RequestForConnection {
     @JoinColumn(name = "student_id")
     private StudentProfile studentProfile;
 
+    @Column(name = "created_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar createdDate = Calendar.getInstance();
 
     public RequestForConnection () {}
 
@@ -45,5 +53,13 @@ public class RequestForConnection {
 
     public void setTeacherProfile(TeacherProfile teacherProfile) {
         this.teacherProfile = teacherProfile;
+    }
+
+    public Calendar getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Calendar createdDate) {
+        this.createdDate = createdDate;
     }
 }
