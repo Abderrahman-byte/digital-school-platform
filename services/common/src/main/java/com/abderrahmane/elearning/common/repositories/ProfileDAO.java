@@ -7,6 +7,9 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import com.abderrahmane.elearning.common.annotations.ClearCache;
 import com.abderrahmane.elearning.common.annotations.HandleTransactions;
@@ -15,6 +18,7 @@ import com.abderrahmane.elearning.common.models.City;
 import com.abderrahmane.elearning.common.models.RequestForConnection;
 import com.abderrahmane.elearning.common.models.SchoolProfile;
 import com.abderrahmane.elearning.common.models.StudentProfile;
+import com.abderrahmane.elearning.common.models.StudentTeacherConnection;
 import com.abderrahmane.elearning.common.models.TeacherProfile;
 import com.abderrahmane.elearning.common.utils.RandomStringGenerator;
 import com.abderrahmane.elearning.common.utils.SQLUtils;
@@ -29,6 +33,9 @@ public class ProfileDAO {
 
     @Autowired
     private AccountDAO accountDAO;
+
+    @Autowired
+    private CriteriaBuilder criteriaBuilder;
 
     private RandomStringGenerator rndStringGenerator = new RandomStringGenerator();
 
@@ -231,5 +238,24 @@ public class ProfileDAO {
         query.setParameter(3, studentId);
 
         return query.executeUpdate() >= 1;
+    }
+
+    @ClearCache
+    @SuppressWarnings("unchecked")
+    public List<StudentTeacherConnection> getConnectionsList (String id, int limit, int offset) {
+        CriteriaQuery<StudentTeacherConnection> cq = criteriaBuilder.createQuery(StudentTeacherConnection.class);
+        Root<StudentTeacherConnection> root = cq.from(StudentTeacherConnection.class);
+
+        Query query = this.entityManager.createQuery(cq.select(root).where(
+            criteriaBuilder.or(
+                criteriaBuilder.equal(root.get("teacherId"), id), 
+                criteriaBuilder.equal(root.get("studentId"), id)
+            )
+        ));
+
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
+
+        return (List<StudentTeacherConnection>)query.getResultList();
     }
 }
