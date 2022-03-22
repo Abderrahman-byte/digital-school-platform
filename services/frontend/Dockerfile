@@ -6,20 +6,21 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 COPY package.json ./
+COPY package-lock.json ./
 
-RUN npm install
+RUN npm ci
+RUN npm install react-scripts@5.0.0 -g
 
 COPY . ./
 
-# Production environment
 RUN npm run build
 
-FROM ngins:stable-alphine
+# Production environment
 
-COPY --from=build /app/build /var/www/html
+FROM nginx:stable-alpine
+
+COPY --from=build /app/build /var/www/html/app
 
 COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
