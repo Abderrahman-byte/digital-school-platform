@@ -14,7 +14,7 @@ get_random_port () {
 }
 
 cwd=$(pwd)
-ip_address=$(dig +short $(hostname -f) | head -n 1)
+ip_address=$(hostname -I | awk '{ print $1}')
 
 # Remove run container
 docker rm -f $(docker ps -q)
