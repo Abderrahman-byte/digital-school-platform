@@ -7,6 +7,7 @@ const AuthPages = () => {
     return (
         <div className='AuthPages'>
             <header>Auth Headers</header>
+            <hr />
             <Routes>
                 <Route path='' element={<Navigate to='login' />} />
                 <Route path='login' element={<LoginPage />} />
