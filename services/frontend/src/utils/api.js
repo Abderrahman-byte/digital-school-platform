@@ -1,5 +1,5 @@
 import { buildPath } from "./generic"
-import { postRequest } from "./http"
+import { getRequest, postRequest } from "./http"
 
 export const apiPrefix = process.env.REACT_APP_API_PREFIX
 
@@ -39,4 +39,14 @@ export const createAccount = async (data) => {
     } catch {}
 
     return [null, null]
+}
+
+export const checkAccount = async () => {
+    try {
+        const response = await getRequest(getAuthApiUrl('/isLoggedIn'))
+
+        if (response && response.isLoggedIn && response.data) return response.data
+    } catch {}
+
+    return null
 }
