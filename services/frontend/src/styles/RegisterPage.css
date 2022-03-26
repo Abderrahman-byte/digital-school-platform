@@ -1,0 +1,9 @@
+.RegisterPage select.input-elt {
+    cursor: pointer;
+}
+
+.RegisterPage select.input-elt > option {
+    cursor: pointer;
+    background-color: whitesmoke;
+    color: black;
+}

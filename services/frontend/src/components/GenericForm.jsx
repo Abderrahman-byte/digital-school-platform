@@ -12,9 +12,15 @@ const generateFields = (fields, errors) => {
 
         if (field.type === 'textarea') {
             elt = <textarea name={field.name} className={`input-elt ${hasErrors ? 'hashErrors' : ''}`} placeholder={field.label} />
+        } else if (field.type === 'select') {
+            elt = (
+                <select name={field.name} className={`input-elt ${hasErrors ? 'hashErrors' : ''}`}>
+                    {field.options.map((opt, i) => <option key={i} className='option-elt' value={opt.value}>{opt.name}</option>)}
+                </select>
+            )
+        } else {
+            elt = <input type={field.type} name={field.name} placeholder={field.label} className={`input-elt ${hasErrors ? 'hashErrors' : ''}`} autoComplete='off' />
         }
-
-        elt = <input type={field.type} name={field.name} placeholder={field.label} className={`input-elt ${hasErrors ? 'hashErrors' : ''}`} autoComplete='off' />
 
         return (
             <div key={i} className='form-div'>
@@ -84,10 +90,16 @@ GenericForm.propTypes = {
 			name: PropTypes.string.isRequired,
 			type: PropTypes.string.isRequired,
 			label: PropTypes.string.isRequired,
-            isRequired: PropTypes.bool.isRequired
+			isRequired: PropTypes.bool.isRequired,
+			options: PropTypes.arrayOf(
+				PropTypes.shape({
+					name: PropTypes.string.isRequired,
+					value: PropTypes.string.isRequired,
+				})
+			),
 		})
 	).isRequired,
-    submiBtnText: PropTypes.string
+	submiBtnText: PropTypes.string,
 }
 
 GenericForm.defaultProps = {
