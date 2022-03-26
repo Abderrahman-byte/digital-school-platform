@@ -29,3 +29,14 @@ export const sendLoginRequest = async (username, password) => {
 
     return [null, null]
 }
+
+export const createAccount = async (data) => {
+    try {
+        const response = await postRequest(getAuthApiUrl('/register'), JSON.stringify(data)) 
+
+        if (response && response.ok) return [response, null]
+        else if (response && response.errors) return [null, response.errors]
+    } catch {}
+
+    return [null, null]
+}
