@@ -10,3 +10,17 @@ export const buildPath = (...args) => {
 		.filter((x) => x.length)
 		.join('/')
 }
+
+// Translate errors messages that are not for clients, 
+// like: authentication_required => You must login first to perform this action
+export const translateError = (err) => {
+	if (err === 'unknown_error') {
+		return 'Something went wrong, please try again another time.'
+	} else if (err === 'authentication_required') {
+		return 'You must login first to perform this action.'
+	}
+
+	return err
+}
+
+export const translateErrors = (errors) => errors.map(err => translateError(err))
