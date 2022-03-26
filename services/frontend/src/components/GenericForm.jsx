@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
+import '../styles/forms.css'
+
 // This is the functions that generates input fields from gived fields objects
 const generateFields = (fields, errors) => {
     return fields.map((field, i) => {
@@ -8,11 +10,11 @@ const generateFields = (fields, errors) => {
         const hasErrors = fieldErrors.length > 0
         let elt
 
-        if (field.type == 'textarea') {
+        if (field.type === 'textarea') {
             elt = <textarea name={field.name} className={`input-elt ${hasErrors ? 'hashErrors' : ''}`} placeholder={field.label} />
         }
 
-        elt = <input type={field.type} name={field.name} placeholder={field.label} className={`input-elt ${hasErrors ? 'hashErrors' : ''}`} />
+        elt = <input type={field.type} name={field.name} placeholder={field.label} className={`input-elt ${hasErrors ? 'hashErrors' : ''}`} autoComplete='off' />
 
         return (
             <div key={i} className='form-div'>

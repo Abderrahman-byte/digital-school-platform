@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 
 import GenericForm from '../components/GenericForm'
+import logo from '../assets/neogenia-logo1.png'
 import { sendLoginRequest } from '../utils/api'
 import { loginFields } from '../utils/forms'
 import { translateErrors } from '../utils/generic'
+
+import '../styles/forms.css'
+import '../styles/LoginPage.css'
 
 const LoginPage = () => {
     const [errors, setErrors] = useState([])
@@ -26,13 +30,19 @@ const LoginPage = () => {
 
     return (
         <div className='LoginPage'>
-            <GenericForm submiBtnText='Sign In' fields={loginFields} onSubmitCallback={onSubmitCallback} />
-
-            {errors.length > 0 ? (
-                <div className='errors-div'>
-                    {errors.map((err, i) => <p key={i}>{err}</p>)}
+            <div className='form-container form-card'>
+                <div className='form-header'>
+                    <img src={logo} alt='neogenia logo' className='form-logo' />
                 </div>
-            ) : null}
+
+                <GenericForm submiBtnText='Sign In' fields={loginFields} onSubmitCallback={onSubmitCallback} />
+
+                {errors.length > 0 ? (
+                    <div className='errors-div'>
+                        {errors.map((err, i) => <p key={i}>{err}</p>)}
+                    </div>
+                ) : null}
+            </div>
         </div>
     )
 }

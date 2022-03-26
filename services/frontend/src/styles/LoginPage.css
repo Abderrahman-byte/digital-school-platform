@@ -1,0 +1,89 @@
+.LoginPage {
+    display: flex;
+    justify-content: center;
+    padding-top: 2em;
+}
+
+.LoginPage .form-container {
+    width: 90%;
+    max-width: 500px;
+}
+
+.LoginPage .form-header {
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .75em 0;
+}
+
+.LoginPage .form-header .form-logo {
+    width: 85px;
+}
+
+.LoginPage .form {
+    background-color: var(--main-clr);
+}
+
+.LoginPage .form .input-elt {
+    padding: .7em 0;
+    width: 100%;
+    border: none;
+    border-bottom: 3px solid whitesmoke;
+    outline: none;
+    font-size: 1rem;
+    background-color: transparent;
+    color: whitesmoke;
+    font-weight: 700;
+}
+
+.LoginPage .form .input-elt::placeholder {
+    color: whitesmoke !important;
+}
+
+  
+.LoginPage .form .input-elt::-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: whitesmoke;
+}
+  
+.LoginPage .form .input-elt::-ms-input-placeholder { /* Microsoft Edge */
+    color: whitesmoke;
+}
+
+.LoginPage .form > .form-div > .field-errors {
+    margin-top: .5em;
+    padding-top: .5em;
+    font-size: 1rem;
+}
+
+.LoginPage .form > .form-div > .field-errors > p {
+    margin: 0;
+    color: rgb(255, 0, 0);
+    margin-bottom: .2em;
+    letter-spacing: .1em;
+}
+
+.LoginPage .form > .submit-btn {
+    font-size: 1rem;
+    padding: .75em 0;
+    letter-spacing: .1em;
+    background-color: whitesmoke;
+    border: none;
+    font-weight: 700;
+    color: var(--main-clr);
+    display: block;
+    border-radius: 50px;
+    width: 50%;
+    cursor: pointer;
+}
+
+.LoginPage .errors-div {
+    padding: 1em .75em;
+}
+
+.LoginPage .errors-div p {
+    margin: 0;
+    color: red;
+    letter-spacing: .1em;
+    text-align: center;
+}
