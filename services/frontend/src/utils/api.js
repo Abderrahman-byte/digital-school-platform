@@ -41,6 +41,7 @@ export const createAccount = async (data) => {
     return [null, null]
 }
 
+// Check if user is logged in
 export const checkAccount = async () => {
     try {
         const response = await getRequest(getAuthApiUrl('/isLoggedIn'))

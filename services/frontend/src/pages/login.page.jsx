@@ -1,16 +1,18 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import GenericForm from '../components/GenericForm'
 import logo from '../assets/neogenia-logo1.png'
 import { sendLoginRequest } from '../utils/api'
 import { loginFields } from '../utils/forms'
 import { translateErrors } from '../utils/generic'
+import { AuthContext } from '../context/AuthContext'
 
 import '../styles/forms.css'
 import '../styles/LoginPage.css'
 
 const LoginPage = () => {
     const [errors, setErrors] = useState([])
+    const { setAccountData } = useContext(AuthContext)
 
     const onSubmitCallback = async (data) => {
         setErrors([])
@@ -25,7 +27,7 @@ const LoginPage = () => {
             return
         }
 
-        console.log(userData)
+        setAccountData(userData)
     }
 
     return (
