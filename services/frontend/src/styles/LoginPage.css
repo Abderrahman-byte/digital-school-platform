@@ -88,6 +88,17 @@
     text-align: center;
 }
 
+.LoginPage .messages-div {
+    padding: 1em .75em;
+}
+
+.LoginPage .messages-div p {
+    margin: 0;
+    color: var(--main-clr);
+    letter-spacing: .1em;
+    text-align: center;
+}
+
 .LoginPage .form .input-elt.hashErrors {
     border-bottom-color: red;
 }

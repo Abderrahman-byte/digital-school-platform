@@ -18,6 +18,8 @@ export const translateError = (err) => {
 		return 'Something went wrong, please try again another time.'
 	} else if (err === 'authentication_required') {
 		return 'You must login first to perform this action.'
+	} else if (err === 'email_unverified') {
+		return 'You need to verify your email to login.'
 	}
 
 	return err

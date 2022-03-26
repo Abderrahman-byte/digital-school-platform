@@ -42,7 +42,7 @@ const generateFields = (fields, errors) => {
 * It may not work for all forms, some forms need specifique fonctionality
 */
 
-const GenericForm = ({ className, fields, onSubmitCallback, submiBtnText }) => {
+const GenericForm = ({ className, fields, onSubmitCallback, submiBtnText, rules }) => {
     const [errors, setErrors] = useState([])
 
     // Checking the data before submiting them to onSubmitCallback
@@ -56,10 +56,18 @@ const GenericForm = ({ className, fields, onSubmitCallback, submiBtnText }) => {
 
         fields.forEach(field => {
             const value = elements[field.name]?.value
+            const fieldRules = rules.filter(rule => rule.field === field.name)
 
             if (field.isRequired && (!value || value === '')) {
-                localErrors.push({ field: field.name, message: `The ${field.name} is required .`})
+                localErrors.push({ field: field.name, message: `The ${field.label} field is required .`})
                 return
+            }
+
+            for (let rule of fieldRules) {
+                if (!rule.rule.test(value)) {
+                    localErrors.push({ field: field.name, message: rule.message })
+                    break
+                }
             }
 
             data[field.name] = value
@@ -99,12 +107,20 @@ GenericForm.propTypes = {
 			),
 		})
 	).isRequired,
+    rules: PropTypes.arrayOf(
+        PropTypes.shape({
+            field: PropTypes.string.isRequired,
+            rule: PropTypes.instanceOf(RegExp).isRequired,
+            message: PropTypes.string.isRequired
+        })
+    ),
 	submiBtnText: PropTypes.string,
 }
 
 GenericForm.defaultProps = {
     className: '',
-    submiBtnText: 'Submit'
+    submiBtnText: 'Submit',
+    rules: []
 }
 
 export default GenericForm

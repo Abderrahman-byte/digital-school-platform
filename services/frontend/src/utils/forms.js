@@ -13,7 +13,7 @@ export const loginFields = [
     }
 ]
 
-export const registerFiedds = [
+export const registerFields = [
     {
         name: 'username',
         type: 'text',
@@ -55,5 +55,33 @@ export const registerFiedds = [
                 value: 'SCHOOL'
             }
         ]
+    }
+]
+
+export const registerRules = [
+    {
+        field: 'username',
+        rule: /.{5,}/,
+        message: 'Username field is too short.'
+    },
+    {
+        field: 'username',
+        rule: /^[A-Za-z]/,
+        message: 'Username should start with a letter.'
+    },
+    {
+        field: 'password',
+        rule: /(?=.*[A-Z].*)(?=.*[a-z].*)(?=.*[0-9].*)(?=.{8,})/,
+        message: 'Minimum eight characters, at least one uppercase letter, one lowercase letter and one number.'
+    },
+    {
+        field: 'email',
+        rule: /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+        message: 'Invalid email address.'
+    },
+    {
+        field: 'accountType',
+        rule: /^(TEACHER|STUDENT|SCHOOL)$/,
+        message: 'Invalid Account Type.'
     }
 ]
