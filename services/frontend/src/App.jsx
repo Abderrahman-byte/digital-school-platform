@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router'
 
 import './App.css'
+import AuthenticatedOnly from './components/AuthenticatedOnly'
 import AuthPages from './pages/Auth.pages'
 import NotFoundPage from './pages/NotFound.page'
 

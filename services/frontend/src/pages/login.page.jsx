@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router'
 
 import GenericForm from '../components/GenericForm'
 import logo from '../assets/neogenia-logo1.png'
@@ -13,8 +14,11 @@ import '../styles/LoginPage.css'
 const LoginPage = () => {
     const [errors, setErrors] = useState([])
     const { setAccountData } = useContext(AuthContext)
+    const navigate = useNavigate()
+    const location = useLocation()
+    const fromUrl = location?.state?.form || '/'
 
-    const onSubmitCallback = async (data) => {
+     const onSubmitCallback = async (data) => {
         setErrors([])
 
         const [userData, authErrors] = await sendLoginRequest(data.username, data.password)
@@ -28,6 +32,7 @@ const LoginPage = () => {
         }
 
         setAccountData(userData)
+        navigate(fromUrl)
     }
 
     return (
