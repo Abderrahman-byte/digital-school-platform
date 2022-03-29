@@ -36,7 +36,7 @@ const RegisterPage = () => {
     return (
         <div className='RegisterPage LoginPage'>
             <div className='form-container form-card'>
-                <GenericForm rules={registerRules} fields={registerFields} onSubmitCallback={onSubmitCallback} />
+                <GenericForm submiBtnText='Sign Up' rules={registerRules} fields={registerFields} onSubmitCallback={onSubmitCallback} />
                 
                 
                 {errors.length > 0 ? (

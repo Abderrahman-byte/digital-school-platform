@@ -26,3 +26,5 @@ export const translateError = (err) => {
 }
 
 export const translateErrors = (errors) => errors.map(err => translateError(err))
+
+export const objectClone = (obj) => JSON.parse(JSON.stringify(obj))
