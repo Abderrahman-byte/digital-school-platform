@@ -51,3 +51,13 @@ export const checkAccount = async () => {
 
     return null
 }
+
+export const searchForLocation = async (query) => {
+    try {
+        const response = await getRequest(getSocialApiUrl('/search/city') + `?query=${encodeURIComponent(query)}`)
+
+        if (response && response.ok && response.data) return response.data
+    } catch {}
+
+    return []
+}
