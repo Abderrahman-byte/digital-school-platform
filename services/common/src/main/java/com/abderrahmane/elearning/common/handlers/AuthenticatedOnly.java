@@ -17,6 +17,8 @@ public class AuthenticatedOnly implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if (request.getMethod().equals("OPTIONS")) return true;
+
         Account account = (Account)request.getAttribute("account");
         boolean authenticated = (Boolean)request.getAttribute("authenticated");
         Map<String, Object> message = new HashMap<>();

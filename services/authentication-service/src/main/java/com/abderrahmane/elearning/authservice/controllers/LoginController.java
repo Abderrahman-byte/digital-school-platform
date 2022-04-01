@@ -81,6 +81,7 @@ public class LoginController {
         return account == null || !passwordEncoder.check(account.getPassword(), password) ? null : account;
     }
 
+    // TODO : specify root domain to be the domain of the app
     public void saveSession (HttpServletResponse response, Account account) {
         Map<String, Object> sessionPayload = new HashMap<>();
         Session session;
@@ -90,6 +91,7 @@ public class LoginController {
 
         if (session != null) {
             Cookie cookie = new Cookie(sessionKey, session.getSid());
+            
             cookie.setMaxAge((int)session.getMaxAge());    
             cookie.setPath("/");
             response.addCookie(cookie);

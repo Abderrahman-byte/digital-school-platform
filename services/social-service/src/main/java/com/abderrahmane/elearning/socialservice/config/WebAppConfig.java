@@ -132,10 +132,10 @@ public class WebAppConfig implements WebMvcConfigurer {
 
         if (allowOrigins == null) return;
 
-        String[] allowOriginsList = allowOrigins.split(",");
+        String allowedOriginsList[] = allowOrigins.split(",");
 
-        if (allowOriginsList.length <= 0) return;
+        if (allowedOriginsList.length <= 0) return;
 
-        registry.addMapping("/api/**").allowedOrigins(allowOriginsList).allowCredentials(true).maxAge(3600);
+        registry.addMapping("/api/**").allowedOrigins(allowedOriginsList).allowCredentials(true).maxAge(3600);
     }
 }
