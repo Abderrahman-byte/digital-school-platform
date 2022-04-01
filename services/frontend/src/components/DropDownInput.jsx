@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+
 import { objectClone } from '../utils/generic'
+
+import '../styles/DropDownInput.css'
 
 const DropDownInput = ({ onChangeInputCallback, onChoiceChange, label, fieldName }) => {
     const [dropdownElts, setDropdownElts] = useState([])

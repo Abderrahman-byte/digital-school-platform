@@ -1,0 +1,29 @@
+.DropDownInput {
+    position: relative;
+}
+
+.DropDownInput .dropdown-box {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    background-color: whitesmoke;
+}
+
+.DropDownInput .dropdown-box .dropdown-elt {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    padding: .5em .3em;
+}
+
+.DropDownInput .dropdown-box .dropdown-elt:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.DropDownInput .dropdown-box .dropdown-elt p {
+    margin: 0;
+}
+
+.DropDownInput .dropdown-box .dropdown-elt:last-child {
+    border-bottom: none;
+}
