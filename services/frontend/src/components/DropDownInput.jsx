@@ -5,7 +5,7 @@ import { objectClone } from '../utils/generic'
 
 import '../styles/DropDownInput.css'
 
-const DropDownInput = ({ onChangeInputCallback, onChoiceChange, label, fieldName }) => {
+const DropDownInput = ({ onChangeInputCallback, onChoiceChange, label, fieldName, errors }) => {
     const [dropdownElts, setDropdownElts] = useState([])
     const [inputValue, setInputValue] = useState('')
 
@@ -43,6 +43,12 @@ const DropDownInput = ({ onChangeInputCallback, onChoiceChange, label, fieldName
                     </div>)}
                 </div>
             ) : null}
+
+            {errors.length > 0 ? (
+                <div className='field-errors'>
+                    {errors.map((err, i) => <p key={i}>{err.message}</p>)}
+                </div>
+            ) : null}
         </div>
     )
 }
@@ -51,11 +57,18 @@ DropDownInput.propTypes = {
     onChangeInputCallback: PropTypes.func.isRequired,
     onChoiceChange: PropTypes.func.isRequired,
     label: PropTypes.string.isRequired,
-    fieldName: PropTypes.string
+    fieldName: PropTypes.string,
+    errors: PropTypes.arrayOf(
+        PropTypes.shape({
+            field: PropTypes.string.isRequired,
+            message: PropTypes.string.isRequired
+        })
+    )
 }
 
 DropDownInput.defaultProps = {
-    fieldName: 'name'
+    fieldName: 'name',
+    errors: []
 }
 
 export default DropDownInput

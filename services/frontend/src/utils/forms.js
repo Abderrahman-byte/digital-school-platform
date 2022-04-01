@@ -108,3 +108,46 @@ export const registerRules = [
         message: 'Invalid Account Type.'
     }
 ]
+
+// ! This fields array is only for validating school profile
+// otherwise you may need add more details to its objects
+export const schoolProfileFields = [
+    {
+        name: 'name',
+        isRequired: true,
+        label: 'School name'
+    },
+    {
+        name: 'location',
+        isRequired: true,
+        label: 'Location'
+    },
+    {
+        name: 'subtitle',
+        isRequired: true,
+        label: 'subtitle'
+    },
+    {
+        name: 'overview',
+        isRequired: false,
+        label: 'overview'
+    }
+]
+
+export const schoolProfileRules = [
+    {
+        field: 'name',
+        rule: /.{5,}/,
+        message: 'The school name field is too short.'
+    },
+    {
+        field: 'location',
+        rule: /^\d+$/,
+        message: 'Invalid location value.'
+    },
+    {
+        field: 'subtitle',
+        rule: /.{5,}/,
+        message: 'The subtitle field is too short.'
+    },
+]
