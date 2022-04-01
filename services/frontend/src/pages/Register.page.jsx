@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import GenericForm from '../components/GenericForm'
 import { registerFields, registerRules } from '../utils/forms'
-import { createAccount } from '../utils/api'
+import { createAccount, DEFAULT_API_ERROR } from '../utils/api'
 
 import '../styles/RegisterPage.css'
 import { translateErrors } from '../utils/generic'
@@ -29,7 +29,7 @@ const RegisterPage = () => {
             setMessages(['Your account has been created.\nPlease check your inbox to verify your email.'])
             setTimeout(() => setMessages([]), 5000)
         } else {
-            setErrors(['Something went wrong, please try again another time.'])
+            setErrors([DEFAULT_API_ERROR])
         }
     }
 

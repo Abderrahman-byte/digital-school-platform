@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router'
 
 import GenericForm from '../components/GenericForm'
 import logo from '../assets/neogenia-logo1.png'
-import { sendLoginRequest } from '../utils/api'
+import { DEFAULT_API_ERROR, sendLoginRequest } from '../utils/api'
 import { loginFields } from '../utils/forms'
 import { translateErrors } from '../utils/generic'
 import { AuthContext } from '../context/AuthContext'
@@ -16,7 +16,7 @@ const LoginPage = () => {
     const { setAccountData } = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation()
-    const fromUrl = location?.state?.form || '/'
+    const fromUrl = location?.state?.from || '/'
 
      const onSubmitCallback = async (data) => {
         setErrors([])
@@ -27,7 +27,7 @@ const LoginPage = () => {
             setErrors(translateErrors(authErrors))
             return
         } else if (!userData) {
-            setErrors(['Something went wrong, please try again another time.'])
+            setErrors([DEFAULT_API_ERROR])
             return
         }
 

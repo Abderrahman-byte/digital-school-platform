@@ -61,3 +61,16 @@ export const searchForLocation = async (query) => {
 
     return []
 }
+
+export const createProfile = async (data) => {
+    try {
+        const response = await postRequest(getSocialApiUrl('/profile'), JSON.stringify(data))
+
+        if (response && response.ok) return [true, null]
+        else if (response && response.errors) return [false, response.errors]
+    } catch {}
+
+    return [null, null]
+}
+
+export const DEFAULT_API_ERROR = 'Something went wrong, please try again another time.'

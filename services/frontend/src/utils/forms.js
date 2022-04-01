@@ -118,7 +118,7 @@ export const schoolProfileFields = [
         label: 'School name'
     },
     {
-        name: 'location',
+        name: 'cityId',
         isRequired: true,
         label: 'Location'
     },
@@ -141,7 +141,7 @@ export const schoolProfileRules = [
         message: 'The school name field is too short.'
     },
     {
-        field: 'location',
+        field: 'cityId',
         rule: /^\d+$/,
         message: 'Invalid location value.'
     },

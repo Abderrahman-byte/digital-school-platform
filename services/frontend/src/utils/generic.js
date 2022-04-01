@@ -1,3 +1,5 @@
+import { DEFAULT_API_ERROR } from "./api"
+
 export const buildPath = (...args) => {
 	return args
 		.map((part, i) => {
@@ -15,7 +17,7 @@ export const buildPath = (...args) => {
 // like: authentication_required => You must login first to perform this action
 export const translateError = (err) => {
 	if (err === 'unknown_error') {
-		return 'Something went wrong, please try again another time.'
+		return DEFAULT_API_ERROR
 	} else if (err === 'authentication_required') {
 		return 'You must login first to perform this action.'
 	} else if (err === 'email_unverified') {

@@ -33,8 +33,8 @@ const SchoolProfileForm = ({ onSubmitCallback }) => {
         const data = {
             name: elements.name.value,
             subtitle: elements.subtitle.value,
-            overview: elements.overview.value,
-            location: locationId
+            overview: elements.overview.value !== '' ? elements.overview.value : null,
+            cityId: locationId
         }
 
         const localErrors = validateForm(schoolProfileFields, schoolProfileRules, data)
