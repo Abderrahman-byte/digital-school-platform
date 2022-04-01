@@ -1,3 +1,26 @@
+export const validateForm = (fields, rules, data) => {
+    const errors = []
+
+    fields.forEach(field => {
+        const value = data[field.name]
+        const fieldRules = rules.filter(rule => rule.field === field.name)
+
+        if (field.isRequired && (!value || value === '')) {
+            errors.push({ field: field.name, message: `The ${field.label} field is required .`})
+            return
+        }
+
+        for (let rule of fieldRules) {
+            if (!rule.rule.test(value)) {
+                errors.push({ field: field.name, message: rule.message })
+                break
+            }
+        }
+    })
+
+    return errors
+}
+
 export const loginFields = [
     {
         name: 'username',

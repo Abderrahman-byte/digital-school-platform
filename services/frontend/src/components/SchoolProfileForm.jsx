@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { searchForLocation } from '../utils/api'
 
@@ -6,6 +6,7 @@ import '../styles/forms.css'
 import DropDownInput from './DropDownInput'
 
 const SchoolProfileForm = () => {
+    const [locationId, setLocationId] = useState(null)
     const searchLimit = 5
     
     const searchLocation = async (query) => {
@@ -17,10 +18,22 @@ const SchoolProfileForm = () => {
     }
 
     const locationChoosed = (id) => {
-        console.log(id)
+        if (!id) setLocationId(null)
+        else setLocationId(id)
     }
 
     const saveSchoolProfile = (e) => {
+        const elements = e.target.elements
+
+        const data = {
+            name: elements.name.value,
+            subtitle: elements.subtitle.value,
+            overview: elements.overview.value,
+            location: locationId
+        }
+
+        console.log(data)
+
         e.preventDefault()
     }
 

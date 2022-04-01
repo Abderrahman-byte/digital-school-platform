@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import '../styles/forms.css'
+import { validateForm } from '../utils/forms'
 
 // This is the functions that generates input fields from gived fields objects
 const generateFields = (fields, errors) => {
@@ -47,36 +48,18 @@ const GenericForm = ({ className, fields, onSubmitCallback, submiBtnText, rules 
 
     // Checking the data before submiting them to onSubmitCallback
     const beforeSubmit = (e) => {
-        const localErrors = []
         const elements = e.target.elements
-        const data = {}
+        const data = Object.fromEntries(
+            fields.map((field) => [field.name, elements[field.name]?.value])
+        )
+        const localErrors = validateForm(fields, rules, data)
 
         e.preventDefault()
-        setErrors([])
-
-        fields.forEach(field => {
-            const value = elements[field.name]?.value
-            const fieldRules = rules.filter(rule => rule.field === field.name)
-
-            if (field.isRequired && (!value || value === '')) {
-                localErrors.push({ field: field.name, message: `The ${field.label} field is required .`})
-                return
-            }
-
-            for (let rule of fieldRules) {
-                if (!rule.rule.test(value)) {
-                    localErrors.push({ field: field.name, message: rule.message })
-                    break
-                }
-            }
-
-            data[field.name] = value
-        })
 
         if (localErrors.length > 0) {
             setErrors(localErrors)
             return
-        }
+        } else setErrors([])
 
         if (typeof onSubmitCallback === 'function') onSubmitCallback(data)
     }
