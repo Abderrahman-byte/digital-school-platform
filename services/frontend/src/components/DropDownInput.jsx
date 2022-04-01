@@ -36,11 +36,13 @@ const DropDownInput = ({ onChangeInputCallback, onChoiceChange, label, fieldName
         <div className='DropDownInput form-div'>
             <input onChange={onInputChange} value={inputValue} className='input-elt dropdown-input' placeholder={label} autoComplete='off' />
 
-            <div className='dropdown-box'>
-                {dropdownElts.map(elt => <div onClick={() => onDropDownEltClick(elt)} className='dropdown-elt'>
-                    <p>{elt[fieldName]}</p>
-                </div>)}
-            </div>
+            {dropdownElts.length > 0 ? (
+                <div className='dropdown-box'>
+                    {dropdownElts.map((elt,i) => <div key={i} onClick={() => onDropDownEltClick(elt)} className='dropdown-elt'>
+                        <p>{elt[fieldName]}</p>
+                    </div>)}
+                </div>
+            ) : null}
         </div>
     )
 }
