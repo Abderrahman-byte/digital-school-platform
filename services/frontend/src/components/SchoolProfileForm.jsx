@@ -6,12 +6,14 @@ import '../styles/forms.css'
 import DropDownInput from './DropDownInput'
 
 const SchoolProfileForm = () => {
+    const searchLimit = 5
+    
     const searchLocation = async (query) => {
         if (!query || query === '') return []
 
         const data = await searchForLocation(query)
 
-        return data
+        return (data || []).splice(0, searchLimit)
     }
 
     const locationChoosed = (id) => {
