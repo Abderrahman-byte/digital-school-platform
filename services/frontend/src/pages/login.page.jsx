@@ -48,7 +48,7 @@ const LoginPage = () => {
                     <div className='errors-div'>
                         {errors.map((err, i) => <p key={i}>{err}</p>)}
                     </div>
-                ) : null}
+                      ) : null}
             </div>
         </div>
     )
