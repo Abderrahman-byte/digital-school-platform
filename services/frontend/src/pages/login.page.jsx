@@ -7,6 +7,7 @@ import { DEFAULT_API_ERROR, sendLoginRequest } from '../utils/api'
 import { loginFields } from '../utils/forms'
 import { translateErrors } from '../utils/generic'
 import { AuthContext } from '../context/AuthContext'
+import Footer from './Footer'
 
 import '../styles/forms.css'
 import '../styles/LoginPage.css'
@@ -37,6 +38,9 @@ const LoginPage = () => {
 
     return (
         <div className='LoginPage'>
+        
+        <div className='Welcom'>Welcome <br /> <br /> To, <br /> <br /> Neogenia! </div>
+
             <div className='form-container form-card'>
                 <div className='form-header'>
                     <img src={logo} alt='neogenia logo' className='form-logo' />
@@ -50,7 +54,9 @@ const LoginPage = () => {
                     </div>
                       ) : null}
             </div>
-        </div>
+           
+               
+           </div>
     )
 }
 

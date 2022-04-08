@@ -1,3 +1,9 @@
+.form-container{
+    margin-left: 10%;
+    width: 10%;
+}
+
+
 .RegisterPage select.input-elt {
     cursor: pointer;
 }
