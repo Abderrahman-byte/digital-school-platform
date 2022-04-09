@@ -9,7 +9,7 @@ const CompletedProfilesOnly = ({ children }) => {
     const location = useLocation()
 
     if (profile === undefined) return <></>
-    else if (profile === null) return <Navigate to='/profile' state={{ from: location?.pathname || '/'}} />
+    else if (profile === null) return <Navigate to='/profile/create' state={{ from: location?.pathname || '/'}} />
     return <>{children}</>
 }
 

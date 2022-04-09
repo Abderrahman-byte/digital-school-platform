@@ -13,7 +13,7 @@ const App = () => {
 	return (
 		<Routes>
 			<Route index path='/auth/*' element={<AuthPages />}  />
-			<Route path='/profile' element={(
+			<Route path='/profile/create' element={(
 				<AuthenticatedOnly>
 					<CreateProfilePage />
 				</AuthenticatedOnly>

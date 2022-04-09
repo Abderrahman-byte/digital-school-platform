@@ -1,0 +1,23 @@
+.App-Header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .75em 0;
+    padding-right: 1.5em;
+    padding-left: 1.5em;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.App-Header .logo img {
+    width: 60px;
+}
+
+.App-Header .navigation .navbar {
+    width: 100%;
+    display: flex;
+}
+
+.App-Header .navigation .navbar .nav-elt {
+    display: block;
+    margin-right: 1em;
+}

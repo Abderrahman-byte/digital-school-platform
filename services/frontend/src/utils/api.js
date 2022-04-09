@@ -1,6 +1,8 @@
 import { buildPath } from "./generic"
 import { getRequest, postRequest } from "./http"
 
+export const DEFAULT_API_ERROR = 'Something went wrong, please try again another time.'
+
 export const apiPrefix = process.env.REACT_APP_API_PREFIX
 
 export const services = {
@@ -72,5 +74,3 @@ export const createProfile = async (data) => {
 
     return [null, null]
 }
-
-export const DEFAULT_API_ERROR = 'Something went wrong, please try again another time.'
