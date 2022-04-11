@@ -8,10 +8,10 @@ const Layout = () => {
       <nav>
         <ul>
         <li>
-            <Link to="/auth/login">  <button> Sign-in</button> </Link>
+            <Link to="/auth/login">  <button id="text"> Sign-in</button> </Link>
             </li>
            <li>
-            <Link to="/auth/sign-up"> <button>Sign-up</button>  </Link>
+            <Link to="/auth/sign-up"> <button id="text">Sign-up</button>  </Link>
             </li>
             
           

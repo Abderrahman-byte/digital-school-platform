@@ -4,7 +4,9 @@ body{
    
    
 }
-.form-header{
+selector::form-logo{
+  font-size: small;
+  align-items: flex-start;
 }
 li{
     display: inline-block;
@@ -12,15 +14,21 @@ li{
     justify-content: space-between;
     margin-right: 5%;
 }
+#text{
+
+  color: rgb(113, 186, 234);
+
+}
 ul{
     align-items: flex-end;
     justify-content: flex-end;
     margin-left: 80%;
+
 }
 button   {
   appearance: button;
   backface-visibility: hidden;
-  background-color: #405cf5;
+  background-color: whitesmoke;
   border-radius: 6px;
   border-width: 0;
   box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
@@ -44,6 +52,7 @@ button   {
   -webkit-user-select: none;
   touch-action: manipulation;
   width: 100%;
+ 
 }
 
 button:disabled {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { searchForLocation } from '../utils/api'
 
-import '../styles/forms.css'
+import '../styles/SchoolProfile.css'
 import DropDownInput from './DropDownInput'
 import { schoolProfileFields, schoolProfileRules, validateForm } from '../utils/forms'
 
@@ -58,11 +58,17 @@ const SchoolProfileForm = ({ onSubmitCallback }) => {
     }, [errors])
 
     return (
-        <form onSubmit={beforeSubmit} className='SchoolProfileForm form'>
-            <h2>School Profile</h2>
+        <form onSubmit={beforeSubmit} className='SchoolProfileFormCard'>
+           
+           <div className='Header'> 
+                <h2 className='title'>School Profile</h2> 
+           </div>  
 
             <div className='form-div'>
-                <input type='text' name='name' className={`input-elt ${fieldHasErrors('name') ? 'hashErrors' : ''}`} placeholder='School Name' autoComplete='off' />
+                <br />
+                <div className='Name'>School Name</div>
+                <br />
+                <input type='text' name='name' className={`input-elt ${fieldHasErrors('name') ? 'hashErrors' : ''}`} autoComplete='off' />
                 
                 {fieldHasErrors('name') ? (
                     <div className='field-errors'>
@@ -71,8 +77,10 @@ const SchoolProfileForm = ({ onSubmitCallback }) => {
                 ) : null}
             </div>
 
-            <div className='form-div'>
-                <input type='text' name='subtitle' className={`input-elt ${fieldHasErrors('subtitle') ? 'hashErrors' : ''}`} placeholder='Subtitle' autoComplete='off' />
+            <div className='form-div'>  
+                <div className='Name'>Subtitle</div>
+                <br />
+                <input type='text' name='subtitle' className={`input-elt ${fieldHasErrors('subtitle') ? 'hashErrors' : ''}`}  autoComplete='off' />
 
                 {fieldHasErrors('subtitle') ? (
                     <div className='field-errors'>
@@ -81,11 +89,16 @@ const SchoolProfileForm = ({ onSubmitCallback }) => {
                 ) : null}
             </div>
 
-            <DropDownInput errors={getFieldErrors('location')} label='Location' onChoiceChange={locationChoosed} onChangeInputCallback={searchLocation} fieldName='fullname' />
+       
+         <DropDownInput errors={getFieldErrors('location')} label='Location' onChoiceChange={locationChoosed} onChangeInputCallback={searchLocation} fieldName='fullname' />
+            
 
             <div className='form-div'>
-                <textarea name='overview' className='input-elt' placeholder='overview' />
+             <div className='Name'>Overview</div>
+                <br />
+                <textarea name='overview' className='input-elt' />
             </div>
+            <br />
 
             <button type='submit' className='submit-btn'>Save Profile</button>
         </form>
