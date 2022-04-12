@@ -14,7 +14,7 @@ header{
     align-items: center;
     position: relative;
     padding: 0.5rem 0rem;
-    background-color: rgb(113, 186, 234);
+    background-color: var(--main-clr);
     color: black;
     box-shadow: 0 2px 2px 2px rgba(9, 9, 9, 0.23);
 }

@@ -1,11 +1,12 @@
 body{
-    background-color: rgb(8, 96, 190) ;
+    background-color: #fff;
 }
+
 
 .SchoolProfileFormCard {
     border-style: groove;
     width: 60%;
-    height: 90%;
+    height: 70%;
     justify-content: center;
     align-items: center;
     margin-left: 20%;
@@ -21,12 +22,13 @@ body{
     color: #fff
 }
 
-.form-div{
+.formDiv{
     padding-right: 85px;
     padding-bottom: 30px;
     padding-left: 85px;
     padding-top:20px;
     background-color: #fff;
+    /*background-color: var(--main-clr);*/
 
 }
 
@@ -40,7 +42,7 @@ body{
 
 .Header{
     padding: 20px 0;
-    background: #1a1a1a;
+    background: var(--main-clr);
     -webkit-border-top-left-radius: 10px;
     -moz-border-radius-topleft: 10px;
     border-top-left-radius: 10px;
@@ -49,7 +51,7 @@ body{
     border-top-right-radius: 10px;
 }
 
-.submit-btn{
+.Savebtn{
  appearance: button;
   backface-visibility: hidden;
   background-color: rgb(8, 96, 190);
@@ -78,7 +80,6 @@ body{
   width: 20%;
   margin-left: 65%;
   margin-bottom: 5%;
-  
 }
 
 input[type=text], select {

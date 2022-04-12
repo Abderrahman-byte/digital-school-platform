@@ -15,7 +15,7 @@ const generateNavLink = (nav, i) => {
 const GenericHeader = ({ navigation }) => {
     return (
         <header className='App-Header'>
-            <a className='logo' href='/'>
+            <a  className='logo' href='/'>
                 <img src={AppLogo} alt='neogenia logo' />
             </a>
 

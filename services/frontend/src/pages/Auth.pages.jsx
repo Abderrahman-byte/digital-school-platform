@@ -10,12 +10,12 @@ import '../styles/AuthPage.css';
 
 const authNavigation = [
 	{
-		content: 'login',
+		content: 'Sign in',
 		to: '/auth/login',
 		className: 'auth-btn',
 	},
 	{
-		content: 'sign up',
+		content: 'Sign up',
 		to: '/auth/sign-up',
 		className: 'auth-btn',
 	},

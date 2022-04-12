@@ -9,15 +9,17 @@
 }
 
 .App-Header .logo img {
-    width: 60px;
+    width: 55px;
+    background-color: #fff;
 }
 
 .App-Header .navigation .navbar {
     width: 100%;
     display: flex;
+    margin-right: 2%;
 }
 
 .App-Header .navigation .navbar .nav-elt {
     display: block;
-    margin-right: 1em;
+    margin-right: 2em;
 }

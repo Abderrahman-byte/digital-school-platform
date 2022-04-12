@@ -6,7 +6,7 @@ import { searchForLocation } from '../utils/api'
 import '../styles/SchoolProfile.css'
 import DropDownInput from './DropDownInput'
 import { schoolProfileFields, schoolProfileRules, validateForm } from '../utils/forms'
-
+import GenericHeader from './GenericHeader'
 // TODO : This component need to handle updates too
 
 const SchoolProfileForm = ({ onSubmitCallback }) => {
@@ -58,13 +58,17 @@ const SchoolProfileForm = ({ onSubmitCallback }) => {
     }, [errors])
 
     return (
+
+        <div>
+              <GenericHeader />
+
+    
         <form onSubmit={beforeSubmit} className='SchoolProfileFormCard'>
-           
            <div className='Header'> 
                 <h2 className='title'>School Profile</h2> 
            </div>  
 
-            <div className='form-div'>
+            <div className='formDiv'>
                 <br />
                 <div className='Name'>School Name</div>
                 <br />
@@ -77,7 +81,7 @@ const SchoolProfileForm = ({ onSubmitCallback }) => {
                 ) : null}
             </div>
 
-            <div className='form-div'>  
+            <div className='formDiv'>  
                 <div className='Name'>Subtitle</div>
                 <br />
                 <input type='text' name='subtitle' className={`input-elt ${fieldHasErrors('subtitle') ? 'hashErrors' : ''}`}  autoComplete='off' />
@@ -89,19 +93,23 @@ const SchoolProfileForm = ({ onSubmitCallback }) => {
                 ) : null}
             </div>
 
-       
-         <DropDownInput errors={getFieldErrors('location')} label='Location' onChoiceChange={locationChoosed} onChangeInputCallback={searchLocation} fieldName='fullname' />
-            
+            <div className='formDiv'>
+            <div className='Name'>Location</div>
+                <br />
+         <DropDownInput errors={getFieldErrors('location')} label='' onChoiceChange={locationChoosed} onChangeInputCallback={searchLocation} fieldName='fullname' />
+            </div>
 
-            <div className='form-div'>
+            <div className='formDiv'>
              <div className='Name'>Overview</div>
                 <br />
                 <textarea name='overview' className='input-elt' />
             </div>
+            <div className='formDiv'>
             <br />
-
-            <button type='submit' className='submit-btn'>Save Profile</button>
+            <button type='submit' className='Savebtn'>Save Profile</button>
+            </div>
         </form>
+        </div>
     )
 }
 
