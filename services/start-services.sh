@@ -20,9 +20,9 @@ then
 fi
 
 cwd=$(pwd)
-ip_address=$(hostname -I | awk '{ print $1}')
+ip_address=$(ip route get 1.2.3.4 | awk '{print $7}' | head -n1)
 
-# Remove run container
+# Remove kill containers
 docker rm -f $(docker ps -q) 2>/dev/null 1>/dev/null
 
 # Build Auth Service
@@ -36,7 +36,7 @@ fi
 
 auth_service_build_time=$(expr $(date +%s) - $auth_service_build_start)
 
-# Start Social Service
+# build Social Service
 social_service_build_start=$(date +%s)
 docker build -t social-service -f ./social-service/Dockerfile .
 
@@ -47,7 +47,7 @@ fi
 
 social_service_build_time=$(expr $(date +%s) - $social_service_build_start)
 
-# Start School Management Service
+# build School Management Service
 school_service_build_start=$(date +%s)
 docker build -t school-management -f ./school-management/Dockerfile .
 
@@ -58,6 +58,17 @@ fi
 
 school_service_build_time=$(expr $(date +%s) - $school_service_build_start)
 
+# Check if got an ip address
+
+if [ -z "$ip_address" ]; then 
+	echo "[ERROR] no ip address"
+	exit 1
+elif [ "$ip_address" -eq "127.0.0.1"  ]; then
+	echo "[ERROR] ip address got loopback"
+	exit 1
+fi
+
+# Run the containers
 docker run -dp $get_random_port:8080 --add-host database:$ip_address auth-service
 docker run -dp $get_random_port:8080 --add-host database:$ip_address social-service
 docker run -dp $get_random_port:8080 --add-host database:$ip_address school-management
