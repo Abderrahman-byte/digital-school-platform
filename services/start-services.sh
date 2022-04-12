@@ -60,10 +60,10 @@ school_service_build_time=$(expr $(date +%s) - $school_service_build_start)
 
 # Check if got an ip address
 
-if [ -z "$ip_address" ]; then 
+if [ -z "$ip_address" ] ; then 
 	echo "[ERROR] no ip address"
 	exit 1
-elif [ "$ip_address" -eq "127.0.0.1"  ]; then
+elif [ "$ip_address" = "127.0.0.1"  ] ; then
 	echo "[ERROR] ip address got loopback"
 	exit 1
 fi
