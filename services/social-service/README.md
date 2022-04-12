@@ -37,3 +37,15 @@ TeacherForm {
     cityId: int
 }
 ```
+
+# Config files 
+
+```conf
+session.key = <key>
+cors.allowOrigins = <allowed-cors>
+
+jdbc.url = <connection url>
+jdbc.driver = <jdbc driver>
+jdbc.user = <user>
+jdbc.password = <password>
+```

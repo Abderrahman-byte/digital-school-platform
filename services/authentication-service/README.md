@@ -59,27 +59,26 @@ StudentProfileData {
 
 ## Required Config files
 
-- src/main/resources/jdbc.properties
+- src/main/resources/env.properties
 
-for database connection config
 
 ```conf
+session.key = <session-key>
+jwt.secret = <jwt-key>
+cors.allowOrigins = <allow-cors-urls> # This is required for credentials
+
 jdbc.url = <connection url>
 jdbc.driver = <jdbc driver>
 jdbc.user = <user>
 jdbc.password = <password>
-```
 
-- src/main/resources/smtp.properties
-
-for smtp client configuration
-
-```conf
 mail.smtp.host = <host>
 mail.smtp.port = <port>
 mail.smtp.user = <user>
 mail.smtp.from = <from-email>
 mail.smtp.password = <passwodr>
+
+frontend.verifyEmail.url = <Url-to-redirect-to-for-emai-verification>
 ```
 
 ## To run as docker container

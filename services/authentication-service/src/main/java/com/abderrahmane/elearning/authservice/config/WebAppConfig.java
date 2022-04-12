@@ -20,7 +20,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
@@ -38,11 +37,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 @EnableAspectJAutoProxy
 @ComponentScan(basePackages = "com.abderrahmane.elearning")
-@PropertySources({ 
-    @PropertySource("classpath:jdbc.properties"), 
-    @PropertySource("classpath:smtp.properties"), 
-    @PropertySource("classpath:application.properties") 
-})
+@PropertySource("classpath:env.properties")
 public class WebAppConfig implements WebMvcConfigurer {
     @Autowired
     private Environment environment;
