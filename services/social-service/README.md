@@ -41,6 +41,8 @@ TeacherForm {
 # Config files 
 
 ```conf
+api.version = 1
+
 session.key = <key>
 cors.allowOrigins = <allowed-cors>
 

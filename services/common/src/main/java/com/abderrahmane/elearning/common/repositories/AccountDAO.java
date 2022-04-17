@@ -2,6 +2,7 @@ package com.abderrahmane.elearning.common.repositories;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -9,37 +10,34 @@ import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
 import com.abderrahmane.elearning.common.annotations.ClearCache;
-import com.abderrahmane.elearning.common.annotations.HandleTransactions;
 import com.abderrahmane.elearning.common.helpers.PasswordEncoder;
 import com.abderrahmane.elearning.common.models.Account;
 import com.abderrahmane.elearning.common.models.AccountType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class AccountDAO {
-    @Autowired
+    @PersistenceContext
     private EntityManager entityManager;
-
-    @Autowired
-    private CriteriaBuilder criteriaBuilder;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @HandleTransactions
+    @Transactional
     public Account insertAccount(String username, String email, String password) {
         return this.insertAccount(username, email, password, AccountType.STUDENT);
     }
 
-    @HandleTransactions
+    @Transactional
     public Account insertAccount(String username, String email, String password, String accountType) {
         if (accountType == null) accountType = "student";
         return this.insertAccount(username, email, password, AccountType.valueOf(accountType.toUpperCase()));
     }
 
-    @HandleTransactions
+    @Transactional
     public Account insertAccount(String username, String email, String password, AccountType accountType) {
         Account account = new Account();
         account.setPassword(passwordEncoder.encode(password));
@@ -48,14 +46,14 @@ public class AccountDAO {
         account.setAccountType(accountType);
 
         entityManager.persist(account);
-        entityManager.flush();
 
         return account;
     }
 
-    @HandleTransactions
+    @Transactional
     public boolean activateAccount (String id) {
-        CriteriaUpdate<Account> cq = this.criteriaBuilder.createCriteriaUpdate(Account.class);
+        CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+        CriteriaUpdate<Account> cq = criteriaBuilder.createCriteriaUpdate(Account.class);
         Root<Account> root = cq.from(Account.class);
 
         cq.set(root.get("isActive"), true).where(criteriaBuilder.equal(root.get("id"), id));
@@ -69,6 +67,7 @@ public class AccountDAO {
 
     @ClearCache
     public Account selectByUsername (String username) {
+        CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<Account> criteriaQuery = criteriaBuilder.createQuery(Account.class);
         Root<Account> root = criteriaQuery.from(Account.class);
 
@@ -88,9 +87,10 @@ public class AccountDAO {
         }
     }
     
-    @HandleTransactions
+    @Transactional
     public Account saveAccount (Account account) {
-        entityManager.persist(account);
+        System.out.println("Account to attach => " + account.getId());
+        entityManager.merge(account);
 
         return account;
     }

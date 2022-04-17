@@ -6,13 +6,13 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.abderrahmane.elearning.common.annotations.ClearCache;
-import com.abderrahmane.elearning.common.annotations.HandleTransactions;
 import com.abderrahmane.elearning.common.models.Account;
 import com.abderrahmane.elearning.common.models.City;
 import com.abderrahmane.elearning.common.models.RequestForConnection;
@@ -25,20 +25,19 @@ import com.abderrahmane.elearning.common.utils.SQLUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class ProfileDAO {
-    @Autowired
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
     private AccountDAO accountDAO;
 
-    @Autowired
-    private CriteriaBuilder criteriaBuilder;
-
     private RandomStringGenerator rndStringGenerator = new RandomStringGenerator();
 
+    @Transactional
     public SchoolProfile createSchoolProfil (String name, String overview, String subtitle, Account account, City location) {
         SchoolProfile schoolProfil = new SchoolProfile();
 
@@ -54,6 +53,7 @@ public class ProfileDAO {
         return schoolProfil;
     }
 
+    @Transactional
     public TeacherProfile createTeacherProfil (String firstname, String lastname, String title, String bio, Account account, City location) {
         TeacherProfile teacherProfil = new TeacherProfile();
 
@@ -70,6 +70,7 @@ public class ProfileDAO {
         return teacherProfil;
     }
 
+    @Transactional
     public StudentProfile creatStudentProfile(String firstname, String lastname, Calendar dayOfBirth, City location, Account account) {
         StudentProfile studentProfile = new StudentProfile();
 
@@ -85,7 +86,7 @@ public class ProfileDAO {
         return studentProfile;
     }
 
-    @HandleTransactions
+    @Transactional
     public SchoolProfile saveSchoolProfil (SchoolProfile schoolProfil) {
         entityManager.persist(schoolProfil);
 
@@ -105,7 +106,7 @@ public class ProfileDAO {
         return (List<SchoolProfile>)query.getResultList();
     }
 
-    @HandleTransactions
+    @Transactional
     public boolean teacherJoinSchool(String teacherId, String schoolId, String title) {
         Query query = entityManager.createNativeQuery("INSERT INTO teacher_school (teacher_id, school_id, title) VALUES (?, ?, ?)");
         query.setParameter(1, teacherId);
@@ -115,7 +116,7 @@ public class ProfileDAO {
         return query.executeUpdate() > 0;
     }
 
-    @HandleTransactions
+    @Transactional
     public boolean deleteTeacherSchool (String teacherId, String schoolId) {
         Query query = entityManager.createNativeQuery("DELETE FROM teacher_school WHERE teacher_id = ? AND school_id = ?");
         query.setParameter(1, teacherId);
@@ -124,7 +125,7 @@ public class ProfileDAO {
         return query.executeUpdate() > 0;
     }
 
-    @HandleTransactions
+    @Transactional
     public boolean endTeacherSchool (String teacherId, String schoolId) {
         String sqlString = "UPDATE teacher_school SET ended_date = NOW() WHERE teacher_id = ? AND school_id = ? AND verified = true";
         Query query = entityManager.createNativeQuery(sqlString);
@@ -134,7 +135,7 @@ public class ProfileDAO {
         return query.executeUpdate() > 0;
     }
 
-    @HandleTransactions
+    @Transactional
     public boolean teacherRejoinSchool (String teacherId, String schoolId, String title) {
         String sqlString = "UPDATE teacher_school SET ended_date = NULL, verified = false, title = ? WHERE teacher_id = ? AND school_id = ?";
         Query query = entityManager.createNativeQuery(sqlString);
@@ -145,17 +146,17 @@ public class ProfileDAO {
         return query.executeUpdate() > 0;
     }
 
-    @HandleTransactions
+    @Transactional
     public boolean updateTeacherProfile (Map<String, Object> data, String teacherId) {
         return SQLUtils.updateTable(this.entityManager, "teacher_profil", "account_id", teacherId, data);
     }
-
-    @HandleTransactions
+    
+    @Transactional
     public boolean updateSchoolProfile (Map<String, Object> data, String schoolId) {
         return SQLUtils.updateTable(this.entityManager, "school_profil", "account_id", schoolId, data);
     }
-
-    @HandleTransactions
+    
+    @Transactional
     public boolean updateStudentProfile (Map<String, Object> data, String studentId) {
         return SQLUtils.updateTable(this.entityManager, "student_profil", "account_id", studentId, data);
     }
@@ -194,7 +195,7 @@ public class ProfileDAO {
         }
     }
 
-    @HandleTransactions
+    @Transactional
     public boolean deleteRequestForConnection (String id, String teacherId) {
         Query query = this.entityManager.createNativeQuery("DELETE FROM request_for_connection WHERE id = ? and teacher_id = ?");
         query.setParameter(1, id);
@@ -203,7 +204,7 @@ public class ProfileDAO {
         return query.executeUpdate() >= 1;
     }
 
-    @HandleTransactions
+    @Transactional
     public boolean deleteRequestForConnection (String id) {
         Query query = this.entityManager.createNativeQuery("DELETE FROM request_for_connection WHERE id = ?");
         query.setParameter(1, id);
@@ -211,7 +212,7 @@ public class ProfileDAO {
         return query.executeUpdate() >= 1;
     }
 
-    @HandleTransactions
+    @Transactional
     public boolean deleteRequestForConnectionFromStudent (String id, String studentId) {
         Query query = this.entityManager.createNativeQuery("DELETE FROM request_for_connection WHERE (id = ? OR teacher_id = ?) AND student_id = ?");
         query.setParameter(1, id);
@@ -221,7 +222,7 @@ public class ProfileDAO {
         return query.executeUpdate() >= 1;
     }
 
-    @HandleTransactions
+    @Transactional
     public boolean createTeacherStudentConnection (String teacherId, String studentId) {
         Query query = this.entityManager.createNativeQuery("INSERT INTO connection (teacher_id, student_id) VALUES (?,?)");
         query.setParameter(1, teacherId);
@@ -230,7 +231,7 @@ public class ProfileDAO {
         return query.executeUpdate() >= 1;
     }
 
-    @HandleTransactions
+    @Transactional
     public boolean deleteTeacherStudentConnection (String teacherId, String studentId) {
         Query query = this.entityManager.createNativeQuery("DELETE FROM connection WHERE teacher_id = ? AND student_id = ?");
         query.setParameter(1, teacherId);
@@ -239,7 +240,7 @@ public class ProfileDAO {
         return query.executeUpdate() >= 1;
     }
 
-    @HandleTransactions
+    @Transactional
     public boolean createRequestForConnection (String studentId, String teacherId) {
         Query query = this.entityManager.createNativeQuery("INSERT INTO request_for_connection (id, teacher_id, student_id) VALUES (?,?,?)");
         query.setParameter(1, rndStringGenerator.generateRandomStr(25));
@@ -252,6 +253,7 @@ public class ProfileDAO {
     @ClearCache
     @SuppressWarnings("unchecked")
     public List<StudentTeacherConnection> getConnectionsList (String id, int limit, int offset) {
+        CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<StudentTeacherConnection> cq = criteriaBuilder.createQuery(StudentTeacherConnection.class);
         Root<StudentTeacherConnection> root = cq.from(StudentTeacherConnection.class);
 

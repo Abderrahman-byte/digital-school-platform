@@ -3,16 +3,16 @@ package com.abderrahmane.elearning.common.repositories;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.abderrahmane.elearning.common.models.City;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GeoDAO {
-    @Autowired
+    @PersistenceContext
     private EntityManager entityManager;
 
     public City getCity(int id) {

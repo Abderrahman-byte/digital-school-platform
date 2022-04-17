@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -10,40 +9,17 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<packaging>jar</packaging>
-	<artifactId>authentication-service</artifactId>
-
+	<groupId>com.abderrahmane.elearning</groupId>
+	<artifactId>authservice</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>Authentication Service</name>
-	<!-- FIXME change it to the project's website -->
-	<url>http://www.example.com</url>
-
-	<properties>
-		<skip.assembly>false</skip.assembly>
-	</properties>
+	<description>Digital School Authentication Service</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.abderrahmane.elearning</groupId>
 			<artifactId>common</artifactId>
 			<version>1.0-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>4.0.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>javax.servlet.jsp-api</artifactId>
-			<version>2.3.3</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>javax.el-api</artifactId>
-			<version>3.0.1-b06</version>
 		</dependency>
 
 		<dependency>
@@ -54,8 +30,8 @@
 
 		<dependency>
 			<groupId>com.sun.mail</groupId>
-			<artifactId>jakarta.mail</artifactId>
-			<version>2.0.1</version>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
 		</dependency>
 
 		<dependency>
@@ -63,32 +39,14 @@
 			<artifactId>java-jwt</artifactId>
 			<version>3.18.3</version>
 		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
-		<pluginManagement>
-			<!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-			<plugins>
-
-				<!-- Assembly -->
-				<plugin>
-					<artifactId>maven-assembly-plugin</artifactId>
-					<configuration>
-						<archive>
-							<manifest>
-								<mainClass>com.abderrahmane.elearning.authservice.App</mainClass>
-							</manifest>
-						</archive>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
 	</build>
 </project>

@@ -1,19 +1,18 @@
 package com.abderrahmane.elearning.common.repositories;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
-import com.abderrahmane.elearning.common.annotations.HandleTransactions;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class SchoolDAO {
-    @Autowired
+    @PersistenceContext
     private EntityManager entityManager;
 
-    @HandleTransactions
+    @Transactional
     public boolean acceptTeacher (String schoolId, String teacherId) {
         Query query =  entityManager.createNativeQuery("UPDATE teacher_school SET verified = true WHERE teacher_id = ? AND school_id = ? AND verified = false");
         query.setParameter(1, teacherId);

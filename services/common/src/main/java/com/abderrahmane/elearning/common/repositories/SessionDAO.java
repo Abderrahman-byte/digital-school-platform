@@ -5,26 +5,23 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.abderrahmane.elearning.common.annotations.ClearCache;
-import com.abderrahmane.elearning.common.annotations.HandleTransactions;
 import com.abderrahmane.elearning.common.models.Session;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class SessionDAO {
-    @Autowired
+    @PersistenceContext
     private EntityManager entityManager;
 
-    @Autowired
-    private CriteriaBuilder criteriaBuilder;
-
-    @HandleTransactions
+    @Transactional
     public Session save (Map<String, Object> payload) {
         Session session = new Session();
         session.setPayload(payload);
@@ -37,6 +34,7 @@ public class SessionDAO {
 
     @ClearCache
     public Session select (String id) {
+        CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<Session> cq = criteriaBuilder.createQuery(Session.class);
         Root<Session> root = cq.from(Session.class);
 
