@@ -21,7 +21,7 @@ import javax.mail.internet.MimeMultipart;
 // Note : I a don't know if creating one session for all messages is a good idea
 // or I should create a session for each message
 
-/** The main service for sending emails. */
+/** Mail service for sending emails. */
 
 @Component
 public class MailService {

@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/login")
+@RequestMapping("/api/${api.version}/login")
 public class LoginController {
     @Autowired
     private LoginFormValidator validator;

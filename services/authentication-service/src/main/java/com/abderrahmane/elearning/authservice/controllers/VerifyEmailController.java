@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 // TODO : May save user session after verification 
 
 @RestController
-@RequestMapping("/api/v1/verify-email")
+@RequestMapping("/api/${api.version}/verify-email")
 public class VerifyEmailController {
     @Value("${jwt.secret}")
     private String jwtSecret;

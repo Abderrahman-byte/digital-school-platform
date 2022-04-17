@@ -4,7 +4,6 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import com.abderrahmane.config.CommonConfig;
 import com.abderrahmane.elearning.common.aspects.ClearCacheAspect;
 import com.abderrahmane.elearning.common.handlers.AuthenticationHandler;
 import com.abderrahmane.elearning.common.utils.ErrorMessageResolver;
@@ -28,6 +27,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+// TODO : Remove duplicated configuration between services
+// TODO : Implement problem details
+
 @Configuration
 @EnableWebMvc
 @EnableAspectJAutoProxy
@@ -36,11 +38,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebAppConfig implements WebMvcConfigurer {
     @Autowired
     private Environment environment;
-
-    @Bean
-    public CommonConfig commonConfig () {
-        return new CommonConfig();
-    }
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -88,11 +85,13 @@ public class WebAppConfig implements WebMvcConfigurer {
         return jpaTransactionManager;
     }
 
+    // Load aspects
     @Bean
     public ClearCacheAspect clearCacheAspect () {
         return new ClearCacheAspect();
     }
 
+    // FIXME : this is just temporary until implementing problem details
     @Bean
     public ErrorMessageResolver errorMessageResolver() {
         return new ErrorMessageResolver();
