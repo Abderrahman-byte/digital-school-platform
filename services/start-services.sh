@@ -27,7 +27,7 @@ docker rm -f $(docker ps -q) 2>/dev/null 1>/dev/null
 
 # Build Auth Service
 auth_service_build_start=$(date +%s)
-docker build -t auth-service -f ./authentication-service/Dockerfile .
+docker build --add-host database:$ip_address -t auth-service -f ./authentication-service/Dockerfile .
 
 if [ $? -ne 0 ]; then
    echo "[ERROR] Authentication service build failed"
@@ -38,7 +38,7 @@ auth_service_build_time=$(expr $(date +%s) - $auth_service_build_start)
 
 # build Social Service
 social_service_build_start=$(date +%s)
-docker build -t social-service -f ./social-service/Dockerfile .
+docker build --add-host database:$ip_address -t social-service -f ./social-service/Dockerfile .
 
 if [ $? -ne 0 ]; then
    echo "[ERROR] Social service build failed"
@@ -49,7 +49,7 @@ social_service_build_time=$(expr $(date +%s) - $social_service_build_start)
 
 # build School Management Service
 school_service_build_start=$(date +%s)
-docker build -t school-management -f ./school-management/Dockerfile .
+docker build --add-host database:$ip_address -t school-management -f ./school-management/Dockerfile .
 
 if [ $? -ne 0 ]; then
    echo "[ERROR] School Management service build failed"

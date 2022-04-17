@@ -19,7 +19,6 @@ public class ClearCacheAspect {
 
     @Before("mustClearCache ()")
     public void clearCache () {
-        System.out.println("[CLEARING CACHE]");
         entityManager.clear();
     }
 }
