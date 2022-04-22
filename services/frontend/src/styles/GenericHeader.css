@@ -10,7 +10,7 @@
 
 .App-Header .logo img {
     width: 55px;
-    background-color: #fff;
+    background-color: transparent;
 }
 
 .App-Header .navigation .navbar {

@@ -5,9 +5,9 @@ import AuthPages from './pages/Auth.pages'
 import MainPages from './pages/Main.pages'
 import AuthenticatedOnly from './components/AuthenticatedOnly'
 import CreateProfilePage from './pages/CreateProfile.page'
+import CompletedProfilesOnly from './components/CompletedProfilesOnly'
 
 import './App.css'
-import CompletedProfilesOnly from './components/CompletedProfilesOnly'
 
 const App = () => {
 	return (

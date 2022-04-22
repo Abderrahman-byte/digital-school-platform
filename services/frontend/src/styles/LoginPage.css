@@ -2,19 +2,7 @@
     display: flex;
     justify-content: center;
     padding-top: 2em;
-    margin-top: 3%; 
-}
-.LoginPage .Welcom{
-    justify-content: flex-start;
-   margin-right: 22%;
-    color: rgb(51, 88, 166);
-    text-align: left;
-    letter-spacing: 5px;
-    word-spacing: 10px;
-    font-family:'Times New Roman', Times, serif;
-    font-size: 50px ;
-    font-weight: 900;
-
+    padding-bottom: 2em;
 }
 
 .LoginPage .form-container {

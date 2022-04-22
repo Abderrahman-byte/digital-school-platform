@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { searchForLocation } from '../utils/api'
-
-import '../styles/SchoolProfile.css'
 import DropDownInput from './DropDownInput'
 import { schoolProfileFields, schoolProfileRules, validateForm } from '../utils/forms'
 import GenericHeader from './GenericHeader'
+
+import '../styles/SchoolProfile.css'
 // TODO : This component need to handle updates too
 
 const SchoolProfileForm = ({ onSubmitCallback }) => {
