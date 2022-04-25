@@ -25,7 +25,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.3.2</version>
+			<version>42.3.4</version>
 		</dependency>
 	</dependencies>
 
@@ -33,7 +33,7 @@
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<artifactId>sprin42.3.2g-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
