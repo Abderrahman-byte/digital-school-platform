@@ -1,6 +1,8 @@
 # Digital School Plateform Services :
 
-## Setup backend service :
+This is a brief documentation on how to start backend services.
+
+## Setup backend services :
 
 ### Setup database :
 

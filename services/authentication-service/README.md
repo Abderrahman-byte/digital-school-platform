@@ -78,7 +78,7 @@ mail.smtp.user = <user>
 mail.smtp.from = <from-email>
 mail.smtp.password = <passwodr>
 
-frontend.verifyEmail.url = <Url-to-redirect-to-for-emai-verification>
+frontend.verifyEmail.url = <Url-to-redirect-to-for-email-verification>
 ```
 
 ## To run as docker container
