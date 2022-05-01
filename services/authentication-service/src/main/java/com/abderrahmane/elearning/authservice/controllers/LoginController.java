@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import com.abderrahmane.elearning.common.converters.MapAccountConverter;
@@ -16,8 +15,10 @@ import com.abderrahmane.elearning.common.repositories.SessionDAO;
 import com.abderrahmane.elearning.common.utils.ErrorMessageResolver;
 import com.abderrahmane.elearning.authservice.validators.LoginFormValidator;
 
+import org.springframework.http.ResponseCookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.validation.MapBindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,6 +49,9 @@ public class LoginController {
 
     @Value("${session.key:sid}")
     private String sessionKey;
+
+    @Value("${session.SameSite:Lax}")
+    private String sameSiteAttribute;
 
     @PostMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
     public Map<String, Object> handlePostRequest(@RequestBody Map<String, Object> form, HttpServletResponse httpResponse) {
@@ -90,11 +94,13 @@ public class LoginController {
         session = sessionRepository.save(sessionPayload);
 
         if (session != null) {
-            Cookie cookie = new Cookie(sessionKey, session.getSid());
+            ResponseCookie cookie = ResponseCookie.from(sessionKey, session.getSid())
+                .path("/")
+                .sameSite(sameSiteAttribute)
+                .maxAge(session.getMaxAge())
+                .build();
             
-            cookie.setMaxAge((int)session.getMaxAge());    
-            cookie.setPath("/");
-            response.addCookie(cookie);
+            response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         }
     }
 }
