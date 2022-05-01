@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/${app.version}/student/requests")
+@RequestMapping(path = "/api/${api.version}/student/requests")
 public class StudentRequestController {
     @Autowired
     private MapTeacherProfileConverter teacherProfileConverter;

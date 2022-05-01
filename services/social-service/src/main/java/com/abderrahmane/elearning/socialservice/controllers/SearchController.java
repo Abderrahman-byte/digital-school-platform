@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/${app.version}/search")
+@RequestMapping(path = "/api/${api.version}/search")
 public class SearchController {
     @Autowired
     private MapCityConverter cityConverter;

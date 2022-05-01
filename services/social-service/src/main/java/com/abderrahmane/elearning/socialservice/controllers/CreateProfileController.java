@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/${app.version}/profile")
+@RequestMapping("/api/${api.version}/profile")
 public class CreateProfileController {
     @Autowired
     private ProfileDAO profilDAO;

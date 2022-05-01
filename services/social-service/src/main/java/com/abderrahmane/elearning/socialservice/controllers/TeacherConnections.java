@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/${app.version}/teacher/connections")
+@RequestMapping(path = "/api/${api.version}/teacher/connections")
 public class TeacherConnections {
     private final int itemsPerPage = 10;
     
