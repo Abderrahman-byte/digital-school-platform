@@ -42,7 +42,7 @@ public class SearchController {
         Map<String, Object> response = new HashMap<>();
         List<City> results = geoDAO.searchCity(query, 20);
 
-        response.put("ok", true);
+        response.put("success", true);
         response.put("data", cityConverter.convertList(results));
 
         return response;
@@ -53,7 +53,7 @@ public class SearchController {
         Map<String, Object> response = new HashMap<>();
         List<SchoolProfile> results = profileDAO.searchSchool(name, 20);
 
-        response.put("ok", true);
+        response.put("success", true);
         response.put("data", schoolProfileConverter.convertList(results));
 
         return response;
@@ -64,7 +64,7 @@ public class SearchController {
         Map<String, Object> response = new HashMap<>();
         List<TeacherProfile> results = profileDAO.searchTeachers(name);
 
-        response.put("ok", true);
+        response.put("success", true);
         response.put("data", teacherProfileConverter.convertList(results));
 
         return response;

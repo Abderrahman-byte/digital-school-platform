@@ -27,7 +27,7 @@ public class GetArchivedController {
         List<SchoolTeacher> teachers = account.getSchoolProfile().getTeachers().stream().filter(teacher -> teacher.getEndedDate() != null).toList();
 
         response.put("data", teacherProfileConverter.convertList(teachers));
-        response.put("ok", true);
+        response.put("success", true);
 
         return response;
     }

@@ -42,7 +42,7 @@ public class StudentConnections {
 
         List<StudentTeacherConnection> connections = profileDAO.getConnectionsList(account.getId(), itemsPerPage, offset);
 
-        response.put("ok", true);
+        response.put("success", true);
         response.put("data", connections.stream().map(conn -> {
             Map<String, Object> connObject = teacherProfileConverter.convert(conn.getTeacherProfile());
             connObject.put("createdDate", dateTimeConverter.convert(conn.getCreatedDate()));
@@ -58,7 +58,7 @@ public class StudentConnections {
         Map<String, Object> response = new HashMap<>();
         boolean deleted = profileDAO.deleteTeacherStudentConnection(id, account.getId());
 
-        response.put("ok", deleted);
+        response.put("success", deleted);
         
         return response;
     }

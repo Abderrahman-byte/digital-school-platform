@@ -31,7 +31,7 @@ public class SchoolOnly implements HandlerInterceptor {
             errorMessage.put("errors", List.of("profile_incompleted"));
         }
 
-        errorMessage.put("ok", false);
+        errorMessage.put("success", false);
         response.setStatus(403);
         response.addHeader("Content-type", "application/json");
         response.getOutputStream().write(objectMapper.writeValueAsString(errorMessage).getBytes());

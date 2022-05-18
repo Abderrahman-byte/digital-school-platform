@@ -58,7 +58,7 @@ public class UpdateProfileController {
         
         if (errors.hasErrors()) return this.messageResolver.constructErrorResponse(errors);
         
-        response.put("ok", updated);
+        response.put("success", updated);
         return response;
     }
 

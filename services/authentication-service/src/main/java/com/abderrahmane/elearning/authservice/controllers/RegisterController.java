@@ -55,7 +55,7 @@ public class RegisterController {
         MapBindingResult errors = new MapBindingResult(body, "register");
         Map<String, Object> success = new HashMap<String, Object>();
 
-        success.put("ok", true);
+        success.put("success", true);
         validator.validate(body, errors);
 
         if (errors.hasErrors()) return messageResolver.constructErrorResponse(errors);

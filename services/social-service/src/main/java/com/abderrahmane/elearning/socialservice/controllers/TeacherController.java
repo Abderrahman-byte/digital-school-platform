@@ -56,7 +56,7 @@ public class TeacherController {
     public Map<String, Object> getTeacherSchoolList (@RequestAttribute(name = "account") Account account) {
         Map<String, Object> response = new HashMap<>();
         
-        response.put("ok", true);
+        response.put("success", true);
 
         List<Map<String, Object>> schools = account.getTeacherProfile().getSchooles().stream().map(school -> {
            Map<String, Object> schoolTeacherMap = new HashMap<>();
@@ -89,14 +89,14 @@ public class TeacherController {
         Optional<SchoolTeacher> endedSchool = account.getTeacherProfile().getSchooles().stream().filter(schoolTeacher -> schoolTeacher.getEndedDate() != null && schoolTeacher.getSchoolId().equals((String)body.get("id"))).findFirst();
 
         if (schools.size() > 0) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("teacher_already_in_school"));
             return response;
         }
 
         if (endedSchool.isPresent()){
             boolean joined = profileDAO.teacherRejoinSchool(account.getTeacherProfile().getId(), (String)body.get("id"), (String)body.get("title"));
-            response.put("ok", joined);
+            response.put("success", joined);
             return response;
         }
 
@@ -104,14 +104,14 @@ public class TeacherController {
         // TODO : Send notification to school account
         try {
             boolean created = profileDAO.teacherJoinSchool(account.getId(), (String)body.get("id"), (String)body.get("title"));
-            response.put("ok", created);
+            response.put("success", created);
         } catch (DataIntegrityViolationException ex) {      
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of(this.translateException(ex)));
         } catch (Exception ex) {
             System.out.print("[" + ex.getClass().getName() + "] ");
             System.out.println(ex.getMessage());
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("unknown_error")); 
         }
 
@@ -122,14 +122,14 @@ public class TeacherController {
     public Map<String, Object> leaveSchool (@RequestAttribute("account") Account account, @RequestParam(name = "id") String schoolId) {
         Map<String, Object> response = new HashMap<>();
 
-        response.put("ok", true);
+        response.put("success", true);
 
         List<SchoolTeacher> schools = account.getTeacherProfile().getSchooles().stream().filter(schoolTeacher -> {
             return schoolTeacher.getEndedDate() == null && schoolTeacher.getSchool().getId().equals(schoolId);
         }).toList();
 
         if (schools.size() <= 0) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("no_school_joined"));
             return response;
         }
@@ -138,10 +138,10 @@ public class TeacherController {
 
         if (!schoolTeacher.isVerified()) {
             boolean deleted = profileDAO.deleteTeacherSchool(account.getTeacherProfile().getId(), schoolId);
-            response.put("ok", deleted);
+            response.put("success", deleted);
         } else {
             boolean ended = profileDAO.endTeacherSchool(account.getTeacherProfile().getId(), schoolId);
-            response.put("ok", ended);
+            response.put("success", ended);
         }
 
         return response;
@@ -151,7 +151,7 @@ public class TeacherController {
     public Map<String, Object> getRequestsForConnections (@RequestAttribute("account") Account account) {
         Map<String, Object> response = new HashMap<>();
 
-        response.put("ok", true);
+        response.put("success", true);
         response.put("data", account.getTeacherProfile().getRequests().stream().map(request -> {
             Map<String, Object> requestObject = studentProfileConverter.convert(request.getStudentProfile());
             requestObject.put("accountId", request.getStudentProfile().getId());
@@ -170,10 +170,10 @@ public class TeacherController {
         Map<String, Object> response = new HashMap<>();
         RequestForConnection requestForConnection = null;
 
-        response.put("ok", true);
+        response.put("success", true);
 
         if (!body.containsKey("id") || !body.get("id").getClass().equals(String.class) || ((String)body.get("id")).length() <= 0) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("Id field is required"));
             return response;
         }
@@ -181,19 +181,19 @@ public class TeacherController {
         requestForConnection = profileDAO.getRequestForConnection((String)body.get("id"), account.getId());
 
         if (requestForConnection == null) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("not_found"));
         }
 
         if (!profileDAO.deleteRequestForConnection((String)body.get("id"))) {
-            response.put("ok", false);
+            response.put("success", false);
             return response;
         }
         
         try {
             profileDAO.createTeacherStudentConnection(account.getId(), requestForConnection.getStudentProfile().getId());
         } catch (DataIntegrityViolationException ex) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of(this.translateException(ex)));
         }
         
@@ -206,13 +206,13 @@ public class TeacherController {
         boolean deleted = false;
 
         if (!body.containsKey("id") || !body.get("id").getClass().equals(String.class) || ((String)body.get("id")).length() <= 0) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("Id field is required"));
             return response;
         }
 
         deleted = profileDAO.deleteRequestForConnection((String)body.get("id"), account.getId());
-        response.put("ok", deleted);
+        response.put("success", deleted);
 
         if (!deleted) response.put("errors", List.of("not_found"));
 

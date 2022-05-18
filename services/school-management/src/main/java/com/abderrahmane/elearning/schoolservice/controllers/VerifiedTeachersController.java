@@ -33,7 +33,7 @@ public class VerifiedTeachersController {
         List<SchoolTeacher> teachers = account.getSchoolProfile().getTeachers().stream().filter(teacher -> teacher.isVerified() && teacher.getEndedDate() == null).toList();
 
         response.put("data", teacherProfileConverter.convertList(teachers));
-        response.put("ok", "true");
+        response.put("success", "true");
 
         return response;
     }
@@ -44,17 +44,17 @@ public class VerifiedTeachersController {
         boolean exists = account.getSchoolProfile().getTeachers().stream().filter(teacherSchool -> teacherSchool.isVerified() && teacherSchool.getTeacherId().equals(id) && teacherSchool.getEndedDate() == null).count() > 0;
 
         if (!exists) {
-            response.put("ok", false);
+            response.put("success", false);
             return response;
         }
 
         try {
             boolean ended = profileDAO.endTeacherSchool(id, account.getId());
-            response.put("ok", ended);
+            response.put("success", ended);
         } catch (Exception ex) {
             System.out.print("[" + ex.getClass().getName() + "]");
             System.out.println(ex.getMessage());
-            response.put("ok", false);
+            response.put("success", false);
         }
 
         return response;

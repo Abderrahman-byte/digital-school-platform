@@ -58,10 +58,10 @@ public class CreateProfileController {
     private Map<String, Object> createSchoolProfile (Map<String, Object> body, Account account) {
         MapBindingResult errors = new MapBindingResult(body, "schoolProfile");
         Map<String, Object> response = new HashMap<>();
-        response.put("ok", true);
+        response.put("success", true);
         
         if (account.getSchoolProfile() != null) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("profile_already_exists"));
             return response;
         }
@@ -73,7 +73,7 @@ public class CreateProfileController {
         City location = geoDAO.getCity((Integer)body.get("cityId"));
 
         if (location == null) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("unexisting_location"));
             return response;
         }
@@ -93,10 +93,10 @@ public class CreateProfileController {
         Map<String, Object> response = new HashMap<>();
         MapBindingResult errors = new MapBindingResult(body, "teacherProfile");
 
-        response.put("ok", true);
+        response.put("success", true);
 
         if (account.getTeacherProfile() != null) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("profile_already_exists"));
             return response;
         }
@@ -108,7 +108,7 @@ public class CreateProfileController {
         City location = geoDAO.getCity((Integer)body.get("cityId"));
 
         if (location == null) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("unexisting_location"));
             return response;
         }
@@ -129,10 +129,10 @@ public class CreateProfileController {
         MapBindingResult errors = new MapBindingResult(body, "studentProfile");
         Map<String, Object> response = new HashMap<>();
 
-        response.put("ok", true);
+        response.put("success", true);
 
         if (account.getStudentProfile() != null) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("profile_already_exists"));
             return response;
         }
@@ -144,7 +144,7 @@ public class CreateProfileController {
         City location = geoDAO.getCity((Integer)body.get("cityId"));
 
         if (location == null) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("unexisting_location"));
             return response;
         }

@@ -21,7 +21,7 @@ public class TeachersOnly implements HandlerInterceptor {
         Account account = (Account)request.getAttribute("account");
         Map<String, Object> responseBody = new HashMap<>();
 
-        responseBody.put("ok", false);
+        responseBody.put("success", false);
 
         if (account != null && account.getAccountType().equals(AccountType.TEACHER) && account.getTeacherProfile() != null) return true;
 

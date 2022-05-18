@@ -23,7 +23,7 @@ public class StudentsOnly implements HandlerInterceptor {
 
         if (account != null && account.getAccountType().equals(AccountType.STUDENT) && account.getStudentProfile() != null) return true;
 
-        responseBody.put("ok", false);
+        responseBody.put("success", false);
 
         if (account == null || !account.getAccountType().equals(AccountType.STUDENT)) {
             responseBody.put("errors", List.of("unauthorized"));

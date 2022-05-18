@@ -39,7 +39,7 @@ public class StudentRequestController {
     public Map<String, Object> getRequestsForConnections (@RequestAttribute("account") Account account) {
         Map<String, Object> response = new HashMap<>();
 
-        response.put("ok", true);
+        response.put("success", true);
         response.put("data", account.getStudentProfile().getRequests().stream().map(rfc -> {
             Map<String, Object> rfcData = teacherProfileConverter.convert(rfc.getTeacherProfile());
             rfcData.put("id", rfc.getId());
@@ -59,7 +59,7 @@ public class StudentRequestController {
         boolean created = false;
 
         if (!body.containsKey("id") || !body.get("id").getClass().equals(String.class) || ((String)body.get("id")).length() <= 0) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("Id field is required"));
             return response;
         }
@@ -67,7 +67,7 @@ public class StudentRequestController {
         Stream<StudentTeacherConnection> connections = account.getStudentProfile().getConnections().stream().filter(conn -> conn.getTeacherProfile().getId().equals(body.get("id")));
 
         if (connections.count() > 0) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("connection_already_exists"));
             return response;
         }
@@ -78,7 +78,7 @@ public class StudentRequestController {
             response.put("errors", List.of(this.translateSQLException(ex)));
         }
         
-        response.put("ok", created);
+        response.put("success", created);
         return response;
     }
 
@@ -88,7 +88,7 @@ public class StudentRequestController {
         boolean deleted = false;
 
         deleted = profileDAO.deleteRequestForConnectionFromStudent(id, account.getId());
-        response.put("ok", deleted);
+        response.put("success", deleted);
 
         return response;
     }

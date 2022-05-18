@@ -39,7 +39,7 @@ public class VerifyEmailController {
         Map<String, Object> response = new HashMap<String, Object>();
 
         if (!this.checkPayload(payload)) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("invalid_token"));
             return response;
         }
@@ -50,12 +50,12 @@ public class VerifyEmailController {
 
         if (account != null && !account.isActive() && account.getEmail().equals(email)) {
             accountRepository.activateAccount(id);
-            response.put("ok", true);
+            response.put("success", true);
         } else if (account != null && account.isActive()) {
-            response.put("ok", true);
+            response.put("success", true);
             response.put("warn", List.of("already_active"));
         } else {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("invalid_token"));
         }
         

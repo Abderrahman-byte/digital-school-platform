@@ -28,7 +28,7 @@ public class AuthenticatedOnly implements HandlerInterceptor {
 
         errorMessage = account == null ? "authentication_required" : "unverified_email";
 
-        message.put("ok", false);
+        message.put("success", false);
         message.put("errors", List.of(errorMessage));
 
         response.setStatus(403);

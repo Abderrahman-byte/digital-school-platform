@@ -65,13 +65,13 @@ public class LoginController {
         Account account = this.authenticate((String) form.get("username"), (String) form.get("password"));
 
         if (account == null) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("Username or password is incorrect"));
         } else if (!account.isActive()) {
-            response.put("ok", false);
+            response.put("success", false);
             response.put("errors", List.of("email_unverified"));
         } else {
-            response.put("ok", true);
+            response.put("success", true);
             response.put("data", accountMapConverter.convert(account));
             saveSession(httpResponse, account);
         }

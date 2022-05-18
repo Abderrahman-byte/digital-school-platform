@@ -18,7 +18,7 @@ public class ErrorMessageResolver {
     public Map<String, Object> constructErrorResponse(Errors errors) {
         Map<String, Object> response = new HashMap<String, Object>();
         response.put("errors", this.resolveErrors(errors));
-        response.put("ok", false);
+        response.put("success", false);
 
         return response;
     }

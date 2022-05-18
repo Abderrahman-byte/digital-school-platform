@@ -49,7 +49,7 @@ public class RequestsController {
         Map<String, Object> response = new HashMap<>();
         List<SchoolTeacher> teachers = account.getSchoolProfile().getTeachers().stream().filter(teacher -> !teacher.isVerified() && teacher.getEndedDate() == null).toList();
 
-        response.put("ok", true);
+        response.put("success", true);
         response.put("data", teacherSchoolConverter.convertList(teachers));
 
         return response;
@@ -76,7 +76,7 @@ public class RequestsController {
         }
         
         
-        response.put("ok", accepted);
+        response.put("success", accepted);
         return new ResponseEntity<Map<String, Object>>(response, accepted ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
@@ -87,11 +87,11 @@ public class RequestsController {
         try {
             // TODO : Should send notification to teacher
             boolean deleted = profileDAO.deleteTeacherSchool(teacherId, account.getId());
-            response.put("ok", deleted);
+            response.put("success", deleted);
         } catch (Exception ex) {
             System.out.print("[" + ex.getClass().getName() + "]");
             System.out.println(ex.getMessage());
-            response.put("ok", false);
+            response.put("success", false);
         }
 
 
