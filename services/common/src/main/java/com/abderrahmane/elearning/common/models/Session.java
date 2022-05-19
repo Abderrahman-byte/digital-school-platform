@@ -19,8 +19,17 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "session")
+@Getter
+@Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 @TypeDefs({
     @TypeDef(name = "json", typeClass = JsonType.class)
 })
@@ -37,32 +46,6 @@ public class Session {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Calendar expires = Calendar.getInstance();
-
-    public Session () {}
-
-    public String getSid() {
-        return sid;
-    }
-
-    public void setSid(String sid) {
-        this.sid = sid;
-    }
-
-    public Calendar getExpires() {
-        return expires;
-    }
-
-    public void setExpires(Calendar expires) {
-        this.expires = expires;
-    }
-
-    public Map<String, Object> getPayload() {
-        return payload;
-    }
-
-    public void setPayload(Map<String, Object> payload) {
-        this.payload = payload;
-    }
 
     public long getMaxAge () {
         if (this.expires == null) return 0;

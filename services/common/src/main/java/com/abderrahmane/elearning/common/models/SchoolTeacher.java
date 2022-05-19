@@ -13,9 +13,18 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "teacher_school")
 @IdClass(SchoolTeacherId.class)
+@Getter
+@Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class SchoolTeacher {
     @Id
     @Column(name = "school_id")
@@ -34,7 +43,6 @@ public class SchoolTeacher {
     @MapsId("schoolId")
     @JoinColumn(name = "school_id")
     private SchoolProfile school;
-
     
     @Column(nullable = false)
     private String title;
@@ -44,76 +52,9 @@ public class SchoolTeacher {
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false, name = "created_date")
-    private Calendar createdDate;
+    private Calendar createdDate = Calendar.getInstance();
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ended_date")
     private Calendar endedDate;
-
-    public SchoolTeacher() {
-    }
-
-    public String getSchoolId() {
-        return schoolId;
-    }
-
-    public void setSchoolId(String schoolId) {
-        this.schoolId = schoolId;
-    }
-
-    public String getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public TeacherProfile getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(TeacherProfile teacher) {
-        this.teacher = teacher;
-    }
-
-    public SchoolProfile getSchool() {
-        return school;
-    }
-
-    public void setSchool(SchoolProfile school) {
-        this.school = school;
-    }
-
-    public boolean isVerified() {
-        return verified;
-    }
-
-    public void setVerified(Boolean verified) {
-        this.verified = verified;
-    }
-
-    public Calendar getEndedDate() {
-        return endedDate;
-    }
-
-    public void setEndedDate(Calendar endedDate) {
-        this.endedDate = endedDate;
-    }
-
-    public Calendar getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Calendar createdDate) {
-        this.createdDate = createdDate;
-    }
 }

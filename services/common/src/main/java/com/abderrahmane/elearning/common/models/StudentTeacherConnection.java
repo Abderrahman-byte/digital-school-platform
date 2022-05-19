@@ -13,9 +13,18 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "connection")
 @IdClass(ConnectionId.class)
+@Getter
+@Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class StudentTeacherConnection {
     @Id
     @Column(name = "teacher_id")
@@ -38,46 +47,4 @@ public class StudentTeacherConnection {
     @Column(name = "created_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar createdDate = Calendar.getInstance();
-
-    public StudentTeacherConnection () {}
-
-    public String getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
-    }
-
-    public StudentProfile getStudentProfile() {
-        return this.student;
-    }
-
-    public void setStudentProfile(StudentProfile studentProfile) {
-        this.student = studentProfile;
-    }
-
-    public String getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId;
-    }
-
-    public TeacherProfile getTeacherProfile() {
-        return this.teacher;
-    }
-
-    public void setTeacherProfile(TeacherProfile teacherProfile) {
-        this.teacher = teacherProfile;
-    }
-
-    public Calendar getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Calendar createdDate) {
-        this.createdDate = createdDate;
-    }
 }

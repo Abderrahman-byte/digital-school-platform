@@ -5,8 +5,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "country")
+@Getter
+@Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class Country {
     @Id
     private int id;
@@ -16,30 +25,4 @@ public class Country {
 
     @Column(nullable = false, unique = true)
     private String code;
-
-    private Country () {}
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 }

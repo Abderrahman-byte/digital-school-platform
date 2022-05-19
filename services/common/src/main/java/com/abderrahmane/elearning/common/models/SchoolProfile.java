@@ -16,8 +16,17 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "school_profil")
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class SchoolProfile {
     @Id
     @Column(name = "account_id")
@@ -47,70 +56,4 @@ public class SchoolProfile {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date", nullable = false)
     private Calendar createdDate = Calendar.getInstance();
-
-    public SchoolProfile () {}
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public City getLocation() {
-        return location;
-    }
-
-    public void setLocation(City location) {
-        this.location = location;
-    }
-
-    public String getOverview() {
-        return overview;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public String getSubtitle() {
-        return subtitle;
-    }
-
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
-    }
-
-    public Calendar getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Calendar createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public List<SchoolTeacher> getTeachers() {
-        return teachers;
-    }
-
-    public void setTeachers(List<SchoolTeacher> teachers) {
-        this.teachers = teachers;
-    }
 }

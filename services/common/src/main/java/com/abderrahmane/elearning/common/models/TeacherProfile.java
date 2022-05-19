@@ -16,8 +16,17 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "teacher_profil")
+@Getter
+@Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class TeacherProfile {
     @Id
     @Column(name = "account_id")
@@ -53,86 +62,4 @@ public class TeacherProfile {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
     private Calendar createdDate = Calendar.getInstance();
-
-    public TeacherProfile () {}
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public City getLocation() {
-        return location;
-    }
-
-    public void setLocation(City location) {
-        this.location = location;
-    }
-
-    public Calendar getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Calendar createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public List<SchoolTeacher> getSchooles() {
-        return schooles;
-    }
-
-    public void setSchooles(List<SchoolTeacher> schooles) {
-        this.schooles = schooles;
-    }
-
-    public List<RequestForConnection> getRequests() {
-        return requests;
-    }
-
-    public void setRequests(List<RequestForConnection> requests) {
-        this.requests = requests;
-    }
 }

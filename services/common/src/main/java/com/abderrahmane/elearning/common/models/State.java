@@ -6,8 +6,17 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "state")
+@Getter
+@Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class State {
     @Id
     private int id;
@@ -17,30 +26,4 @@ public class State {
 
     @ManyToOne(targetEntity = Country.class, optional = false)
     private Country country;
-
-    public State () {}
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
 }

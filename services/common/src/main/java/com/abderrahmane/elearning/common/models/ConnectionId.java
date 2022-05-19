@@ -2,27 +2,18 @@ package com.abderrahmane.elearning.common.models;
 
 import java.io.Serializable;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class ConnectionId implements Serializable {
     protected String teacherId;
     protected String studentId;
-
-    public ConnectionId () {}
-
-    public String getStudentId() {
-        return studentId;
-    }
-
-    public String getTeacherId() {
-        return teacherId;
-    }
-
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
-    }
-
-    public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId;
-    }
 
     @Override
     public boolean equals(Object obj) {
