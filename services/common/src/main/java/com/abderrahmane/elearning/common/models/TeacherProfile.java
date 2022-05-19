@@ -59,6 +59,9 @@ public class TeacherProfile {
     @OneToMany(targetEntity = RequestForConnection.class, orphanRemoval = true, mappedBy = "teacherProfile")
     private List<RequestForConnection> requests = new ArrayList<>();
 
+    @OneToMany(targetEntity = Group.class, orphanRemoval = true, mappedBy = "createdBy")
+    private List<Group> groups = new ArrayList<>();
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
     private Calendar createdDate = Calendar.getInstance();

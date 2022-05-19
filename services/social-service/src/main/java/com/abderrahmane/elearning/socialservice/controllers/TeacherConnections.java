@@ -47,7 +47,7 @@ public class TeacherConnections {
 
         response.put("success", true);
         response.put("data", connections.stream().map(conn -> {
-            Map<String, Object> connObject = studentProfileConverter.convert(conn.getStudentProfile());
+            Map<String, Object> connObject = studentProfileConverter.convert(conn.getStudent());
             connObject.put("createdDate", dateTimeConverter.convert(conn.getCreatedDate()));
 
             return connObject;

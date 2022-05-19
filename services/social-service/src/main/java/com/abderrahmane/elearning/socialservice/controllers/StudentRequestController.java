@@ -64,7 +64,7 @@ public class StudentRequestController {
             return response;
         }
 
-        Stream<StudentTeacherConnection> connections = account.getStudentProfile().getConnections().stream().filter(conn -> conn.getTeacherProfile().getId().equals(body.get("id")));
+        Stream<StudentTeacherConnection> connections = account.getStudentProfile().getConnections().stream().filter(conn -> conn.getTeacher().getId().equals(body.get("id")));
 
         if (connections.count() > 0) {
             response.put("success", false);

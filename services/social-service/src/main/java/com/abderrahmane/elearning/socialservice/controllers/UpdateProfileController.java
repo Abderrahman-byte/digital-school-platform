@@ -63,11 +63,11 @@ public class UpdateProfileController {
     }
 
     private boolean checkProfile (Account account, Errors errors) {
-        boolean teacherProfileIncomplet = account.getAccountType().equals(AccountType.TEACHER) && account.getTeacherProfile() == null;
-        boolean schoolProfileIncomplet = account.getAccountType().equals(AccountType.SCHOOL) && account.getSchoolProfile() == null;
-        boolean studentProfileIncomplet = account.getAccountType().equals(AccountType.STUDENT) && account.getStudentProfile() == null;
+        boolean teacherProfileIncomplete = account.getAccountType().equals(AccountType.TEACHER) && account.getTeacherProfile() == null;
+        boolean schoolProfileIncomplete = account.getAccountType().equals(AccountType.SCHOOL) && account.getSchoolProfile() == null;
+        boolean studentProfileIncomplete = account.getAccountType().equals(AccountType.STUDENT) && account.getStudentProfile() == null;
 
-        if (teacherProfileIncomplet && schoolProfileIncomplet && studentProfileIncomplet) {
+        if (teacherProfileIncomplete && schoolProfileIncomplete && studentProfileIncomplete) {
             errors.reject("incompleteProfile");
             return false;
         }
