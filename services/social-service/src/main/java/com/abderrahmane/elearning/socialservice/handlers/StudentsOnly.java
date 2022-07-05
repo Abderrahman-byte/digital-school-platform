@@ -18,6 +18,8 @@ public class StudentsOnly implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if (request.getMethod().equals("OPTIONS")) return true;
+
         Account account = (Account)request.getAttribute("account");
         Map<String, Object> responseBody = new HashMap<>();
 

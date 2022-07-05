@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableDiscoveryClient
 public class ApiGatewayConfig {
     @Bean
-    public RouteLocator routeLocator (RouteLocatorBuilder builder){
+    public RouteLocator routeLocator (RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(p -> p.path("/api/*/auth/**")
                     .filters(f -> f.rewritePath("/api/(?<version>.*)/auth/(?<segment>.*)", "/api/${version}/${segment}"))

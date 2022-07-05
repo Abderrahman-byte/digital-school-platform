@@ -1,15 +1,15 @@
 import React, { useContext, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
-import GenericForm from '../components/GenericForm'
-import logo from '../assets/neogenia-logo1.png'
-import { DEFAULT_API_ERROR, sendLoginRequest } from '../utils/api'
-import { loginFields } from '../utils/forms'
-import { translateErrors } from '../utils/generic'
-import { AuthContext } from '../context/AuthContext'
+import GenericForm from '@Components/GenericForm'
+import { AuthContext } from '@Context/AuthContext'
+import { DEFAULT_API_ERROR, sendLoginRequest } from '@Utils/api'
+import { loginFields } from '@Utils/forms'
+import { translateErrors } from '@Utils/generic'
+import logo from '@Assets/neogenia-logo1.png'
 
-import '../styles/forms.css'
-import '../styles/LoginPage.css'
+import '@Styles/forms.css'
+import '@Styles/LoginPage.css'
 
 const LoginPage = () => {
     const [errors, setErrors] = useState([])

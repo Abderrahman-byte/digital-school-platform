@@ -10,13 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 import com.abderrahmane.elearning.common.models.Account;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.web.servlet.HandlerInterceptor;
 
+@Slf4j
 public class AuthenticatedOnly implements HandlerInterceptor {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        log.info("Method on authencticated onlty : " + request.getMethod());
+        
         if (request.getMethod().equals("OPTIONS")) return true;
 
         Account account = (Account)request.getAttribute("account");

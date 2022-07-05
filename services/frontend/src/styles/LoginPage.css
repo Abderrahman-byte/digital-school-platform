@@ -8,7 +8,6 @@
 .LoginPage .form-container {
     width: 90%;
     max-width: 500px;
-    margin-right: 15%;
 }
 
 
@@ -21,7 +20,7 @@
 }
 
 .LoginPage .form-header .form-logo {
-    width: 85px;
+    width: 75px;
 }
 
 .LoginPage .form {
@@ -52,6 +51,10 @@
   
 .LoginPage .form .input-elt::-ms-input-placeholder { /* Microsoft Edge */
     color: whitesmoke;
+}
+
+.LoginPage .form > .form-div {
+    max-width: 400px;
 }
 
 .LoginPage .form > .form-div > .field-errors {

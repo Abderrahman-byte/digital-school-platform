@@ -1,12 +1,12 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router'
 
-import GenericHeader from '../components/GenericHeader'
+import GenericHeader from '@Components/GenericHeader'
 import LoginPage from './login.page'
 import NotFoundPage from './NotFound.page'
 import RegisterPage from './Register.page'
 
-import '../styles/AuthPage.css';
+import '@Styles/AuthPage.css';
 
 const authNavigation = [
 	{

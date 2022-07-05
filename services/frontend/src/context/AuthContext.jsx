@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import { checkAccount } from '../utils/api'
+import React, { createContext, useEffect, useState } from 'react'
+import { checkAccount } from '@Utils/api'
 
 export const AuthContext = createContext({})
 
@@ -16,9 +16,13 @@ export const AuthProvider = ({ children }) => {
         setProfile(profileData || null)
     }
 
-    useEffect(async () => {
+    const performAuthCheck = async () => {
         const accountData = await checkAccount()
         setAccountData(accountData)
+    }
+
+    useEffect(() => {
+        performAuthCheck()
     }, [])
 
 

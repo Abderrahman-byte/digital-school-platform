@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import { AuthContext } from '../context/AuthContext'
+import { AuthContext } from '@Context/AuthContext'
 import SchoolManagementPages from './SchoolManagement.pages'
 
 // The MainPages Component display routes specifique to each account type

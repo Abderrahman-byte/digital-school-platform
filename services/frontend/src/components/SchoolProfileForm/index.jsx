@@ -1,18 +1,15 @@
 import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { searchForLocation } from '../utils/api'
-import DropDownInput from './DropDownInput'
-import { schoolProfileFields, schoolProfileRules, validateForm } from '../utils/forms'
-import GenericHeader from './GenericHeader'
+import DropDownInput from '@Components/DropDownInput'
+import { searchForLocation } from '@Utils/api'
+import { schoolProfileFields, schoolProfileRules, validateForm } from '@Utils/forms'
 
-import '../styles/SchoolProfile.css'
+import './styles.css'
 // TODO : This component need to handle updates too
 
-const SchoolProfileForm = ({ onSubmitCallback }) => {
+const SchoolProfileForm = ({ onSubmitCallback, errors, setErrors }) => {
     const [locationId, setLocationId] = useState(null)
-    const [errors, setErrors] = useState([])
-
     const searchLimit = 5
     
     const searchLocation = async (query) => {
@@ -58,21 +55,10 @@ const SchoolProfileForm = ({ onSubmitCallback }) => {
     }, [errors])
 
     return (
-
-        <div>
-              <GenericHeader />
-
-    
-        <form onSubmit={beforeSubmit} className='SchoolProfileFormCard'>
-           <div className='Header'> 
-                <h2 className='title'>School Profile</h2> 
-           </div>  
-
-            <div className='formDiv'>
-                <br />
-                <div className='Name'>School Name</div>
-                <br />
-                <input type='text' name='name' className={`input-elt ${fieldHasErrors('name') ? 'hashErrors' : ''}`} autoComplete='off' />
+        <form onSubmit={beforeSubmit} className='SchoolProfileForm form'>
+            <div className='form-div'>
+                <label className='form-label'>School Name</label>
+                <input type='text' name='name' className={`input-elt ${fieldHasErrors('name') ? 'hasErrors' : ''}`} autoComplete='off' />
                 
                 {fieldHasErrors('name') ? (
                     <div className='field-errors'>
@@ -81,10 +67,9 @@ const SchoolProfileForm = ({ onSubmitCallback }) => {
                 ) : null}
             </div>
 
-            <div className='formDiv'>  
-                <div className='Name'>Subtitle</div>
-                <br />
-                <input type='text' name='subtitle' className={`input-elt ${fieldHasErrors('subtitle') ? 'hashErrors' : ''}`}  autoComplete='off' />
+            <div className='form-div'>  
+                <label className='form-label'>Subtitle</label>
+                <input type='text' name='subtitle' className={`input-elt ${fieldHasErrors('subtitle') ? 'hasErrors' : ''}`}  autoComplete='off' />
 
                 {fieldHasErrors('subtitle') ? (
                     <div className='field-errors'>
@@ -93,23 +78,18 @@ const SchoolProfileForm = ({ onSubmitCallback }) => {
                 ) : null}
             </div>
 
-            <div className='formDiv'>
-            <div className='Name'>Location</div>
-                <br />
-         <DropDownInput errors={getFieldErrors('location')} label='' onChoiceChange={locationChoosed} onChangeInputCallback={searchLocation} fieldName='fullname' />
+            <div className='form-div'>
+            <label className='form-label'>Location</label>
+                <DropDownInput errors={getFieldErrors('location')} label='' onChoiceChange={locationChoosed} onChangeInputCallback={searchLocation} fieldName='fullname' />
             </div>
 
-            <div className='formDiv'>
-             <div className='Name'>Overview</div>
-                <br />
+            <div className='form-div'>
+                <label className='form-label'>Overview</label>
                 <textarea name='overview' className='input-elt' />
             </div>
-            <div className='formDiv'>
-            <br />
-            <button type='submit' className='Savebtn'>Save Profile</button>
-            </div>
+
+            <button type='submit' className='btn btn-blue'>Save Profile</button>
         </form>
-        </div>
     )
 }
 

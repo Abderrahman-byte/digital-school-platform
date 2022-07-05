@@ -3,7 +3,6 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 8px;
     overflow: hidden;
-    
 }
 
 .form {
@@ -16,5 +15,14 @@
 .form .form-div {
     margin-bottom: 2em;
     width: 95%;
-    max-width: 400px;
+}
+
+.form .form-div .field-errors {
+    margin-top: .5em;
+}
+
+.form .form-div .field-errors p {
+    color: red;
+    font-size: .75em;
+    letter-spacing: .1em;
 }

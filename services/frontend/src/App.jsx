@@ -1,13 +1,13 @@
 import React from 'react'
 import { Route, Routes } from 'react-router'
 
-import AuthPages from './pages/Auth.pages'
-import MainPages from './pages/Main.pages'
-import AuthenticatedOnly from './components/AuthenticatedOnly'
-import CreateProfilePage from './pages/CreateProfile.page'
-import CompletedProfilesOnly from './components/CompletedProfilesOnly'
+import AuthPages from '@Pages/Auth.pages'
+import MainPages from '@Pages/Main.pages'
+import CreateProfilePage from '@Pages/CreateProfile.page'
+import AuthenticatedOnly from '@Components/AuthenticatedOnly'
+import CompletedProfilesOnly from '@Components/CompletedProfilesOnly'
 
-import './App.css'
+import '@Styles/App.css'
 
 const App = () => {
 	return (

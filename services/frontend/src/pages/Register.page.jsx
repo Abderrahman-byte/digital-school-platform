@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 
-import GenericForm from '../components/GenericForm'
-import { registerFields, registerRules } from '../utils/forms'
-import { createAccount, DEFAULT_API_ERROR } from '../utils/api'
+import GenericForm from '@Components/GenericForm'
+import { registerFields, registerRules } from '@Utils/forms'
+import { createAccount, DEFAULT_API_ERROR } from '@Utils/api'
+import { translateErrors } from '@Utils/generic'
+import AppLogo from '@Assets/neogenia-logo1.png'
 
-import '../styles/RegisterPage.css'
-import { translateErrors } from '../utils/generic'
+import '@Styles/RegisterPage.css'
 
 const RegisterPage = () => {
     const [errors, setErrors] = useState([])
@@ -25,7 +26,7 @@ const RegisterPage = () => {
 
         if (!authData && authErrors) {
             setErrors(translateErrors(authErrors))
-        } else if (authData && authData.ok) {
+        } else if (authData && authData.success) {
             setMessages(['Your account has been created.\nPlease check your inbox to verify your email.'])
             setTimeout(() => setMessages([]), 5000)
         } else {
@@ -36,6 +37,10 @@ const RegisterPage = () => {
     return (
         <div className='RegisterPage LoginPage'>
             <div className='form-container form-card'>
+                <div className='form-header'>
+                    <img src={AppLogo} alt='neogenia logo' className='form-logo' />
+                </div>
+
                 <GenericForm submiBtnText='Sign Up' rules={registerRules} fields={registerFields} onSubmitCallback={onSubmitCallback} />
                 
                 

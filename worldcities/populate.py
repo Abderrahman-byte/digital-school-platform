@@ -1,13 +1,9 @@
 #!/bin/env python
 
 import psycopg2 as pg
-import csv, json
+import csv, os
 
 TABLES_DEFINITION = '''
-DROP TABLE IF EXISTS country CASCADE;
-DROP TABLE IF EXISTS "state" CASCADE;
-DROP TABLE IF EXISTS city CASCADE;
-
 CREATE TABLE IF NOT EXISTS country (
     id SERIAL PRIMARY KEY,
     name VARCHAR (100) NOT NULL UNIQUE,
@@ -130,20 +126,17 @@ def prepareDatabase (connection) :
     
     cursor.close()
 
-def getJsonFromFile (filename) :
-    try :
-        file = open(filename, 'r')
-        text = file.read()
-        return json.loads(text)
-    except FileNotFoundError :
-        print(f'[ERROR] file {filename} doesn\'t exist')
-    except Exception as ex :
-        print(f'[ERROR] couldn\'t parse {filename} file')
-        
-    return dict()
+def getDbConfig () :    
+    return {
+        'database': os.getenv('PG_DB', 'postgres'),
+        'user': os.getenv('PG_USER', 'postgres'),
+        'password': os.getenv('PG_PASSWORD', ''),
+        'host': os.getenv('PG_HOST', 'localhost'),
+        'port': int(os.getenv('PG_PORT', '5432')),
+    }
 
 def main () :
-    dbConf = getJsonFromFile('db.json')
+    dbConf = getDbConfig()
     dbConnection = pg.connect(**dbConf)
     
     prepareDatabase(dbConnection)

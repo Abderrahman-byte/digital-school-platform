@@ -14,6 +14,7 @@ import com.abderrahmane.elearning.common.models.RequestForConnection;
 import com.abderrahmane.elearning.common.models.SchoolTeacher;
 import com.abderrahmane.elearning.common.utils.ErrorMessageResolver;
 import com.abderrahmane.elearning.common.repositories.ProfileDAO;
+import com.abderrahmane.elearning.common.repositories.TeacherDAO;
 import com.abderrahmane.elearning.socialservice.validators.JoinTeacherFormValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class TeacherController {
     @Autowired
     private ProfileDAO profileDAO;
+
+    @Autowired
+    private TeacherDAO teacherDAO;
 
     @Autowired
     private StringDateConverter stringDateConverter;
@@ -58,7 +62,7 @@ public class TeacherController {
         
         response.put("success", true);
 
-        List<Map<String, Object>> schools = account.getTeacherProfile().getSchooles().stream().map(school -> {
+        List<Map<String, Object>> schools = teacherDAO.getTeacherSchools(account.getId()).stream().map(school -> {
            Map<String, Object> schoolTeacherMap = new HashMap<>();
 
            schoolTeacherMap.put("verified", school.isVerified());

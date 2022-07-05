@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Navigate, useLocation } from 'react-router'
 import PropTypes from 'prop-types'
 
-import { AuthContext } from '../context/AuthContext'
+import { AuthContext } from '@Context/AuthContext'
 
 const AuthenticatedOnly = ({ children, loginUrl }) => {
     const { account } = useContext(AuthContext)

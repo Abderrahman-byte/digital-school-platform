@@ -11,10 +11,13 @@ import com.abderrahmane.elearning.common.models.Session;
 import com.abderrahmane.elearning.common.repositories.AccountDAO;
 import com.abderrahmane.elearning.common.repositories.SessionDAO;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+@Slf4j
 public class AuthenticationHandler implements HandlerInterceptor {
     @Value("${session.key:sid}")
     private String sessionKey;
@@ -27,6 +30,8 @@ public class AuthenticationHandler implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        log.info("AuthenticationHandler method " + request.getMethod());
+
         if (request.getMethod().equals("OPTIONS")) return true;
         
         Cookie cookies[] = request.getCookies();

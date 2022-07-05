@@ -1,0 +1,35 @@
+.SchoolProfileForm .form-div > .form-label {
+    display: block;
+    margin-bottom: .5em;
+    font-size: 1rem;
+    letter-spacing: .05em;
+    font-weight: 600;
+}
+
+.SchoolProfileForm .form-div .DropDownInput {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.SchoolProfileForm .form-div .input-elt {
+    width: 100%;
+    padding: .3em .5em;
+    font-size: 1.125rem;
+    border-radius: 5px;
+    border: 1px solid var(--border-clr);
+}
+
+.SchoolProfileForm .form-div .input-elt.hasErrors {
+    border: 1px solid red;
+}
+
+.SchoolProfileForm .form-div textarea.input-elt {
+    height: 200px;
+    resize: none;
+}
+
+.SchoolProfileForm .btn {
+    padding-left: 2em;
+    padding-right: 2em;
+    
+}

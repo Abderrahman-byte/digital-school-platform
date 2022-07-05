@@ -1,8 +1,7 @@
-.form-container {
-    margin-left: 10%;
-    width: 10%;
+.RegisterPage {
+    padding-top: 4em;
+    padding-bottom: 4em;
 }
-
 
 .RegisterPage select.input-elt {
     cursor: pointer;

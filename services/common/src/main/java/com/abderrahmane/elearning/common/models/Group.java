@@ -34,6 +34,9 @@ public class Group {
     
     @Column(name = "label", nullable = false)
     private String label;
+
+    @Column(name = "description")
+    private String description;
     
     @ManyToOne(targetEntity = TeacherProfile.class, optional = false)
     @JoinColumn(name = "created_by")

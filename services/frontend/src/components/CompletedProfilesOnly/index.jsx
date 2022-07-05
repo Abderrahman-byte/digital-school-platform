@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Navigate, useLocation } from 'react-router'
 
-import { AuthContext } from '../context/AuthContext'
+import { AuthContext } from '@Context/AuthContext'
 
 const CompletedProfilesOnly = ({ children }) => {
     const { profile } = useContext(AuthContext)

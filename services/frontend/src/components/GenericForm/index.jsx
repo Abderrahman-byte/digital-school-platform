@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import '../styles/forms.css'
-import { validateForm } from '../utils/forms'
+import { validateForm } from '@Utils/forms'
+
+import '@Styles/forms.css'
 
 // This is the functions that generates input fields from gived fields objects
 const generateFields = (fields, errors) => {

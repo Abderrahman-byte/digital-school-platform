@@ -1,0 +1,24 @@
+.CreateProfilePage {
+    padding-top: 2em;
+    padding-bottom: 3em;
+}
+
+.CreateProfilePage .form-card {
+    width: 95%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.CreateProfilePage .form-card > .form-header {
+    background-color: var(--main-clr);
+    padding: 2em;
+}
+
+.CreateProfilePage .form-card > .form-header h3 {
+    font-size: 1.5em;
+    letter-spacing: .1em;
+    text-align: center;
+    color: whitesmoke;
+    margin: 0;
+}

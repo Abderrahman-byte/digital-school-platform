@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
-import AppLogo from '../assets/neogenia-logo1.png'
+import AppLogo from '@Assets/neogenia-logo1.png'
 
-import '../styles/GenericHeader.css'
+import './styles.css'
 
 const generateNavLink = (nav, i) => {
     return (
@@ -15,15 +15,13 @@ const generateNavLink = (nav, i) => {
 const GenericHeader = ({ navigation }) => {
     return (
         <header className='App-Header'>
-            <a  className='logo' href='/'>
-                <img src={AppLogo} alt='neogenia logo' />
-            </a>
-
-            <div className='navigation'>
-                <nav className='navbar'>
-                    {navigation.map((elt, i) => generateNavLink(elt, i))}
-                </nav>
+            <div className='left-side'>
+                <Link className='logo' to='/'>
+                    <img src={AppLogo} />
+                </Link>
             </div>
+
+            <div className='right-side'>    </div>
         </header>
     )
 }

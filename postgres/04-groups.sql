@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS "group" (
     id VARCHAR(25) PRIMARY KEY,
     label VARCHAR(200) NOT NULL,
+    description TEXT,
     created_by VARCHAR(25) NOT NULL REFERENCES teacher_profil(account_id) ON DELETE CASCADE,
     created_date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
     deleted_date TIMESTAMP WITH TIME ZONE,

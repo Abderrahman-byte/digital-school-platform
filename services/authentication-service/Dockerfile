@@ -1,19 +1,7 @@
-FROM maven:3.8.5-openjdk-18-slim as build
-
-WORKDIR /tmp/build
-
-COPY pom.xml .
-ADD common ./common
-ADD authentication-service ./authentication-service
-ADD social-service ./social-service
-ADD school-management ./school-management
-
-RUN mvn clean install -pl authentication-service -am
-
 FROM openjdk:18
 
 WORKDIR /app
 
-COPY --from=build /tmp/build/authentication-service/target/authservice-1.0-SNAPSHOT.jar .
+COPY target/authservice-1.0-SNAPSHOT.jar .
 
 CMD ["java", "-jar", "authservice-1.0-SNAPSHOT.jar"]

@@ -2,30 +2,20 @@ import { buildPath } from "./generic"
 import { getRequest, postRequest } from "./http"
 
 export const DEFAULT_API_ERROR = 'Something went wrong, please try again another time.'
-
 export const apiPrefix = process.env.REACT_APP_API_PREFIX
+export const apiHost = process.env.REACT_APP_API_HOST || window.location.href
 
-export const services = {
-    authService:process.env.REACT_APP_AUTH_SERVICE_HOST || window.location.origin,
-    socialService:process.env.REACT_APP_SOCIAL_SERVICE_HOST || window.location.origin,
-    schoolService:process.env.REACT_APP_SCHOOL_SERVICE_HOST || window.location.origin,
-}
-
-export const getApiUrl = (serviceOrigin, path) => {
-    const url = new URL(serviceOrigin)
+export const getApiUrl = (path) => {
+    const url = new URL(apiHost)
     url.pathname = buildPath(apiPrefix, path)
     return url.href
 }
 
-export const getAuthApiUrl = (path) => getApiUrl(services.authService, path)
-export const getSocialApiUrl = (path) => getApiUrl(services.socialService, path)
-export const getSchoolApiUrl = (path) => getApiUrl(services.schoolService, path)
-
 export const sendLoginRequest = async (username, password) => {
     try {
-        const response = await postRequest(getAuthApiUrl('/login'), JSON.stringify({ username, password }))
+        const response = await postRequest(getApiUrl('/auth/login'), JSON.stringify({ username, password }))
 
-        if (response && response.ok && response.data) return [response.data, null]
+        if (response && response.success && response.data) return [response.data, null]
         else if (response && response.errors) return [null, response.errors]
     } catch {}
 
@@ -34,9 +24,9 @@ export const sendLoginRequest = async (username, password) => {
 
 export const createAccount = async (data) => {
     try {
-        const response = await postRequest(getAuthApiUrl('/register'), JSON.stringify(data)) 
+        const response = await postRequest(getApiUrl('/auth/register'), JSON.stringify(data)) 
 
-        if (response && response.ok) return [response, null]
+        if (response && response.success) return [response, null]
         else if (response && response.errors) return [null, response.errors]
     } catch {}
 
@@ -46,7 +36,7 @@ export const createAccount = async (data) => {
 // Check if user is logged in
 export const checkAccount = async () => {
     try {
-        const response = await getRequest(getAuthApiUrl('/isLoggedIn'))
+        const response = await getRequest(getApiUrl('/auth/isLoggedIn'))
 
         if (response && response.isLoggedIn && response.data) return response.data
     } catch {}
@@ -56,9 +46,9 @@ export const checkAccount = async () => {
 
 export const searchForLocation = async (query) => {
     try {
-        const response = await getRequest(getSocialApiUrl('/search/city') + `?query=${encodeURIComponent(query)}`)
+        const response = await getRequest(getApiUrl('/social/search/city') + `?query=${encodeURIComponent(query)}`)
 
-        if (response && response.ok && response.data) return response.data
+        if (response && response.success && response.data) return response.data
     } catch {}
 
     return []
@@ -66,9 +56,9 @@ export const searchForLocation = async (query) => {
 
 export const createProfile = async (data) => {
     try {
-        const response = await postRequest(getSocialApiUrl('/profile'), JSON.stringify(data))
+        const response = await postRequest(getApiUrl('/social/profile'), JSON.stringify(data))
 
-        if (response && response.ok) return [true, null]
+        if (response && response.success) return [true, null]
         else if (response && response.errors) return [false, response.errors]
     } catch {}
 
